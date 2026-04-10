@@ -17,6 +17,9 @@ const LINES = [
     { text: "that moves through [DIALOGUE],", delay: 0.40 },
     { text: "and holds its shape inside the [WORLDS]", delay: 0.48 },
     { text: "it was made for.", delay: 0.54 },
+    { text: "", delay: 0 },
+    { text: "Designing from the [HUMAN] condition,", delay: 0.62 },
+    { text: "towards a [SYMBIOTIC] future.", delay: 0.70 },
 ];
 
 const FILLED_PILLS = new Set(['ANTHROPOLOGIST', 'DESIGNER']);
@@ -148,16 +151,15 @@ export function Interlude() {
     const sectionRef = useRef<HTMLElement>(null);
     // cardWrapRef: GSAP anima scaleY aquí (sin float CSS)
     const cardWrapRef = useRef<HTMLDivElement>(null);
-    const creatureRef = useRef<HTMLDivElement>(null);
+    const tickerRow1Ref = useRef<HTMLDivElement>(null);
+    const tickerRow2Ref = useRef<HTMLDivElement>(null);
     const [textActive, setTextActive] = useState(false);
     const { revealed, cursorVisible } = useTypewriter(LINES, textActive);
-    const creatureCompleted = useRef(false);
 
     useEffect(() => {
         const section = sectionRef.current;
         const cardWrap = cardWrapRef.current;
-        const creature = creatureRef.current;
-        if (!section || !cardWrap || !creature) return;
+        if (!section || !cardWrap) return;
 
         const ctx = gsap.context(() => {
 
@@ -186,54 +188,41 @@ export function Interlude() {
                 once: true,
             });
 
-            // ── Criatura: position fixed — no sube con el scroll ──
-            // Empieza fuera del borde derecho (translateX 100vw desde left:0)
-            // x va de 100vw → -120vw (desaparece por la izquierda)
-            // scale va de 1 → 0.28
-            // transformOrigin: left top para que el scale no desplace el x
-            gsap.set(creature, {
-                x: '100vw',
-                scaleX: 1,
-                scaleY: 1,
-                transformOrigin: 'left center',
-            });
 
-            ScrollTrigger.create({
-                trigger: section,
-                start: 'top+=400 bottom',
-                end: 'bottom bottom',
-                scrub: 0.4,
-                onUpdate: (self) => {
-                    const p = self.progress;
 
-                    if (p >= 0.99) {
-                        creatureCompleted.current = true;
+            // ── Ticker horizontal scrubbed ──
+            // Fila 1: se mueve de derecha a izquierda con scroll
+            // Fila 2: dirección opuesta
+            const row1 = tickerRow1Ref.current;
+            const row2 = tickerRow2Ref.current;
+            if (row1 && row2) {
+                gsap.fromTo(row1,
+                    { x: '0%' },
+                    {
+                        x: '-50%',
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: '40% bottom',
+                            end: 'bottom top',
+                            scrub: 1,
+                        },
                     }
-
-                    if (creatureCompleted.current && p < 0.97) {
-                        // Completó y scroll vuelve arriba → flip, quedarse fuera izquierda
-                        gsap.set(creature, {
-                            x: '-120vw',
-                            scaleX: -0.28,
-                            scaleY: 0.28,
-                        });
-                        return;
+                );
+                gsap.fromTo(row2,
+                    { x: '-50%' },
+                    {
+                        x: '0%',
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: '40% bottom',
+                            end: 'bottom top',
+                            scrub: 1,
+                        },
                     }
-
-                    if (!creatureCompleted.current) {
-                        // Trayecto normal der→izq
-                        // x: de 100vw a -120vw (sale completamente por la izquierda)
-                        const xVw = 100 - p * 220;
-                        // scale: de 1 a 0.28
-                        const sc = Math.max(0.28, 1 - p * 0.72);
-                        gsap.set(creature, {
-                            x: `${xVw}vw`,
-                            scaleX: sc,
-                            scaleY: sc,
-                        });
-                    }
-                },
-            });
+                );
+            }
 
         }, section);
 
@@ -254,15 +243,15 @@ export function Interlude() {
                 ref={sectionRef}
                 aria-label="Personal statement"
                 style={{
-                    minHeight: '200vh',
+                    minHeight: '130vh',
                     width: '100%',
                     position: 'relative',
                     backgroundColor: 'transparent',
                     display: 'flex',
                     alignItems: 'flex-start',
                     justifyContent: 'center',
-                    paddingTop: 'clamp(60px, 12vh, 120px)',
-                    paddingBottom: 'clamp(60px, 12vh, 120px)',
+                    paddingTop: 'clamp(80px, 15vh, 160px)',
+                    paddingBottom: 'clamp(80px, 15vh, 160px)',
                     paddingLeft: 'clamp(20px, 4vw, 40px)',
                     paddingRight: 'clamp(20px, 4vw, 40px)',
                     zIndex: 3,
@@ -288,8 +277,8 @@ export function Interlude() {
                         </div>
                     </div>
 
-                    {/* Columna derecha — texto */}
-                    <div style={{ paddingLeft: 'clamp(0px, 3vw, 48px)' }}>
+                {/* Columna derecha — texto */}
+                    <div style={{ paddingLeft: 'clamp(0px, 3vw, 48px)', position: 'relative' }}>
                         {LINES.map((line, i) => (
                             <div key={i} style={{
                                 fontFamily: 'var(--font-jetbrains-mono), monospace',
@@ -303,7 +292,7 @@ export function Interlude() {
                             </div>
                         ))}
                         {cursorVisible && (
-                            <span style={{
+                            <div style={{
                                 display: 'inline-block',
                                 width: '0.6em', height: '1.2em',
                                 backgroundColor: COLORS.accentInfrared,
@@ -311,33 +300,74 @@ export function Interlude() {
                                 animation: 'blink-cursor 1s step-end infinite',
                             }} />
                         )}
+
+                        {/* Palabras gigantes de fondo para llenar el espacio */}
+                        <div style={{
+                            position: 'absolute',
+                            top: '80%',
+                            left: '-15%',
+                            fontSize: 'clamp(6rem, 25vw, 22rem)',
+                            fontFamily: "'LunaObscura', monospace",
+                            color: PILL_GREEN,
+                            opacity: 0.03,
+                            lineHeight: 0.7,
+                            letterSpacing: '-0.05em',
+                            pointerEvents: 'none',
+                            whiteSpace: 'nowrap',
+                            zIndex: -1,
+                        }}>
+                            ANTHROPOS
+                        </div>
                     </div>
                 </div>
 
-                {/* Criatura — fixed para no moverse con el scroll vertical */}
-                <div
-                    ref={creatureRef}
-                    style={{
-                        position: 'fixed',
-                        top: '55vh',
-                        left: 0,
-                        width: '1920px',
-                        height: '400px',
-                        pointerEvents: 'none',
-                        zIndex: 2,
-                        transformOrigin: 'left center',
+                {/* ── Ticker horizontal ── */}
+                <div style={{
+                    position: 'absolute',
+                    bottom: '15vh',
+                    left: 0,
+                    width: '100%',
+                    overflow: 'hidden',
+                    pointerEvents: 'none',
+                    zIndex: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 8,
+                    maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+                }}>
+                    {/* Fila 1 — va izquierda con scroll */}
+                    <div ref={tickerRow1Ref} style={{
+                        display: 'flex',
+                        whiteSpace: 'nowrap',
                         willChange: 'transform',
-                    }}
-                >
-                    <video
-                        src="/smallcreature.webm"
-                        autoPlay muted loop playsInline
-                        style={{
-                            width: '100%', height: '100%',
-                            objectFit: 'contain',
-                            mixBlendMode: 'screen',
-                        }}
-                    />
+                    }}>
+                        <span style={{
+                            fontFamily: "'LunaObscura', monospace",
+                            fontSize: 'clamp(48px, 8vw, 96px)',
+                            letterSpacing: '0.04em',
+                            color: 'rgba(255,255,255,0.07)',
+                            textTransform: 'uppercase',
+                            lineHeight: 1,
+                            paddingRight: '4vw',
+                        }}>FIELDWORK ⊕ MUTATION → SITUATED ⊕ ORGANISM → DESIGN ⊕ ANTHROPOLOGY → INTERFACE ⊕ CULTURE → FORM ⊕ FIELDWORK ⊕ MUTATION → SITUATED ⊕ ORGANISM → DESIGN ⊕ ANTHROPOLOGY → INTERFACE ⊕ CULTURE → FORM</span>
+                    </div>
+                    {/* Fila 2 — va derecha con scroll (opuesta) */}
+                    <div ref={tickerRow2Ref} style={{
+                        display: 'flex',
+                        whiteSpace: 'nowrap',
+                        willChange: 'transform',
+                    }}>
+                        <span style={{
+                            fontFamily: "'LunaObscura', monospace",
+                            fontSize: 'clamp(48px, 8vw, 96px)',
+                            letterSpacing: '0.04em',
+                            color: 'rgba(0,255,65,0.06)',
+                            textTransform: 'uppercase',
+                            lineHeight: 1,
+                            paddingRight: '4vw',
+                        }}>DIALOGUE ⤵ LISTENING → IDENTITY ⊕ FIELDWORK ⤴ WORLDS → BRAND ⊕ DIALOGUE ⤵ LISTENING → IDENTITY ⊕ FIELDWORK ⤴ WORLDS → BRAND ⊕ DIALOGUE ⤵ LISTENING → IDENTITY</span>
+                    </div>
                 </div>
             </section>
         </>
@@ -452,7 +482,6 @@ function SpecimenCard() {
         </>
     );
 }
-
 function RecDot({ hovered }: { hovered: boolean }) { return (<div style={{ display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}><div style={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: '#FF3B3B', boxShadow: hovered ? '0 0 8px #FF3B3B' : '0 0 4px #FF3B3B', animation: 'rec-blink 1.2s step-end infinite' }} /><span style={luna(7, 'rgba(255,255,255,.4)', .1)}>REC</span></div>); }
 function DataRow({ label, value, accent, warn }: { label: string; value: string; accent?: boolean; warn?: boolean }) { const vc = warn ? '#FF5555' : accent ? '#00FF41' : 'rgba(255,255,255,.7)'; return (<div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}><span style={luna(8, 'rgba(255,255,255,.5)', .08)}>{label}</span><span style={{ ...luna(9, vc, .06), fontWeight: 700 }}>{value}</span></div>); }
 function luna(size: number, color: string, spacing: number): React.CSSProperties { return { fontFamily: "'LunaObscura',var(--font-jetbrains-mono),monospace", fontSize: size, letterSpacing: `${spacing}em`, color, textTransform: 'uppercase' as const, lineHeight: 1.3, whiteSpace: 'nowrap' as const }; }
