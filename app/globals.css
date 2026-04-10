@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+/* ─── DESIGN TOKENS (orko_ Brutalist System) ─────────────────────────────── */
+
+@theme inline {
+  /* Palette */
+  --color-abyss: #050505;
+  --color-ash: #1a1a1a;
+  --color-bone: #f0f0f0;
+  --color-infrared: #ff2a00;
+  --color-green: #00ff41;
+
+  /* Typography */
+  --font-headline: "HS LunaObscura", var(--font-headline), sans-serif;
+  --font-data: "JetBrains Mono", monospace;
+
+  /* Motion — keep in sync with lib/constants.ts */
+  --ease-hero: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-snap: cubic-bezier(0.85, 0, 0.15, 1);
+  --ease-aggro: cubic-bezier(0.7, 0, 0.3, 1);
+  --duration-micro: 150ms;
+  --duration-macro: 800ms;
+
+  /* Spacing */
+  --gutter: 40px;
+  --gutter-mobile: 20px;
+  --max-content: 1440px;
+}
+
+/* ─── GLOBAL RESET & BASE ─────────────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  background-color: #050505;
+  color: #f0f0f0;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  cursor: none !important;
+}
+
+a,
+button,
+[role="button"],
+input,
+label,
+select,
+textarea {
+  cursor: none !important;
+}
+
+/* ─── CUSTOM SCROLLBAR ────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 4px;
+  background: #050505;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1a1a;
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #ff2a00;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1a1a1a #050505;
+}
+
+/* ─── SELECTION ───────────────────────────────────────────────────────────── */
+
+::selection {
+  background: #ff2a00;
+  color: #050505;
+}
+
+::-moz-selection {
+  background: #ff2a00;
+  color: #050505;
+}
+
+/* ─── TYPOGRAPHY SCALE ───────────────────────────────────────────────────── */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-headline);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+}
+
+/* ─── ACCESSIBILITY: SKIP LINK ───────────────────────────────────────────── */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  background: #ff2a00;
+  color: #050505;
+  padding: 0.5rem 1rem;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.875rem;
+  z-index: 9999;
+  text-decoration: none;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ─── FOCUS RING ─────────────────────────────────────────────────────────── */
+
+:focus-visible {
+  outline: 1px solid #ff2a00;
+  outline-offset: 4px;
+}
+
+/* ─── REDUCED MOTION ─────────────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,1702 @@
+<!DOCTYPE html>
+<html lang="en" class="" data-capo="">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      MACHINEZERO
+    </title>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}:where(:not(html,iframe,canvas,img,svg,video,audio):not(svg *,symbol *)){all:unset;display:revert}*,:after,:before{box-sizing:border-box}a,button{cursor:revert}menu,ol,ul{list-style:none}img{max-block-size:100%;max-inline-size:100%}table{border-collapse:collapse}input,textarea{-webkit-user-select:auto}textarea{white-space:revert}meter{-webkit-appearance:revert;-moz-appearance:revert;appearance:revert}:where(pre){all:revert}::-moz-placeholder{color:unset}::placeholder{color:unset}::marker{content:normal}:where([hidden]){display:none}:where([contenteditable]:not([contenteditable=false])){-moz-user-modify:read-write;-webkit-user-modify:read-write;-webkit-line-break:after-white-space;overflow-wrap:break-word;-webkit-user-select:auto}:where([draggable=true]){-webkit-user-drag:element}:where(dialog:modal){all:revert}@font-face{font-family:RobotoMono;font-style:normal;font-weight:300;src:url(/fonts/RobotoMono-Light.woff2) format(&#34;woff2&#34;),url(/fonts/RobotoMono-Light.woff) format(&#34;woff&#34;)}@font-face{font-family:RobotoMono;font-style:normal;font-weight:400;src:url(/fonts/RobotoMono-Regular.woff2) format(&#34;woff2&#34;),url(/fonts/RobotoMono-Regular.woff) format(&#34;woff&#34;)}:root{--font-mono:&#34;RobotoMono&#34;,monospace;--black:#0c0c0c;--black-0:hsla(0,0%,5%,0);--black-5:hsla(0,0%,5%,.05);--black-10:hsla(0,0%,5%,.1);--black-15:hsla(0,0%,5%,.15);--black-20:hsla(0,0%,5%,.2);--black-25:hsla(0,0%,5%,.25);--black-30:hsla(0,0%,5%,.3);--black-35:hsla(0,0%,5%,.35);--black-40:hsla(0,0%,5%,.4);--black-45:hsla(0,0%,5%,.45);--black-50:hsla(0,0%,5%,.5);--black-55:hsla(0,0%,5%,.55);--black-60:hsla(0,0%,5%,.6);--black-65:hsla(0,0%,5%,.65);--black-70:hsla(0,0%,5%,.7);--black-75:hsla(0,0%,5%,.75);--black-80:hsla(0,0%,5%,.8);--black-85:hsla(0,0%,5%,.85);--black-90:hsla(0,0%,5%,.9);--black-95:hsla(0,0%,5%,.95);--white:#f8f6f6;--white-0:hsla(0,12%,97%,0);--white-5:hsla(0,12%,97%,.05);--white-10:hsla(0,12%,97%,.1);--white-15:hsla(0,12%,97%,.15);--white-20:hsla(0,12%,97%,.2);--white-25:hsla(0,12%,97%,.25);--white-30:hsla(0,12%,97%,.3);--white-35:hsla(0,12%,97%,.35);--white-40:hsla(0,12%,97%,.4);--white-45:hsla(0,12%,97%,.45);--white-50:hsla(0,12%,97%,.5);--white-55:hsla(0,12%,97%,.55);--white-60:hsla(0,12%,97%,.6);--white-65:hsla(0,12%,97%,.65);--white-70:hsla(0,12%,97%,.7);--white-75:hsla(0,12%,97%,.75);--white-80:hsla(0,12%,97%,.8);--white-85:hsla(0,12%,97%,.85);--white-90:hsla(0,12%,97%,.9);--white-95:hsla(0,12%,97%,.95);--orange:#eb5b21;--orange-0:rgba(235,91,33,0);--orange-5:rgb(235 91 33/5%);--orange-10:rgba(235,91,33,.1);--orange-15:rgba(235,91,33,.15);--orange-20:rgba(235,91,33,.2);--orange-25:rgba(235,91,33,.25);--orange-30:rgba(235,91,33,.3);--orange-35:rgba(235,91,33,.35);--orange-40:rgba(235,91,33,.4);--orange-45:rgba(235,91,33,.45);--orange-50:rgba(235,91,33,.5);--orange-55:rgba(235,91,33,.55);--orange-60:rgba(235,91,33,.6);--orange-65:rgba(235,91,33,.65);--orange-70:rgba(235,91,33,.7);--orange-75:rgba(235,91,33,.75);--orange-80:rgba(235,91,33,.8);--orange-85:rgba(235,91,33,.85);--orange-90:rgba(235,91,33,.9);--orange-95:rgba(235,91,33,.95);--ease-in-quad:cubic-bezier(.55,.085,.68,.53);--ease-in-cubic:cubic-bezier(.55,.055,.675,.19);--ease-in-quart:cubic-bezier(.895,.03,.685,.22);--ease-in-quint:cubic-bezier(.755,.05,.855,.06);--ease-in-expo:cubic-bezier(.95,.05,.795,.035);--ease-in-circ:cubic-bezier(.6,.04,.98,.335);--ease-out-quad:cubic-bezier(.25,.46,.45,.94);--ease-out-cubic:cubic-bezier(.215,.61,.355,1);--ease-out-quart:cubic-bezier(.165,.84,.44,1);--ease-out-quint:cubic-bezier(.23,1,.32,1);--ease-out-expo:cubic-bezier(.19,1,.22,1);--ease-out-circ:cubic-bezier(.075,.82,.165,1);--ease-in-out-quad:cubic-bezier(.455,.03,.515,.955);--ease-in-out-cubic:cubic-bezier(.645,.045,.355,1);--ease-in-out-quart:cubic-bezier(.77,0,.175,1);--ease-in-out-quint:cubic-bezier(.86,0,.07,1);--ease-in-out-expo:cubic-bezier(1,0,0,1);--ease-in-out-circ:cubic-bezier(.785,.135,.15,.86);--layout-columns-count:2;--layout-columns-gap:0px;--layout-margin:16px;--layout-width:calc(100vw - var(--layout-margin)*2);--layout-column-width:calc((var(--layout-width) - ((var(--layout-columns-count) - 1)*var(--layout-columns-gap)))/var(--layout-columns-count))}@media (min-width:920px){:root{--layout-columns-count:4;--layout-columns-gap:0px;--layout-margin:32px}}.layout-block,.layout-grid{margin-left:auto;margin-right:auto;max-width:var(--layout-width);position:relative;width:100%}.layout-block-inner,.layout-grid-inner{padding-left:var(--layout-margin);padding-right:var(--layout-margin);position:relative;width:100%}.layout-grid{display:grid;grid-template-columns:repeat(var(--layout-columns-count),minmax(0,1fr));grid-gap:var(--layout-columns-gap)}.layout-grid&gt;:first-child{padding-left:var(--spacer-xs);padding-right:var(--spacer-xs)}@media (min-width:920px){.layout-grid&gt;:first-child{padding-left:var(--spacer-sm);padding-right:var(--spacer-sm)}}.layout-grid&gt;:nth-child(2),.layout-grid&gt;:nth-child(4){padding-left:calc(var(--spacer-xs));padding-right:calc(var(--spacer-xs) + 1px)}@media (min-width:920px){.layout-grid&gt;:nth-child(2),.layout-grid&gt;:nth-child(4){padding-left:0;padding-right:calc(var(--spacer-sm) + 1px)}.layout-grid&gt;:nth-child(3){padding-left:calc(var(--spacer-sm) + 3px)}}.layout-grid--full{min-height:calc(100svh - var(--spacer-mobile)*2)}@media (min-width:920px){.layout-grid--full{min-height:calc(100svh - var(--spacer-desktop)*2)}}.layout-grid--svh{min-height:100svh}@media (min-width:920px){.layout-grid--svh{min-height:100svh}}.layout-grid--text{min-height:auto;padding:var(--spacer-desktop) var(--spacer-sm) var(--spacer-xs) var(--spacer-sm)}.layout-grid--text .text-block{border-bottom:1px solid var(--white-5)}.layout-grid--text .text-block:first-child{border-top:1px solid var(--white-5)}.layout-grid--text .text-block:first-child p{padding-bottom:var(--spacer-md)}.layout-grid--text&gt;*{grid-column:span 2}.layout-grid--text&gt;* p{display:flex;flex-direction:column;gap:calc(var(--spacer-xs)*.25);padding:var(--spacer-xs) 0}.layout-grid--text&gt;* p.orange{color:var(--orange)}.layout-grid-inner{display:grid;grid-template-columns:repeat(var(--layout-columns-count),minmax(0,1fr));grid-gap:var(--layout-columns-gap)}.layout-section{align-items:center;display:flex;flex-direction:column;justify-content:start;min-height:100svh;padding:var(--spacer-mobile);position:relative}@media (min-width:920px){.layout-section{padding:var(--spacer-desktop)}}.layout-grid-block{align-items:start;border-bottom:1px solid var(--white-5);border-top:1px solid var(--white-5);display:flex;flex-direction:column;gap:var(--spacer-xs);justify-content:center;padding:var(--spacer-sm) 0;position:relative}@media (min-width:920px){.layout-grid-block{gap:var(--spacer-sm);padding:var(--spacer-lg) 0}}:root{--spacer-desktop:32px;--spacer-mobile:24px;--spacer-wide:288px;--spacer-xxl:144px;--spacer-xl:64px;--spacer-lg:32px;--spacer-md:24px;--spacer-sm:16px;--spacer-xs:8px}@media (min-width:920px){:root{--spacer-desktop:32px;--spacer-mobile:24px;--spacer-wide:288px;--spacer-xxl:144px;--spacer-xl:64px;--spacer-lg:32px;--spacer-md:24px;--spacer-sm:16px;--spacer-xs:8px}}.full-width{left:50%;margin-left:-50vw;margin-right:-50vw;position:relative;right:50%;width:100vw}.uppercase{text-transform:uppercase}.overflow-hidden{overflow:hidden}.relative{position:relative}@media (min-width:920px){.mobile-only{display:none!important}}@media (max-width:919px){.desktop-only{display:none!important}}@media (min-width:920px){.desktop-only{display:block!important}}html.has-scroll-smooth .hide-on-smooth-scroll,html:not(.has-scroll-smooth) .hide-on-native-scroll{display:none}:root .theme-dark{--theme-bg:#0c0c0c;--theme-fg:#f8f6f6;--theme-contrast:#eb5b21}html{overflow-x:hidden;overscroll-behavior-y:contain}html:not(.dev),html:not(.dev) *{scrollbar-width:none!important;-ms-overflow-style:none!important}html:not(.dev) ::-webkit-scrollbar,html:not(.dev)::-webkit-scrollbar{height:0!important;width:0!important}html.lenis{height:auto}.lenis.lenis-smooth{scroll-behavior:auto}.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}.lenis.lenis-stopped{overflow:hidden}.lenis.lenis-scrolling iframe{pointer-events:none}.site-orchestra{z-index:70}#theatrejs-studio-root,.grid-debug,.stats{z-index:60!important}.site-header{z-index:50}.site-footer{z-index:15}.fade-enter-active,.fade-leave-active{transition:opacity .3s}.fade-enter-from,.fade-leave-to{opacity:0}.quick-fade-enter-active,.quick-fade-leave-active{transition:opacity .1s}.quick-fade-enter-from,.quick-fade-leave-to{opacity:0}.slow-fade-enter-active,.slow-fade-leave-active{transition:opacity .6s}.slow-fade-enter-from,.slow-fade-leave-to{opacity:0}.slide-up-enter-active,.slide-up-leave-active{transition:transform .4s var(--ease-out-quad)}.slide-up-enter-from,.slide-up-leave-to{transform:translateY(-100%)}.slide-left-enter-active,.slide-left-leave-active{transition:transform .4s var(--ease-out-quad)}.slide-left-enter-from,.slide-left-leave-to{transform:translate(-100%)}.page-enter-active,.page-leave-active{transition:opacity .4s}.page-enter-from,.page-leave-to{opacity:0}html.page-404{background-color:var(--orange)}html.page-404 .theme-dark,html.page-404 body{background-color:transparent!important}html *{-webkit-user-select:none;-moz-user-select:none;user-select:none}body{margin:0;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased!important;background:var(--black);font-family:var(--font-mono);text-rendering:optimizeLegibility!important}img{-webkit-backface-visibility:hidden;-webkit-image-rendering:-webkit-optimize-contrast;image-rendering:smooth;transform:translateZ(0)}@media (min-width:920px){.a-div:hover,a:hover{text-decoration:underline}}.label,label{font-size:10px}.label,.p,label,p{font-family:var(--font-mono);font-weight:400;text-transform:lowercase}.p,p{font-size:14px}.p-l{font-size:18px}.p-l,.p-s{font-family:var(--font-mono);font-weight:400;text-transform:lowercase}.p-s{font-size:12px}.small,small{font-family:var(--font-mono);font-size:11px;font-weight:400;text-transform:lowercase}@media (min-width:920px){.small,small{font-size:12px}}sup{font-size:10px}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.borders{border:calc(var(--spacer-mobile) - 2px) solid var(--black);bottom:0;left:0;pointer-events:none;position:fixed;right:0;top:0;z-index:70}.borders.p404{border-color:var(--orange)}.borders.p404&gt;div{border-color:var(--black)}@media (min-width:920px){.borders{border:var(--spacer-desktop) solid var(--black)}}.borders&gt;div{border:2px solid var(--white);bottom:0;left:0;position:absolute;right:0;top:0}.container.default{color:var(--theme-fg);display:grid;grid-template-rows:1fr auto;min-height:100vh;position:relative;z-index:1}.container.default.is-loading,.container.default.is-loading *{pointer-events:none}.container.default:not(.fonts-loaded){opacity:0}.container.default ::selection{background:var(--theme-fg);color:var(--theme-bg)}.container.default ::-moz-selection{background:var(--theme-fg);color:var(--theme-bg)}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.site-header{bottom:0;color:var(--white);height:120px;padding:var(--spacer-sm) 0;position:fixed;width:100%;z-index:50}@media (min-width:920px){.site-header{bottom:inherit;left:1px;padding:var(--spacer-lg);top:4px}}.site-header .layout-grid{align-items:start;justify-content:start}.site-header .container{padding-right:0;top:-2px}.site-header__container{height:0}.site-header__container&gt;div{grid-column:span 1;padding:var(--spacer-sm) 0;padding-left:0!important;position:relative}@media (min-width:1400px){.site-header__container&gt;div{grid-column:span 1}}.site-header__container&gt;div:first-child{opacity:0}.site-header__container&gt;div:not(.blok){border-top:2px solid var(--white)}@media (min-width:920px){.site-header__container&gt;div:not(.blok){border-bottom:2px solid var(--white);border-right:2px solid var(--white);border-top:none}}.site-header__container&gt;div.blok{align-items:center;display:flex;justify-content:flex-end;opacity:0;padding:var(--spacer-xs) 0}@media (min-width:920px){.site-header__container&gt;div.blok:nth-child(2),.site-header__container&gt;div.blok:nth-child(4){padding-right:var(--spacer-sm)}}.site-header__container&gt;div .logo{align-items:flex-start;border-bottom:1px solid var(--white-5);border-top:1px solid var(--white-5);display:flex;gap:var(--spacer-sm);justify-content:start;padding-left:var(--spacer-sm);position:relative;text-decoration:none!important}.site-header__container&gt;div .logo svg{height:auto;max-width:80px}@media (min-width:920px){.site-header__container&gt;div .logo svg{max-width:160px}}.site-header__container&gt;div .logo span{color:var(--white);text-transform:uppercase}@media screen and (max-width:1280px){.site-header__container&gt;div .logo span{display:none!important}}.site-header__container&gt;div .content{border-top:2px solid var(--white);margin-top:var(--spacer-sm);padding:var(--spacer-sm) var(--spacer-sm) var(--spacer-lg)}.site-header__container&gt;div .content.caption{border-top:1px solid var(--white-50);display:flex;flex-direction:column;padding-bottom:0!important;padding-top:var(--spacer-xs)}.site-header__container&gt;div .content.caption .credits{color:var(--orange);margin-bottom:var(--spacer-xs)}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.scramble-text{display:inline-block;pointer-events:none;position:relative}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.mobile-nav{align-items:center;background-color:var(--black);border-top:1px solid var(--white-60);bottom:var(--spacer-mobile);display:flex;height:auto;justify-content:space-between;left:50%;padding:var(--spacer-xs) 0;position:fixed;transform:translate(-50%);width:calc(100% - var(--spacer-mobile)*2);z-index:50}.mobile-nav .background{background-color:var(--black-90);height:100%;left:0;opacity:0;pointer-events:none;position:absolute;top:0;width:100%;z-index:0}.mobile-nav__container{border-bottom:1px solid var(--white-15);border-top:1px solid var(--white-15);justify-content:space-between;padding:0 var(--spacer-xs);position:relative;width:100%}.mobile-nav .logo,.mobile-nav .logo a,.mobile-nav__container{align-items:center;display:flex}.mobile-nav .logo svg{height:auto;width:64px}.mobile-nav .menu{align-items:center;color:var(--white);display:flex;gap:var(--spacer-xs);justify-content:flex-end;width:50%}.mobile-nav .menu&gt;div{display:flex}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}#scroll-down{bottom:calc(var(--spacer-mobile) + 56px);color:var(--white-30);left:50%;opacity:0;padding-bottom:var(--spacer-xs);position:absolute;transform:translate(-50%)}@media (min-width:920px){#scroll-down{bottom:calc(var(--spacer-desktop) + 14px);color:var(--white-80)}}.point-helper{bottom:0;left:0;pointer-events:none;position:fixed;right:0;top:0;z-index:100}.point-helper div{height:1px;position:absolute;width:1px}.point-helper div:first-child{left:35%;top:55%}@media (min-width:920px){.point-helper div:first-child{left:50%;top:55%}}.point-helper div:nth-child(2){left:50%;top:45%}@media (min-width:920px){.point-helper div:nth-child(2){left:47%;top:48%}}.point-helper div:nth-child(3){left:55%;top:46%}.point-helper svg{height:100%;left:0;opacity:0;position:absolute;top:0;width:100%}.point-helper svg line{stroke:var(--orange)}.point-helper svg line.line-3{display:none}@media (min-width:920px){.point-helper svg line.line-3{display:block}}.point-helper svg .line-3-rect{display:none}@media (min-width:920px){.point-helper svg .line-3-rect{display:block}}.home-intro{color:var(--white);overflow:hidden;position:relative}.home-intro .blok{border:2px solid var(--orange);display:inline-block;height:auto;left:0;opacity:0;padding:var(--spacer-xs);position:absolute;top:0;width:100%}.home-intro .blok.description{max-width:280px}@media (min-width:920px){.home-intro .blok.description{max-width:200px}.home-intro .blok.description[data-index=&#34;0&#34;]{max-width:360px}}.home-intro .blok.title{max-width:220px}.home-intro .blok.title p{color:var(--orange);text-transform:uppercase!important}.home-intro .blok.title p.p-s[data-index=&#34;0&#34;]{text-transform:lowercase!important}.home-intro .blok.title .mobile-only{color:var(--white)}.home-intro .blok.counter{display:none;max-width:64px}@media (min-width:920px){.home-intro .blok.counter{display:block}}.home-intro .blok.counter p{align-items:flex-start;display:flex;justify-content:center}.home-intro .blok.counter p sup{position:relative;top:-3px}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.home-grid .layout-grid{height:calc(100svh - var(--spacer-lg))}@media (min-width:920px){.home-grid .layout-grid{height:calc(100svh - var(--spacer-xl))}}.home-grid .layout-grid&gt;div{height:calc(50svh - var(--spacer-lg));padding:0}@media (min-width:920px){.home-grid .layout-grid&gt;div{height:calc(100svh - var(--spacer-xl))}}.home-grid .layout-grid&gt;div:first-child{display:flex;flex-direction:column}.home-grid .layout-grid&gt;div:first-child&gt;div{display:flex;height:80%}@media (max-width:919px){.home-grid .layout-grid&gt;div:first-child&gt;div{margin-top:auto}}@media (min-width:920px){.home-grid .layout-grid&gt;div:first-child&gt;div{height:50%}}.home-grid .layout-grid&gt;div:nth-child(2){display:flex;flex-direction:column}.home-grid .layout-grid&gt;div:nth-child(2)&gt;div{display:flex;height:90%}@media (min-width:920px){.home-grid .layout-grid&gt;div:nth-child(2)&gt;div{height:50%}}.home-grid .layout-grid&gt;div:nth-child(2)&gt;div:nth-child(2),.home-grid .layout-grid&gt;div:nth-child(2)&gt;div:nth-child(3){height:25%}.home-grid .layout-grid&gt;div:nth-child(3){display:flex;flex-direction:column}.home-grid .layout-grid&gt;div:nth-child(3)&gt;div{display:flex}.home-grid .layout-grid&gt;div:nth-child(3)&gt;div:nth-child(2){height:80%}@media (min-width:920px){.home-grid .layout-grid&gt;div:nth-child(3)&gt;div:nth-child(2){height:50%}}.home-grid .layout-grid&gt;div:nth-child(3)&gt;div:first-child,.home-grid .layout-grid&gt;div:nth-child(3)&gt;div:nth-child(3){height:25%}.home-grid .layout-grid&gt;div:nth-child(4){display:flex;flex-direction:column}.home-grid .layout-grid&gt;div:nth-child(4)&gt;div{display:flex}.home-grid .layout-grid&gt;div:nth-child(4)&gt;div:first-child{height:70%}@media (min-width:920px){.home-grid .layout-grid&gt;div:nth-child(4)&gt;div:first-child{height:50%}}.home-grid .layout-grid&gt;div:nth-child(4)&gt;div:nth-child(2),.home-grid .layout-grid&gt;div:nth-child(4)&gt;div:nth-child(3){height:25%}.home-grid .layout-grid-block{position:relative}.home-grid .layout-grid-block:not(:first-of-type){border-top:none}.home-grid [data-tres-model]{align-items:start;display:flex;flex-direction:column;gap:var(--spacer-xs);height:100%;justify-content:end;padding:var(--spacer-sm);position:absolute;width:100%}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.animation-borders{align-items:start;bottom:0;display:flex;flex-direction:column;justify-content:end;left:0;padding:var(--spacer-xs);position:absolute;right:0;top:0}@media (min-width:920px){.animation-borders{padding:var(--spacer-sm)}}.animation-borders p{font-family:var(--font-mono);font-size:10px;font-weight:400;opacity:1;text-transform:lowercase}@media (min-width:920px){.animation-borders p{font-family:var(--font-mono);font-size:11px;font-weight:400;opacity:0;text-transform:lowercase}}@media (min-width:920px) and (min-width:920px){.animation-borders p{font-size:12px}}.animation-borders p.description{display:none!important}@media (min-width:920px){.animation-borders p.description{display:block!important}}.animation-borders p.small{color:var(--theme-contrast)}.animation-borders__border{bottom:0;left:0;position:absolute;right:0;top:0}.animation-borders__border&gt;div{position:absolute}.animation-borders__border&gt;div&gt;div{background-color:var(--theme-fg);height:0;position:absolute;width:0}.animation-borders__border&gt;div:first-child{height:2px;left:0;top:0;width:100%}.animation-borders__border&gt;div:nth-child(2){height:100%;left:0;top:0;width:2px}.animation-borders__border&gt;div:nth-child(3){bottom:0;height:2px;right:0;width:100%}.animation-borders__border&gt;div:nth-child(4){bottom:0;height:100%;right:0;width:2px}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}@media (min-width:920px){.home-projects-list{padding-bottom:0;padding-top:calc(120px + var(--spacer-desktop))}}.home-projects-list #scroller{height:calc(100svh - 120px);overflow:hidden;position:relative;width:100%}@media (min-width:920px){.home-projects-list #scroller{height:calc(100svh - 128px - var(--spacer-desktop) - var(--spacer-desktop)*2)}}.home-projects-list #scroller&gt;div{padding-top:1px}.home-projects-list .layout-grid{padding:var(--spacer-xs) 0;position:relative}.home-projects-list .layout-grid p{padding-right:var(--spacer-xs);-webkit-user-select:none;-moz-user-select:none;user-select:none}.home-projects-list .layout-grid--item{border-top:1px solid var(--white-5)}.home-projects-list .layout-grid--item.active-hover:hover{background-color:var(--orange)}.home-projects-list .layout-grid--item.active-hover:hover svg rect{fill:var(--white)}.home-projects-list .layout-grid--item:not(.active) p&gt;span{display:-webkit-box;overflow:hidden;text-overflow:ellipsis;-webkit-box-orient:vertical;-webkit-line-clamp:1}@media (max-width:919px){.home-projects-list .layout-grid--item:not(.active) p&gt;span{-webkit-line-clamp:1}}.home-projects-list .layout-grid--item p{display:-webkit-box;overflow:hidden;text-overflow:ellipsis;-webkit-box-orient:vertical;-webkit-line-clamp:1;font-family:var(--font-mono);font-size:12px;font-weight:400;text-transform:lowercase}@media (max-width:919px){.home-projects-list .layout-grid--item p{-webkit-line-clamp:1}}@media (min-width:920px){.home-projects-list .layout-grid--item p{font-family:var(--font-mono);font-size:14px;font-weight:400;text-transform:lowercase}}.home-projects-list .layout-grid--item p:first-child{align-items:center;display:flex;justify-content:space-between}@media (max-width:919px){.home-projects-list .layout-grid--item p:first-child{grid-column:span 2}}.home-projects-list .layout-grid--item p:first-child&gt;span{display:-webkit-box;overflow:hidden;padding-right:var(--spacer-xs);position:relative;text-overflow:ellipsis;-webkit-box-orient:vertical;-webkit-line-clamp:1}@media (max-width:919px){.home-projects-list .layout-grid--item p:first-child&gt;span{-webkit-line-clamp:1}}.home-projects-list .layout-grid--item p.details{display:none;padding-right:var(--spacer-sm)}@media (min-width:920px){.home-projects-list .layout-grid--item p.details{align-items:center;display:flex!important;justify-content:space-between}}.home-projects-list .layout-grid--item svg{cursor:pointer}.home-projects-list .layout-grid--item.active svg rect:first-child{display:none}.home-projects-list .layout-grid--details{gap:var(--spacer-xs);height:0;opacity:0;overflow:hidden;position:relative}@media (min-width:920px){.home-projects-list .layout-grid--details{gap:0}}.home-projects-list .layout-grid--details .image-container{aspect-ratio:1;position:relative;width:100%}.home-projects-list .layout-grid--details .image-container img{height:100%;left:0;-o-object-fit:cover;object-fit:cover;position:absolute;top:0;width:100%}@media (min-width:920px){.home-projects-list .layout-grid--details .image-container{display:none}.home-projects-list .layout-grid--details .image-container:first-child{display:block}}.home-projects-list .layout-grid--details img{height:auto;width:100%}.home-projects-list .layout-grid--details p{display:flex;flex-direction:column;gap:calc(var(--spacer-xs)*.5);padding-bottom:20px}.home-projects-list .layout-grid--details p:first-child{grid-column:span 2}@media (min-width:920px){.home-projects-list .layout-grid--details p:first-child{grid-column:span 1}}.home-projects-list .layout-grid--details p .text-orange{color:var(--orange)}.home-projects-list .layout-grid--details p .description{max-width:480px}@media (min-width:920px){.home-projects-list .layout-grid--details p .description{text-wrap:balance}}.home-projects-list .layout-grid--details&gt;div{grid-column:span 2}@media (min-width:920px){.home-projects-list .layout-grid--details&gt;div{grid-column:span 1}}.home-projects-list .layout-grid--top{border-bottom:1px solid var(--white-30);display:none!important}@media (min-width:920px){.home-projects-list .layout-grid--top{display:grid!important}}.home-projects-list .layout-grid--top p{color:var(--theme-contrast);font-family:var(--font-mono);font-size:12px;font-weight:400;text-transform:lowercase}@media (min-width:920px){.home-projects-list .layout-grid--top p{font-family:var(--font-mono);font-size:14px;font-weight:400;text-transform:lowercase}}.home-projects-list .layout-grid--header{border-bottom:1px solid var(--white);border-top:1px solid var(--white)}.home-projects-list .layout-grid--header p{color:var(--theme-contrast);font-family:var(--font-mono);font-size:18px;font-weight:400;grid-column:span 2;text-transform:lowercase}@media (min-width:920px){.home-projects-list .layout-grid--header p{font-family:var(--font-mono);font-size:14px;font-weight:400;grid-column:span 4;text-transform:lowercase}}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.home-brands-awards{align-items:center;display:flex;justify-content:flex-start}@media (min-width:920px){.home-brands-awards .layout-grid{margin-top:auto}}.home-brands-awards .layout-grid&gt;div{border-collapse:collapse;display:grid;flex-direction:column;grid-column:span 2;grid-template-columns:repeat(2,1fr)}@media (min-width:920px){.home-brands-awards .layout-grid&gt;div{display:flex;grid-column:span 1}}.home-brands-awards .layout-grid&gt;div:first-child{padding-right:0}.home-brands-awards .layout-grid&gt;div:first-child p{padding-right:var(--spacer-xs)}@media (min-width:920px){.home-brands-awards .layout-grid&gt;div:first-child p{padding-right:var(--spacer-sm)}.home-brands-awards .layout-grid&gt;div:nth-child(2) .layout-grid-block{padding-left:var(--spacer-sm)}}.home-brands-awards .layout-grid&gt;div .layout-grid-block{justify-content:flex-start}@media (max-width:919px){.home-brands-awards .layout-grid&gt;div .layout-grid-block{padding-bottom:var(--spacer-md)}.home-brands-awards .layout-grid&gt;div .layout-grid-block.full{grid-column:span 2!important}}.home-brands-awards .layout-grid&gt;div .layout-grid-block:first-child{grid-column:span 2}.home-brands-awards .layout-grid&gt;div .layout-grid-block:nth-child(2),.home-brands-awards .layout-grid&gt;div .layout-grid-block:nth-child(3){grid-column:span 1}@media (min-width:920px){.home-brands-awards .layout-grid&gt;div .layout-grid-block:nth-child(2),.home-brands-awards .layout-grid&gt;div .layout-grid-block:nth-child(3){grid-column:span 2}.home-brands-awards .layout-grid-block{min-height:200px}}.home-brands-awards .layout-grid-block:not(:first-of-type){border-top:none}.home-brands-awards .layout-grid-block.gl{padding-bottom:60%!important;position:relative;width:100%}@media (min-width:920px){.home-brands-awards .layout-grid-block.gl{padding-bottom:150%!important;width:calc(200% + var(--spacer-xs))}}.home-brands-awards .layout-grid-block.gl [data-tres-model]{bottom:0;left:0;position:absolute;right:0;top:0}.home-brands-awards .layout-grid-block p:first-child{color:var(--theme-contrast)}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.home-contacts{align-items:center;display:flex;justify-content:flex-start}@media (min-width:920px){.home-contacts{justify-content:center}}.home-contacts .title{padding-right:12px;position:relative}.home-contacts .info{align-items:flex-start;display:flex;flex-direction:column;gap:calc(var(--spacer-xs)*.5);justify-content:flex-start;margin-top:var(--spacer-xs)}.home-contacts .info span:first-child{color:var(--theme-contrast)}.home-contacts .open{opacity:.025;pointer-events:none}.home-contacts .layout-grid{margin-top:0}@media (min-width:920px){.home-contacts .layout-grid{margin-top:auto}}.home-contacts .layout-grid&gt;div{border-collapse:collapse;display:flex;flex-direction:column;grid-column:span 2}@media (min-width:920px){.home-contacts .layout-grid&gt;div{grid-column:span 1}}.home-contacts .layout-grid&gt;div:first-child{padding-right:0}.home-contacts .layout-grid&gt;div:nth-child(2) .layout-grid-block{gap:var(--spacer-xs)}.home-contacts .layout-grid .submit{align-items:center;display:flex;gap:var(--spacer-xs);justify-content:start;width:100%}.home-contacts .layout-grid .submit .form-input{flex-grow:1}.home-contacts .layout-grid-block{border-bottom:none;justify-content:start}.home-contacts .layout-grid-block:not(:first-of-type){border-top:none}.home-contacts .layout-grid-block p:first-child{color:var(--theme-contrast)}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.form-input{align-items:center;border:1px solid var(--white);display:flex;justify-content:start;left:2px;padding:var(--spacer-xs);position:relative;width:calc(100% - 2px)}.form-input *,.form-input input,.form-input textarea{-webkit-user-select:none;-moz-user-select:none;user-select:none}.form-input input,.form-input textarea{-webkit-appearance:none;-moz-appearance:none;appearance:none;background:transparent;border:none;outline:none;width:100%}.form-input input:active,.form-input input:focus,.form-input textarea:active,.form-input textarea:focus{font-size:16px}@media (min-width:920px){.form-input input:active,.form-input input:focus,.form-input textarea:active,.form-input textarea:focus{font-size:12px}}.form-input textarea{height:180px;resize:none}@media (min-width:920px){.form-input textarea{height:110px}}.form-input.select{z-index:10}.form-input.select input{cursor:default;pointer-events:none}.form-input.select.select-open svg{transform:rotate(180deg)}.form-input--options{left:0;position:absolute;top:calc(100% + 2px);width:100%}.form-input--options&gt;div{background-color:var(--black);border:1px solid var(--white-10);padding:var(--spacer-xs) var(--spacer-xs);position:relative}.form-input--options&gt;div:hover{background-color:var(--orange)}.form-input--options&gt;div:not(:first-child){border-top:none}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.btn{border:1px solid var(--theme-contrast);color:var(--theme-contrast);padding:var(--spacer-xs) var(--spacer-sm);position:relative}
+    </style>
+    <style>
+      @keyframes flip-r{50%{opacity:0;transform:translate(100%)}51%{opacity:0;transform:translate(-100%)}}@keyframes flip-l{50%{opacity:0;transform:translate(-100%)}51%{opacity:0;transform:translate(100%)}}@keyframes flip-d{50%{opacity:0;transform:translateY(100%)}51%{opacity:0;transform:translateY(-100%)}}@keyframes flip-u{50%{opacity:0;transform:translateY(-100%)}51%{opacity:0;transform:translateY(100%)}}.site-footer{border-top:1px solid var(--white);margin-bottom:50px;margin-top:auto;position:relative;width:100%;z-index:0}@media (min-width:920px){.site-footer{margin-bottom:0;margin-top:auto}}.site-footer .info .a-div{display:block;width:100%}@media (max-width:919px){.site-footer .logo svg{width:110px!important}}.site-footer .layout-grid .contacts.mobile-only{padding-left:var(--spacer-xs);padding-right:var(--spacer-xs)}.site-footer .layout-grid&gt;div{display:flex;flex-direction:column;height:auto;justify-content:start;padding:var(--spacer-sm) 0}@media (min-width:920px){.site-footer .layout-grid&gt;div{height:260px}}.site-footer .layout-grid&gt;div:first-child{grid-column:span 1}@media (min-width:920px){.site-footer .layout-grid&gt;div:first-child{grid-column:span 2}}.site-footer .layout-grid&gt;div:first-child svg{height:auto;max-width:200px;padding-right:var(--spacer-sm);width:100%}.site-footer .layout-grid&gt;div:first-child&gt;div{padding-left:var(--spacer-xs)}@media (min-width:920px){.site-footer .layout-grid&gt;div:first-child&gt;div{padding-left:var(--spacer-sm)}}.site-footer .layout-grid&gt;div:nth-child(2){grid-column:span 1;padding-left:0;padding-right:0}.site-footer .layout-grid&gt;div:nth-child(2) .social-links{align-items:start;display:grid;gap:var(--spacer-xs);grid-template-columns:repeat(2,1fr)}.site-footer .layout-grid&gt;div:nth-child(2) .social-links&gt;div{display:flex;flex-direction:column;gap:var(--spacer-xs)}.site-footer .layout-grid&gt;div:nth-child(2) .contact-link{align-items:center;display:flex;gap:var(--spacer-xs)}.site-footer .layout-grid&gt;div:nth-child(2)&gt;div{padding-left:var(--spacer-xs)}@media (min-width:920px){.site-footer .layout-grid&gt;div:nth-child(2)&gt;div{padding-left:var(--spacer-sm)}}.site-footer .layout-grid&gt;div:nth-child(3){margin-top:var(--spacer-sm);padding-left:0;padding-right:0;position:relative}@media (min-width:920px){.site-footer .layout-grid&gt;div:nth-child(3){border-top:none;margin-top:0}}.site-footer .layout-grid&gt;div:nth-child(3).contacts{display:flex;flex-direction:column;gap:var(--spacer-xs);justify-content:space-between;margin-top:0;position:relative}@media (min-width:920px){.site-footer .layout-grid&gt;div:nth-child(3).contacts:before{background-color:var(--white);content:&#34;&#34;;height:100%;left:0;position:absolute;top:0;width:1px}.site-footer .layout-grid&gt;div:nth-child(3).contacts .info{display:flex;flex-direction:column;gap:0;margin-top:0}}.site-footer .layout-grid&gt;div:nth-child(3).contacts address{display:flex;flex-direction:column;justify-content:space-between;padding-left:var(--spacer-xs);padding-right:var(--spacer-xs)}@media (min-width:920px){.site-footer .layout-grid&gt;div:nth-child(3).contacts address{padding-left:var(--spacer-sm);padding-right:var(--spacer-sm)}}.site-footer .layout-grid&gt;div:nth-child(3).contacts address&gt;div{position:relative}.site-footer .layout-grid&gt;div:nth-child(3).contacts address&gt;div:first-child{display:contents;height:auto}@media (min-width:920px){.site-footer .layout-grid&gt;div:nth-child(3).contacts address&gt;div:first-child{height:30px}}.site-footer .layout-grid&gt;div:nth-child(3).contacts address&gt;div:nth-child(2){flex-grow:1}.site-footer .layout-grid&gt;div:nth-child(3).contacts&gt;div.p{border-top:none;display:flex;flex-direction:column;gap:var(--spacer-xs);padding-left:var(--spacer-xs);padding-right:var(--spacer-xs);padding-top:var(--spacer-sm)}@media (min-width:920px){.site-footer .layout-grid&gt;div:nth-child(3).contacts&gt;div.p{border-top:1px solid var(--white-15);height:105px;padding-left:var(--spacer-sm);padding-right:var(--spacer-sm)}}.site-footer .layout-grid&gt;div:nth-child(3).contacts&gt;div.p&gt;div:first-child{display:contents;height:auto}@media (min-width:920px){.site-footer .layout-grid&gt;div:nth-child(3).contacts&gt;div.p&gt;div:first-child{height:30px}}.site-footer .layout-grid&gt;div:nth-child(3).contacts&gt;div.p&gt;div:nth-child(2){flex-grow:1}.site-footer .layout-grid&gt;div&gt;div{display:flex;flex-direction:column}.site-footer .layout-grid&gt;div&gt;div:first-child{height:105px}@media (min-width:920px){.site-footer .layout-grid&gt;div&gt;div:first-child{flex-grow:1;height:auto}}.site-footer .layout-grid&gt;div&gt;div:nth-child(2){border-top:1px solid var(--white-15);padding-top:var(--spacer-sm)}@media (min-width:920px){.site-footer .layout-grid&gt;div&gt;div:nth-child(2){height:105px}}
+    </style>
+    <link rel="stylesheet" href="/_nuxt/Btn.FMn1cfHS.css" crossorigin="" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CFMzv0e9.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BY8pFgP5.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/bCzTmjA5.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/zAUP4rcA.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DwmwAYva.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DH0SbfiX.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BlcKjbyG.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BjBWNPBi.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/B69l9WEI.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DzwVR_7Y.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BWeDvmcG.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/Cy_pM4PG.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/xEG-Frq_.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/Ch4LFOVX.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DlAUqK2U.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/Chw-9Yyq.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/C_JIZt3Q.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/C1SsycWr.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BvQ-16Ht.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CwICVeQR.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DS7XVw-4.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BjZYz_L_.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/4hAdUs0b.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DXVvj6op.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DXx4VQD5.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BflcaeIV.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DrCdk6OU.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BVYXA9dp.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DgyiqVZS.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/erI7K3ti.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/Bb70_VgD.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DuSxJShY.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DYK7TneY.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DoMUzHqP.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/wY-tBGRV.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CWnA75bJ.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DYKuE6lO.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BJZpTXGB.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/C3yrUFc2.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/Cb1kVhla.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DHmF_AG5.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/a1fbop9P.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/J0kJuZPU.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/Bf1pE-Ld.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/YcWQlNgQ.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BCxxSfUQ.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/l-1ksDSn.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DixyuqGO.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CiXEAi_R.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/B4I_koPm.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CtJg_vGZ.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CgAuSQ3W.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/-kPsYybb.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/SgcGj5DB.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CO2P314i.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CEKaffV1.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BWrXM5d2.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DEKRqI0u.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BLoOMQB7.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/CWdr87pR.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DVHG244h.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BLTRtJc8.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BvoLNG9r.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/BrG00lXx.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/nxBHrHfD.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/mpD4bH4q.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DLLfniC7.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/WIO-XuYn.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/5xL3xD5Y.js" />
+    <link rel="modulepreload" as="script" crossorigin="" href="/_nuxt/DmNRRe2e.js" />
+    <link rel="icon" href="/images/favicon-white.ico" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="description" content="machinezero is a multidisciplinary studio, blending craftsmanship and technology to create tailor-made hardware and immersive installations, redefining in-store brand experiences." />
+    <meta property="og:description" content="machinezero is a multidisciplinary studio, blending craftsmanship and technology to create tailor-made hardware and immersive installations, redefining in-store brand experiences." />
+    <meta property="og:image" content="https://www.machinezero.it/share/share.webp" />
+    <meta property="og:title" content="MACHINEZERO" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:description" content="machinezero is a multidisciplinary studio, blending craftsmanship and technology to create tailor-made hardware and immersive installations, redefining in-store brand experiences." />
+    <meta name="twitter:title" content="MACHINEZERO" />
+    <meta name="twitter:image" content="https://www.machinezero.it/share/share.webp" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <script type="module" src="/_nuxt/CFMzv0e9.js" crossorigin="">
+    </script>
+    <link rel="preload" as="fetch" fetchpriority="low" crossorigin="anonymous" href="/_nuxt/builds/meta/9b4eb1a4-48db-466d-90e1-e8ec5fe84352.json" />
+  </head>
+  <body>
+    <div id="__nuxt">
+      <!--[-->
+      <div>
+        <!--[-->
+        <!--[-->
+        <header class="site-header opacity-0 desktop-only">
+          <nav class="site-header__container layout-grid">
+            <div class="container">
+              <a role="link" aria-label="Homepage" class="logo">              <svg width="245" height="113" viewBox="0 0 245 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M219.487 90.7485H232.312C234.575 90.7485 236.419 92.6677 236.419 95.0474V108.47C236.419 110.839 234.585 112.769 232.312 112.769H219.487C217.224 112.769 215.38 110.85 215.38 108.47V95.0474C215.39 92.6787 217.224 90.7485 219.487 90.7485Z" fill="#F8F6F6">
+                </path>
+                <path d="M228.069 79.748H240.894C243.157 79.748 245.001 81.6672 245.001 84.047V97.47C245.001 99.8388 243.167 101.769 240.894 101.769H228.069C225.806 101.769 223.962 99.8497 223.962 97.47V84.047C223.972 81.6672 225.806 79.748 228.069 79.748Z" fill="#F8F6F6">
+                </path>
+                <path d="M110.626 4.49541L76.2391 53.4062C74.5837 55.7531 73.6616 58.9443 73.6616 62.2672V100.244C73.6616 107.164 77.6012 112.779 82.4733 112.779H109.191C111.517 112.779 113.738 111.474 115.394 109.149L149.75 60.7648C151.416 58.407 152.359 55.2048 152.359 51.86V13.3674C152.359 6.44745 148.419 0.832588 143.547 0.832588H116.85C114.514 0.821621 112.271 2.1376 110.626 4.49541Z" fill="#F8F6F6">
+                </path>
+                <path d="M37.4508 3.92582L2.27773 53.9552C0.873736 55.9402 0.0878906 58.6489 0.0878906 61.4563V102.142C0.0878906 107.998 3.43023 112.758 7.54791 112.758H36.1516C38.1319 112.758 40.0284 111.639 41.4324 109.654L76.6055 59.6249C78.0095 57.64 78.7953 54.9312 78.7953 52.1238V11.4379C78.7953 5.58177 75.453 0.822266 71.3353 0.822266H42.7316C40.7513 0.822266 38.8548 1.94087 37.4508 3.92582Z" fill="#F8F6F6">
+                </path>
+                <path d="M65.3533 75.6357C65.3533 75.6357 69.1253 69.9769 71.0846 69.9769C73.0439 69.9769 73.662 72.1703 73.662 75.6357C73.662 79.1011 76.8787 76.184 77.0568 75.0435C77.2349 73.903 76.7843 64.1428 76.3443 63.0022C75.9042 61.8617 68.9471 58.6924 68.9471 58.6924L61.9062 67.4327" fill="#F8F6F6">
+                </path>
+                <path d="M78.7972 37.9105C78.7972 37.9105 79.6039 48.6248 84.5493 41.5952C89.4947 34.5657 89.0861 43.8543 89.0861 43.9859C89.0861 44.1175 84.6332 51.8489 84.6332 51.8489C84.6332 51.8489 77.6761 55.2705 77.0998 55.4021C76.5235 55.5337 73.3174 45.0058 73.2336 44.5014C73.1393 43.9969 77.0998 31.4512 77.0998 31.4512L78.7972 37.9105Z" fill="#F8F6F6">
+                </path>
+                <path d="M184.17 4.49541L149.783 53.4062C148.128 55.7531 147.206 58.9443 147.206 62.2672V100.244C147.206 107.164 151.145 112.779 156.017 112.779H182.735C185.061 112.779 187.282 111.474 188.938 109.149L223.294 60.7648C224.96 58.407 225.903 55.2048 225.903 51.86V13.3673C225.903 6.44745 221.963 0.832588 217.091 0.832588H190.394C188.068 0.821621 185.826 2.1376 184.17 4.49541Z" fill="#F8F6F6">
+                </path>
+                <path d="M138.896 75.6357C138.896 75.6357 142.668 69.9769 144.627 69.9769C146.586 69.9769 147.205 72.1703 147.205 75.6357C147.205 79.1011 150.421 76.184 150.599 75.0435C150.777 73.903 150.327 64.1428 149.887 63.0022C149.447 61.8617 142.49 58.6924 142.49 58.6924L135.449 67.4327" fill="#F8F6F6">
+                </path>
+                <path d="M152.338 37.9105C152.338 37.9105 153.144 48.6248 158.09 41.5952C163.035 34.5657 162.627 43.8543 162.627 43.9859C162.627 44.1175 158.174 51.8489 158.174 51.8489C158.174 51.8489 151.217 55.2705 150.64 55.4021C150.064 55.5337 146.858 45.0058 146.774 44.5014C146.68 43.9969 150.64 31.4512 150.64 31.4512L152.338 37.9105Z" fill="#F8F6F6">
+                </path>
+                <path d="M216.448 92.1717L224.977 81.2271L243.983 100.276L235.276 111.429" fill="#F8F6F6">
+                </path>
+              </svg>
+              <span class="small desktop-only">              MACHINEZERO
+              <br />
+              INTERACTIVE
+              <br />
+              STUDIO
+</span>
+</a>
+              <!---->
+              <!---->
+            </div>
+            <div role="link" class="blok">
+              <div class="a-div" role="button" aria-label="About">
+                <span class="p-s">                <span class="scramble-text">                <!--[-->
+                about
+                <!--]-->
+</span>
+</span>
+              </div>
+            </div>
+            <div role="link" class="blok">
+              <div class="a-div" role="button" aria-label="Projects">
+                <span class="p-s">                <span class="scramble-text">                <!--[-->
+                projects
+                <!--]-->
+</span>
+</span>
+              </div>
+            </div>
+            <div role="link" class="blok">
+              <div class="a-div" role="button" aria-label="Contacts">
+                <span class="p-s">                <span class="scramble-text">                <!--[-->
+                contacts
+                <!--]-->
+</span>
+</span>
+              </div>
+            </div>
+          </nav>
+        </header>
+        <nav class="mobile-nav mobile-only">
+          <div class="background">
+          </div>
+          <div class="mobile-nav__container">
+            <div class="logo">
+              <a role="link" aria-label="Homepage" class="logo">              <svg width="245" height="113" viewBox="0 0 245 113" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M219.487 90.7485H232.312C234.575 90.7485 236.419 92.6677 236.419 95.0474V108.47C236.419 110.839 234.585 112.769 232.312 112.769H219.487C217.224 112.769 215.38 110.85 215.38 108.47V95.0474C215.39 92.6787 217.224 90.7485 219.487 90.7485Z" fill="#F8F6F6">
+                </path>
+                <path d="M228.069 79.748H240.894C243.157 79.748 245.001 81.6672 245.001 84.047V97.47C245.001 99.8388 243.167 101.769 240.894 101.769H228.069C225.806 101.769 223.962 99.8497 223.962 97.47V84.047C223.972 81.6672 225.806 79.748 228.069 79.748Z" fill="#F8F6F6">
+                </path>
+                <path d="M110.626 4.49541L76.2391 53.4062C74.5837 55.7531 73.6616 58.9443 73.6616 62.2672V100.244C73.6616 107.164 77.6012 112.779 82.4733 112.779H109.191C111.517 112.779 113.738 111.474 115.394 109.149L149.75 60.7648C151.416 58.407 152.359 55.2048 152.359 51.86V13.3674C152.359 6.44745 148.419 0.832588 143.547 0.832588H116.85C114.514 0.821621 112.271 2.1376 110.626 4.49541Z" fill="#F8F6F6">
+                </path>
+                <path d="M37.4508 3.92582L2.27773 53.9552C0.873736 55.9402 0.0878906 58.6489 0.0878906 61.4563V102.142C0.0878906 107.998 3.43023 112.758 7.54791 112.758H36.1516C38.1319 112.758 40.0284 111.639 41.4324 109.654L76.6055 59.6249C78.0095 57.64 78.7953 54.9312 78.7953 52.1238V11.4379C78.7953 5.58177 75.453 0.822266 71.3353 0.822266H42.7316C40.7513 0.822266 38.8548 1.94087 37.4508 3.92582Z" fill="#F8F6F6">
+                </path>
+                <path d="M65.3533 75.6357C65.3533 75.6357 69.1253 69.9769 71.0846 69.9769C73.0439 69.9769 73.662 72.1703 73.662 75.6357C73.662 79.1011 76.8787 76.184 77.0568 75.0435C77.2349 73.903 76.7843 64.1428 76.3443 63.0022C75.9042 61.8617 68.9471 58.6924 68.9471 58.6924L61.9062 67.4327" fill="#F8F6F6">
+                </path>
+                <path d="M78.7972 37.9105C78.7972 37.9105 79.6039 48.6248 84.5493 41.5952C89.4947 34.5657 89.0861 43.8543 89.0861 43.9859C89.0861 44.1175 84.6332 51.8489 84.6332 51.8489C84.6332 51.8489 77.6761 55.2705 77.0998 55.4021C76.5235 55.5337 73.3174 45.0058 73.2336 44.5014C73.1393 43.9969 77.0998 31.4512 77.0998 31.4512L78.7972 37.9105Z" fill="#F8F6F6">
+                </path>
+                <path d="M184.17 4.49541L149.783 53.4062C148.128 55.7531 147.206 58.9443 147.206 62.2672V100.244C147.206 107.164 151.145 112.779 156.017 112.779H182.735C185.061 112.779 187.282 111.474 188.938 109.149L223.294 60.7648C224.96 58.407 225.903 55.2048 225.903 51.86V13.3673C225.903 6.44745 221.963 0.832588 217.091 0.832588H190.394C188.068 0.821621 185.826 2.1376 184.17 4.49541Z" fill="#F8F6F6">
+                </path>
+                <path d="M138.896 75.6357C138.896 75.6357 142.668 69.9769 144.627 69.9769C146.586 69.9769 147.205 72.1703 147.205 75.6357C147.205 79.1011 150.421 76.184 150.599 75.0435C150.777 73.903 150.327 64.1428 149.887 63.0022C149.447 61.8617 142.49 58.6924 142.49 58.6924L135.449 67.4327" fill="#F8F6F6">
+                </path>
+                <path d="M152.338 37.9105C152.338 37.9105 153.144 48.6248 158.09 41.5952C163.035 34.5657 162.627 43.8543 162.627 43.9859C162.627 44.1175 158.174 51.8489 158.174 51.8489C158.174 51.8489 151.217 55.2705 150.64 55.4021C150.064 55.5337 146.858 45.0058 146.774 44.5014C146.68 43.9969 150.64 31.4512 150.64 31.4512L152.338 37.9105Z" fill="#F8F6F6">
+                </path>
+                <path d="M216.448 92.1717L224.977 81.2271L243.983 100.276L235.276 111.429" fill="#F8F6F6">
+                </path>
+              </svg>
+</a>
+            </div>
+            <div class="menu">
+              <div class="a-div">
+                <span class="p-s">                <span class="scramble-text">                <!--[-->
+                about
+                <!--]-->
+</span>
+</span>
+              </div>
+            </div>
+            <div class="menu">
+              <div class="a-div">
+                <span class="p-s">                <span class="scramble-text">                <!--[-->
+                projects
+                <!--]-->
+</span>
+</span>
+              </div>
+            </div>
+            <div class="menu">
+              <div class="a-div">
+                <span class="p-s">                <span class="scramble-text">                <!--[-->
+                contacts
+                <!--]-->
+</span>
+</span>
+              </div>
+            </div>
+          </div>
+        </nav>
+        <span></span>
+        <!--]-->
+        <div class="container default index theme-dark">
+          <!--[-->
+          <main data-tres-container="" class="home">
+            <!--[-->
+            <div class="point-helper">
+              <div>
+              </div>
+              <div>
+              </div>
+              <div>
+              </div>
+              <svg>
+                <line class="line-1" x1="0" y1="0" x2="0" y2="0" stroke-width="1">
+                </line>
+                <g transform="translate(-2,-2)">
+                  <rect x="0" y="0" width="4" height="4" fill="#EB5B21">
+                  </rect>
+                </g>
+                <line class="line-2" x1="0" y1="0" x2="0" y2="0" stroke-width="1">
+                </line>
+                <g transform="translate(-2,-2)">
+                  <rect x="0" y="0" width="4" height="4" fill="#EB5B21">
+                  </rect>
+                </g>
+                <!---->
+                <!---->
+              </svg>
+            </div>
+            <section id="about" class="home-intro layout-section" data-tres-logo="">
+              <small id="scroll-down">              Scroll Down
+</small>
+              <div class="blok counter" style="display:none;">
+                <!---->
+              </div>
+              <div class="blok title">
+                <!---->
+                <!---->
+              </div>
+              <div class="blok description" data-index="-1">
+                <!---->
+              </div>
+            </section>
+            <!--]-->
+            <section id="projects" class="home-grid layout-section">
+              <div class="layout-grid">
+                <div>
+                  <div class="layout-grid-block desktop-only">
+                  </div>
+                  <div class="layout-grid-block">
+                    <div data-tres-model="" data-tres-options="{&#34;id&#34;: &#34;model-max-mara&#34;, &#34;src&#34;: &#34;/models/max-mara.glb&#34;, &#34;scale&#34;: 0.9}">
+                      <a href="/projects/weekend-max-mara" class="animation-borders" aria-label="Weekend Max Mara">                      <p>
+                        <span class="scramble-text">                        <!--[-->
+                        Weekend Max Mara
+                        <!--]-->
+</span>
+                      </p>
+                      <p class="small description">
+                        <span class="scramble-text">                        <!--[-->
+                        interactive installation
+                        <!--]-->
+</span>
+                      </p>
+                      <div class="animation-borders__border">
+                        <!--[-->
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <!--]-->
+                      </div>
+</a>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <div class="layout-grid-block">
+                    <div data-tres-model="" data-tres-options="{&#34;id&#34;: &#34;model-bulgari&#34;, &#34;src&#34;: &#34;/models/bulgari.glb&#34;, &#34;scale&#34;: 0.8}">
+                      <a href="/projects/bulgari-mixology" class="animation-borders" aria-label="Bulgari / Mixology">                      <p>
+                        <span class="scramble-text">                        <!--[-->
+                        Bulgari / Mixology
+                        <!--]-->
+</span>
+                      </p>
+                      <p class="small description">
+                        <span class="scramble-text">                        <!--[-->
+                        interactive installation
+                        <!--]-->
+</span>
+                      </p>
+                      <div class="animation-borders__border">
+                        <!--[-->
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <!--]-->
+                      </div>
+</a>
+                    </div>
+                  </div>
+                  <div class="layout-grid-block desktop-only">
+                  </div>
+                  <div class="layout-grid-block desktop-only">
+                  </div>
+                </div>
+                <div>
+                  <div class="layout-grid-block desktop-only">
+                  </div>
+                  <div class="layout-grid-block">
+                    <div data-tres-model="" data-tres-options="{&#34;id&#34;: &#34;model-mani&#34;, &#34;src&#34;: &#34;/models/mani.glb&#34;, &#34;scale&#34;: 0.8}">
+                      <a href="/projects/mani-festival" class="animation-borders" aria-label="mani festival">                      <p>
+                        <span class="scramble-text">                        <!--[-->
+                        mani festival
+                        <!--]-->
+</span>
+                      </p>
+                      <p class="small description">
+                        <span class="scramble-text">                        <!--[-->
+                        art installation
+                        <!--]-->
+</span>
+                      </p>
+                      <div class="animation-borders__border">
+                        <!--[-->
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <!--]-->
+                      </div>
+</a>
+                    </div>
+                  </div>
+                  <div class="layout-grid-block">
+                  </div>
+                </div>
+                <div>
+                  <div class="layout-grid-block">
+                    <div data-tres-model="" data-tres-options="{&#34;id&#34;: &#34;model-pacha&#34;, &#34;src&#34;: &#34;/models/pacha.glb&#34;, &#34;scale&#34;: 0.8}">
+                      <a href="/projects/pacha" class="animation-borders" aria-label="musicon / pacha corridor">                      <p>
+                        <span class="scramble-text">                        <!--[-->
+                        musicon / pacha corridor
+                        <!--]-->
+</span>
+                      </p>
+                      <p class="small description">
+                        <span class="scramble-text">                        <!--[-->
+                        interactive installation
+                        <!--]-->
+</span>
+                      </p>
+                      <div class="animation-borders__border">
+                        <!--[-->
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <div>
+                          <div>
+                          </div>
+                        </div>
+                        <!--]-->
+                      </div>
+</a>
+                    </div>
+                  </div>
+                  <div class="layout-grid-block desktop-only">
+                  </div>
+                  <div class="layout-grid-block desktop-only">
+                  </div>
+                </div>
+              </div>
+            </section>
+            <section id="projects-list" class="home-projects-list layout-section">
+              <div class="layout-grid layout-grid--top desktop-only">
+                <p>
+                  <span>                  client
+</span>
+                </p>
+                <p>
+                  <span>                  project
+</span>
+                </p>
+                <p>
+                  <span>                  category
+</span>
+                </p>
+                <p>
+                  <span>                  location
+</span>
+                </p>
+              </div>
+              <div id="scroller">
+                <div>
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--header">
+                    <p>
+                      <span>                      2025 ///
+</span>
+                    </p>
+                  </div>
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      okgiorgio
+</span>
+                      <span class="mobile-only">                      / Custom Midi Consolle
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Custom Midi Consolle
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Custom Midi Controller and DMX Lights
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Worldwide
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item">
+                    <p>
+                      <span>                      <span>                      Machinezero
+</span>
+                      <span class="mobile-only">                      / Innovative Startup Status Achieved
+</span>
+</span>
+                      <!---->
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Innovative Startup Status Achieved
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Innovative Startup Status Achieved
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Verona
+</span>
+                      <!---->
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--header">
+                    <p>
+                      <span>                      2024 ///
+</span>
+                    </p>
+                  </div>
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item">
+                    <p>
+                      <span>                      <span>                      Videocittà
+</span>
+                      <span class="mobile-only">                      / Videocittà NEXT Awards
+</span>
+</span>
+                      <!---->
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Videocittà NEXT Awards
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Videocittà NEXT Awards
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Rome
+</span>
+                      <!---->
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Bvlgari
+</span>
+                      <span class="mobile-only">                      / Holiday Season Experience
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Holiday Season Experience
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Interactive Retail Installation
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Worldwide
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Pinguini Tattici Nucleari
+</span>
+                      <span class="mobile-only">                      / Hello World LP
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Hello World LP
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      EEG installation
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Milan
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Galleria Nazionale Arte Moderna
+</span>
+                      <span class="mobile-only">                      / Futurismo
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Futurismo
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Interactive tunnel
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Rome
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Holy Fest
+</span>
+                      <span class="mobile-only">                      / R00T:s Project
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      R00T:s Project
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Interactive LED structures
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Verona
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Bvlgari
+</span>
+                      <span class="mobile-only">                      / Chiming Watches - Watches and Wonders
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Chiming Watches - Watches and Wonders
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Interactive Retail Installation
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Geneva
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Mani Fest
+</span>
+                      <span class="mobile-only">                      / R00T:s Project
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      R00T:s Project
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Interactive LED structures
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Verona
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Pacha
+</span>
+                      <span class="mobile-only">                      / Super Privè Corridor
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Super Privè Corridor
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Interactive Ledwall tunnel
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Ibiza
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Masseto
+</span>
+                      <span class="mobile-only">                      / Custom Remote Control
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Custom Remote Control
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Custom Remote Control
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Livorno
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Weekend Max Mara
+</span>
+                      <span class="mobile-only">                      / Pasticcino Bag Japan
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Pasticcino Bag Japan
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Custom Vending Machine + Interactive LED forest
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Milan
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Bvlgari
+</span>
+                      <span class="mobile-only">                      / Mixology Consolle
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Mixology Consolle
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Custom Perfume Consolle
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Worldwide
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item">
+                    <p>
+                      <span>                      <span>                      machinezero
+</span>
+                      <span class="mobile-only">                      / Company established
+</span>
+</span>
+                      <!---->
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Company established
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Company established
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Verona
+</span>
+                      <!---->
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Bob Sinclar
+</span>
+                      <span class="mobile-only">                      / Fieracavalli closing event
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Fieracavalli closing event
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      AI Content &amp; live VJ
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Verona
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--header">
+                    <p>
+                      <span>                      2023 ///
+</span>
+                    </p>
+                  </div>
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Angelini
+</span>
+                      <span class="mobile-only">                      / Ilae Epilepsy Congress 2023
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Ilae Epilepsy Congress 2023
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      EEG installation
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Dublin
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Weekend Max Mara
+</span>
+                      <span class="mobile-only">                      / Pasticcino Bag France
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Pasticcino Bag France
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Interactive Product
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Worldwide
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--[-->
+                  <!--[-->
+                  <div class="layout-grid layout-grid--item active-hover">
+                    <p>
+                      <span>                      <span>                      Accurat
+</span>
+                      <span class="mobile-only">                      / Physical Data Viz
+</span>
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg" class="mobile-only">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Physical Data Viz
+</span>
+                    </p>
+                    <p class="desktop-only">
+                      <span>                      Physical Data Viz
+</span>
+                    </p>
+                    <p class="details desktop-only">
+                      <span>                      Milan
+</span>
+                      <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="9.4707" y="16.3135" width="1" height="16" transform="rotate(-180 9.4707 16.3135)" fill="#EB5B21">
+                        </rect>
+                        <rect x="0.970703" y="8.81348" width="1" height="16" transform="rotate(-90 0.970703 8.81348)" fill="#EB5B21">
+                        </rect>
+                      </svg>
+                    </p>
+                  </div>
+                  <!---->
+                  <!--]-->
+                  <!--]-->
+                  <!--]-->
+                </div>
+              </div>
+            </section>
+            <section id="brands" class="home-brands-awards layout-section">
+              <div class="layout-grid">
+                <div>
+                  <div class="layout-grid-block">
+                    <p>
+                      brands
+                    </p>
+                    <p>
+                      Bulgari, Brunello Cucinelli, Weekend Max Mara, Liu-Jo, Pinguini Tattici Nucleari, Sony Music, La Galleria Nazionale (GNAM), Pacha, Music On, Bob Sinclar, okgiorgio, Angelini Pharma, Brita, Pinko, Masseto
+                    </p>
+                  </div>
+                  <div class="layout-grid-block full">
+                    <p>
+                      Creative Partners
+                    </p>
+                    <p>
+                      Mirror, Accurat, Protesa
+                    </p>
+                  </div>
+                  <div class="layout-grid-block full mobile-only">
+                    <p>
+                      awards
+                    </p>
+                    <p>
+                      Videocittà NEXT Category 2024
+                    </p>
+                  </div>
+                </div>
+                <div class="desktop-only">
+                  <div class="layout-grid-block">
+                    <p>
+                      awards
+                    </p>
+                    <p>
+                      Videocittà NEXT Category 2024
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div class="layout-grid-block gl">
+                    <div data-tres-model="" data-tres-options="{&#34;name&#34;: &#34;cube&#34;,&#34;src&#34;: &#34;/models/cube.glb&#34;, &#34;scale&#34;: 6}">
+                    </div>
+                  </div>
+                </div>
+                <div>
+                </div>
+              </div>
+              <div class="layout-grid desktop-only">
+              </div>
+            </section>
+            <section id="contacts" class="home-contacts layout-section">
+              <div class="layout-grid">
+                <div>
+                  <div class="layout-grid-block">
+                    <p>
+                      drop us a line
+                    </p>
+                    <p class="title">
+                      Hey, let’s have a chat! Select the reason for your interest and hit us.
+                    </p>
+                  </div>
+                </div>
+                <div>
+                  <div class="layout-grid-block">
+                    <div class="form-input small select">
+                      <input value="collaborate with us" type="select" placeholder="collaborate with us" disabled="" />
+                      <svg width="8" height="14" viewBox="0 0 8 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M4.39591 0L3.39591 0L3.39591 11.8353L0.707107 9.14645L0 9.85355L3.53553 13.3891L3.88909 13.7426L4.24264 13.3891L7.77817 9.85355L7.07107 9.14645L4.39591 11.8216L4.39591 0Z" fill="#F8F6F6">
+                        </path>
+                      </svg>
+                      <div style="display:none;" class="form-input--options">
+                        <!--[-->
+                        <div>
+                          <span>                          offer a project
+</span>
+                        </div>
+                        <div>
+                          <span>                          media and press inquiries
+</span>
+                        </div>
+                        <div>
+                          <span>                          custom installations requests
+</span>
+                        </div>
+                        <div>
+                          <span>                          general questions
+</span>
+                        </div>
+                        <!--]-->
+                      </div>
+                    </div>
+                    <div class="form-input small textarea textarea">
+                      <textarea placeholder="Write your message here... (max 240 characters)">
+                      </textarea>
+                      <!---->
+                      <!---->
+                    </div>
+                    <div class="submit">
+                      <div class="form-input small text">
+                        <input value="" type="text" placeholder="insert your email" />
+                        <!---->
+                        <!---->
+                      </div>
+                      <button role="button" aria-label="send" title="send" class="btn small">
+                        <!--[-->
+                        go
+                        <!--]-->
+                      </button>
+                    </div>
+                    <p class="info p-s">
+                      <!--[-->
+                      <span></span>
+                      <span></span>
+                      <!--]-->
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <footer class="site-footer desktop-only">
+                <div class="site-footer__container layout-grid">
+                  <div>
+                    <div class="logo">
+                      <svg width="236" height="104" viewBox="0 0 236 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M39.01 52.04H1V103.08H39.01V52.04Z" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M77.0197 43.61V1H39.0098" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M77.0195 52.0403V43.6104" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M39.0098 1V52.04H77.0197" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M1 52.04L39.01 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M39.0098 52.04L77.0197 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M70.7402 60.47L77.0202 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M39.0098 103.081L70.7397 60.4707" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M108.75 52.04H70.7402V103.08H108.75V52.04Z" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M146.77 45.12V1H108.76" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M146.77 52.0401V45.1201" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M108.76 1V52.04H146.77" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M70.7402 52.04L108.76 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M108.76 52.04L146.77 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M141.619 58.96L146.769 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M108.76 103.08L141.62 58.96" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M179.629 52.04H141.619V103.08H179.629V52.04Z" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M225.489 84.0703H206.479V103.08H225.489V84.0703Z" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M234.989 91.9807V72.9707H215.979" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M215.979 72.9707V91.9807H234.989" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M217.639 52.04V1H179.629" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M179.629 1V52.04H217.639" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M141.619 52.04L179.629 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M179.629 52.04L217.639 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M179.629 103.08L217.639 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M206.479 84.0707L215.979 72.9707" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M225.49 84.0707L234.99 72.9707" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M225.49 103.08L234.99 91.9805" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M206.479 103.08L215.979 91.9805" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M141.619 103.08L179.629 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M70.7402 103.08L108.76 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M1 103.08L39.01 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="small">
+                        /every/thing/interactive
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="social-links">
+                      <div>
+                        <a class="a-div has-link isAbsolute small" href="https://www.instagram.com/machinezero.interactive/" target="_blank">                        <!--[-->
+                        instagram
+                        <!--]-->
+</a>
+                        <a class="a-div has-link isAbsolute small" href="https://www.linkedin.com/company/machinezero/" target="_blank">                        <!--[-->
+                        linkedin
+                        <!--]-->
+</a>
+                      </div>
+                      <div>
+                        <a class="a-div has-link isAbsolute small" href="https://www.youtube.com/@machinezero.interactive" target="_blank">                        <!--[-->
+                        youtube
+                        <!--]-->
+</a>
+                        <a class="a-div has-link isAbsolute small" href="https://vimeo.com/machinezero" target="_blank">                        <!--[-->
+                        vimeo
+                        <!--]-->
+</a>
+                      </div>
+                    </div>
+                    <div>
+                      <p class="small desktop-only">
+                        get in touch
+                      </p>
+                      <div class="contact-link">
+                        <a class="a-div has-link isAbsolute small" href="mailto:hello@machinezero.it" target="_blank">                        <!--[-->
+                        <span>                        hello@machinezero.it
+</span>
+                        <!--]-->
+</a>
+                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g transform="translate(0, 5)">
+                            <path d="M8.63636 8.27273H5V1H12.2727V4.63636" stroke="#F8F6F6">
+                            </path>
+                          </g>
+                          <g transform="translate(0, 5)">
+                            <rect x="8.22705" y="4.22729" width="6.27273" height="6.27273" stroke="#F8F6F6" shape-rendering="crispEdges">
+                            </rect>
+                          </g>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="contacts">
+                    <address class="small">
+                      <a class="a-div has-link isAbsolute" href="https://www.google.com/maps/place/MACHINEZERO/@45.439269,11.0033835,17z/data=!3m1!4b1!4m6!3m5!1s0xda9fd801c89bc3f:0x7529dbd5c564eeca!8m2!3d45.4392653!4d11.0059638!16s%2Fg%2F11y9xj80_4?entry=tts&amp;g_ep=EgoyMDI1MDQxNC4xIPu8ASoASAFQAw%3D%3D&amp;skid=16c793db-4f9d-422c-98df-2e7e9da25719" target="_blank">                      <!--[-->
+                      <span class="uppercase">                      MACHINEZERO
+</span>
+                      <br />
+                      <span>                      Via XX Settembre, 16
+</span>
+                      <br />
+                      <span>                      37129 Verona - Italy
+</span>
+                      <!--]-->
+</a>
+                      <div>
+                        <span>                        VAT it05041060236
+</span>
+                      </div>
+                    </address>
+                    <div class="p small desktop-only">
+                      <div>
+                        <span>                        Made with ♥ by
+</span>
+                      </div>
+                      <div>
+                        <span class="info">                        <a class="a-div has-link isAbsolute" href="https://andreagiuffrida.lostsignal.co/" target="_blank">                        <!--[-->
+                        andrea giuffrida
+                        <!--]-->
+</a>
+                        <a class="a-div has-link isAbsolute" href="https://elisabettabalconi.com/" target="_blank">                        <!--[-->
+                        elisabetta balconi
+                        <!--]-->
+</a>
+                        <a class="a-div" href="#">                        <!--[-->
+                        davide valentino
+                        <!--]-->
+</a>
+</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="contacts mobile-only">
+                    <div class="p small">
+                      <div>
+                        <span>                        Made with ♥ by
+</span>
+                      </div>
+                      <div>
+                        <span class="info">                        <a class="a-div has-link isAbsolute" href="https://andreagiuffrida.lostsignal.co/" target="_blank">                        <!--[-->
+                        andrea giuffrida
+                        <!--]-->
+</a>
+                        <a class="a-div has-link isAbsolute" href="https://elisabettabalconi.com/" target="_blank">                        <!--[-->
+                        elisabetta balconi
+                        <!--]-->
+</a>
+                        <a class="a-div" href="#">                        <!--[-->
+                        davide valentino
+                        <!--]-->
+</a>
+</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+            </section>
+            <section id="footer" class="home-footer layout-section mobile-only">
+              <footer class="site-footer">
+                <div class="site-footer__container layout-grid">
+                  <div>
+                    <div class="logo">
+                      <svg width="236" height="104" viewBox="0 0 236 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M39.01 52.04H1V103.08H39.01V52.04Z" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M77.0197 43.61V1H39.0098" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M77.0195 52.0403V43.6104" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M39.0098 1V52.04H77.0197" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M1 52.04L39.01 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M39.0098 52.04L77.0197 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M70.7402 60.47L77.0202 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M39.0098 103.081L70.7397 60.4707" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M108.75 52.04H70.7402V103.08H108.75V52.04Z" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M146.77 45.12V1H108.76" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M146.77 52.0401V45.1201" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M108.76 1V52.04H146.77" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M70.7402 52.04L108.76 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M108.76 52.04L146.77 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M141.619 58.96L146.769 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M108.76 103.08L141.62 58.96" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M179.629 52.04H141.619V103.08H179.629V52.04Z" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M225.489 84.0703H206.479V103.08H225.489V84.0703Z" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M234.989 91.9807V72.9707H215.979" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M215.979 72.9707V91.9807H234.989" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M217.639 52.04V1H179.629" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M179.629 1V52.04H217.639" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M141.619 52.04L179.629 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M179.629 52.04L217.639 1" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M179.629 103.08L217.639 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M206.479 84.0707L215.979 72.9707" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M225.49 84.0707L234.99 72.9707" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M225.49 103.08L234.99 91.9805" stroke="white" stroke-width="0.5669" stroke-miterlimit="10">
+                        </path>
+                        <path d="M206.479 103.08L215.979 91.9805" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M141.619 103.08L179.629 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M70.7402 103.08L108.76 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                        <path d="M1 103.08L39.01 52.04" stroke="white" stroke-width="0.5669" stroke-miterlimit="10" stroke-dasharray="2.27 2.27">
+                        </path>
+                      </svg>
+                    </div>
+                    <div>
+                      <p class="small">
+                        /every/thing/interactive
+                      </p>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="social-links">
+                      <div>
+                        <a class="a-div has-link isAbsolute small" href="https://www.instagram.com/machinezero.interactive/" target="_blank">                        <!--[-->
+                        instagram
+                        <!--]-->
+</a>
+                        <a class="a-div has-link isAbsolute small" href="https://www.linkedin.com/company/machinezero/" target="_blank">                        <!--[-->
+                        linkedin
+                        <!--]-->
+</a>
+                      </div>
+                      <div>
+                        <a class="a-div has-link isAbsolute small" href="https://www.youtube.com/@machinezero.interactive" target="_blank">                        <!--[-->
+                        youtube
+                        <!--]-->
+</a>
+                        <a class="a-div has-link isAbsolute small" href="https://vimeo.com/machinezero" target="_blank">                        <!--[-->
+                        vimeo
+                        <!--]-->
+</a>
+                      </div>
+                    </div>
+                    <div>
+                      <p class="small desktop-only">
+                        get in touch
+                      </p>
+                      <div class="contact-link">
+                        <a class="a-div has-link isAbsolute small" href="mailto:hello@machinezero.it" target="_blank">                        <!--[-->
+                        <span>                        hello@machinezero.it
+</span>
+                        <!--]-->
+</a>
+                        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <g transform="translate(0, 5)">
+                            <path d="M8.63636 8.27273H5V1H12.2727V4.63636" stroke="#F8F6F6">
+                            </path>
+                          </g>
+                          <g transform="translate(0, 5)">
+                            <rect x="8.22705" y="4.22729" width="6.27273" height="6.27273" stroke="#F8F6F6" shape-rendering="crispEdges">
+                            </rect>
+                          </g>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="contacts">
+                    <address class="small">
+                      <a class="a-div has-link isAbsolute" href="https://www.google.com/maps/place/MACHINEZERO/@45.439269,11.0033835,17z/data=!3m1!4b1!4m6!3m5!1s0xda9fd801c89bc3f:0x7529dbd5c564eeca!8m2!3d45.4392653!4d11.0059638!16s%2Fg%2F11y9xj80_4?entry=tts&amp;g_ep=EgoyMDI1MDQxNC4xIPu8ASoASAFQAw%3D%3D&amp;skid=16c793db-4f9d-422c-98df-2e7e9da25719" target="_blank">                      <!--[-->
+                      <span class="uppercase">                      MACHINEZERO
+</span>
+                      <br />
+                      <span>                      Via XX Settembre, 16
+</span>
+                      <br />
+                      <span>                      37129 Verona - Italy
+</span>
+                      <!--]-->
+</a>
+                      <div>
+                        <span>                        VAT it05041060236
+</span>
+                      </div>
+                    </address>
+                    <div class="p small desktop-only">
+                      <div>
+                        <span>                        Made with ♥ by
+</span>
+                      </div>
+                      <div>
+                        <span class="info">                        <a class="a-div has-link isAbsolute" href="https://andreagiuffrida.lostsignal.co/" target="_blank">                        <!--[-->
+                        andrea giuffrida
+                        <!--]-->
+</a>
+                        <a class="a-div has-link isAbsolute" href="https://elisabettabalconi.com/" target="_blank">                        <!--[-->
+                        elisabetta balconi
+                        <!--]-->
+</a>
+                        <a class="a-div" href="#">                        <!--[-->
+                        davide valentino
+                        <!--]-->
+</a>
+</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="contacts mobile-only">
+                    <div class="p small">
+                      <div>
+                        <span>                        Made with ♥ by
+</span>
+                      </div>
+                      <div>
+                        <span class="info">                        <a class="a-div has-link isAbsolute" href="https://andreagiuffrida.lostsignal.co/" target="_blank">                        <!--[-->
+                        andrea giuffrida
+                        <!--]-->
+</a>
+                        <a class="a-div has-link isAbsolute" href="https://elisabettabalconi.com/" target="_blank">                        <!--[-->
+                        elisabetta balconi
+                        <!--]-->
+</a>
+                        <a class="a-div" href="#">                        <!--[-->
+                        davide valentino
+                        <!--]-->
+</a>
+</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </footer>
+            </section>
+          </main>
+          <!--]-->
+        </div>
+        <span></span>
+        <!--]-->
+      </div>
+      <!--]-->
+    </div>
+    <div id="teleports">
+    </div>
+    <script type="application/json" data-nuxt-data="nuxt-app" data-ssr="true" id="__NUXT_DATA__">
+      [[&#34;ShallowReactive&#34;,1],{&#34;data&#34;:2,&#34;state&#34;:259,&#34;once&#34;:273,&#34;_errors&#34;:274,&#34;serverRendered&#34;:263,&#34;path&#34;:29},[&#34;ShallowReactive&#34;,3],{&#34;j9WApIYhTz&#34;:4},[5,7,27,33,35,43,59,73,90,106,117,132,149,164,180,193,197,214,216,230,242],{&#34;header&#34;:6},&#34;2025 ///&#34;,{&#34;client&#34;:8,&#34;project&#34;:9,&#34;description&#34;:10,&#34;details&#34;:11,&#34;info&#34;:12,&#34;category&#34;:19,&#34;agency&#34;:20,&#34;month&#34;:21,&#34;year&#34;:22,&#34;location&#34;:23,&#34;thumb&#34;:24,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;okgiorgio&#34;,&#34;Custom Midi Consolle&#34;,&#34;Custom Midi Controller and DMX Lights&#34;,&#34;Interaction: We developed a custom MIDI controller for live performances that incorporates numerous inputs and eliminates the need for a nearby computer screen. This design allows the artist to stay informed without distractions while enjoying full and flexible control over their live set. Additionally, we integrated lighting output control to enhance the performance. Hardware: The console features a Leap Motion sensor, 30 analog inputs, 2 displays, 2 encoders, 12 momentary buttons, a Kaosspad, and 3-channel DMX output.&#34;,[13,16],{&#34;title&#34;:14,&#34;content&#34;:15},&#34;Interaction&#34;,&#34;We developed a custom MIDI controller for live performances that incorporates numerous inputs and eliminates the need for a nearby computer screen. This design allows the artist to stay informed without distractions while enjoying full and flexible control over their live set. Additionally, we integrated lighting output control to enhance the performance. &#34;,{&#34;title&#34;:17,&#34;content&#34;:18},&#34;Hardware&#34;,&#34;The console features a Leap Motion sensor, 30 analog inputs, 2 displays, 2 encoders, 12 momentary buttons, a Kaosspad, and 3-channel DMX output.&#34;,&#34;interactive Events &amp; Performance&#34;,&#34;Machinezero&#34;,&#34;january&#34;,&#34;2025&#34;,&#34;Worldwide&#34;,[25],&#34;okgiorgio01.webp&#34;,&#34;&#34;,{&#34;client&#34;:20,&#34;project&#34;:28,&#34;description&#34;:28,&#34;details&#34;:29,&#34;category&#34;:30,&#34;agency&#34;:20,&#34;month&#34;:21,&#34;year&#34;:22,&#34;location&#34;:31,&#34;thumb&#34;:32,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Innovative Startup Status Achieved&#34;,&#34;/&#34;,&#34;brand milestone&#34;,&#34;Verona&#34;,[],{&#34;header&#34;:34},&#34;2024 ///&#34;,{&#34;client&#34;:36,&#34;project&#34;:37,&#34;description&#34;:37,&#34;details&#34;:29,&#34;category&#34;:38,&#34;agency&#34;:20,&#34;month&#34;:39,&#34;year&#34;:40,&#34;location&#34;:41,&#34;thumb&#34;:42,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Videocittà&#34;,&#34;Videocittà NEXT Awards&#34;,&#34;awards&#34;,&#34;december&#34;,&#34;2024&#34;,&#34;Rome&#34;,[],{&#34;client&#34;:44,&#34;project&#34;:45,&#34;description&#34;:46,&#34;details&#34;:47,&#34;info&#34;:48,&#34;category&#34;:54,&#34;agency&#34;:55,&#34;month&#34;:39,&#34;year&#34;:40,&#34;location&#34;:23,&#34;thumb&#34;:56,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Bvlgari&#34;,&#34;Holiday Season Experience&#34;,&#34;Interactive Retail Installation&#34;,&#34;Interaction: Visitors at select Bvlgari boutiques worldwide use simple touchscreen gestures to navigate a phygital installation that blends in-store and online experiences, unlocking personalized digital gifts and creating lasting festive memories.Software: Custom WebGL code. Hardware: iPad Pro 13\&#34; and a photo printer&#34;,[49,51],{&#34;title&#34;:14,&#34;content&#34;:50},&#34;Visitors at select Bvlgari boutiques worldwide use simple touchscreen gestures to navigate a phygital installation that blends in-store and online experiences, unlocking personalized digital gifts and creating lasting festive memories.&#34;,{&#34;title&#34;:52,&#34;content&#34;:53},&#34;Software&#34;,&#34;Custom WebGL code.&#34;,&#34;interactive Retail&#34;,&#34;Mirror&#34;,[57,58],&#34;bulgari01.webp&#34;,&#34;bulgari02.webp&#34;,{&#34;client&#34;:60,&#34;project&#34;:61,&#34;description&#34;:62,&#34;details&#34;:63,&#34;info&#34;:64,&#34;category&#34;:19,&#34;agency&#34;:69,&#34;month&#34;:70,&#34;year&#34;:40,&#34;location&#34;:71,&#34;thumb&#34;:72,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Pinguini Tattici Nucleari&#34;,&#34;Hello World LP&#34;,&#34;EEG installation&#34;,&#34;Interaction: The user wears an EEG brain sensor that tracks brain frequencies in real time. These signals dynamically alter the album cover&#39;s color scheme, while head rotations allow the user to navigate a rotating globe. Hardware: 6 EEG brain sensors, a Bluetooth 5.2 receiver, 5-meter USB 3.0 extension cables, HDMI cables, a custom macro keypad, 3 43\&#34; 4K signage screens, and 6 Sony Bluetooth headphones. Software: The system runs on 3 computers utilizing a custom Python script alongside TouchDesigner.&#34;,[65,67],{&#34;title&#34;:14,&#34;content&#34;:66},&#34;The user wears an EEG brain sensor that tracks brain frequencies in real time. These signals dynamically alter the album cover&#39;s color scheme, while head rotations allow the user to navigate a rotating globe.&#34;,{&#34;title&#34;:17,&#34;content&#34;:68},&#34;6 EEG brain sensors, a Bluetooth 5.2 receiver, 5-meter USB 3.0 extension cables, HDMI cables, a custom macro keypad, 3 43\&#34; 4K signage screens, and 6 Sony Bluetooth headphones.&#34;,&#34;Sony Music&#34;,&#34;november&#34;,&#34;Milan&#34;,[],{&#34;client&#34;:74,&#34;project&#34;:75,&#34;description&#34;:76,&#34;details&#34;:77,&#34;info&#34;:78,&#34;category&#34;:85,&#34;agency&#34;:86,&#34;month&#34;:70,&#34;year&#34;:40,&#34;location&#34;:41,&#34;thumb&#34;:87,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Galleria Nazionale Arte Moderna&#34;,&#34;Futurismo&#34;,&#34;Interactive tunnel&#34;,&#34;Interaction: Within the tunnel, visitors trigger a dynamic sensory experience through their movement, which is captured by depth cameras. As they progress along the path, lights and sound evolve in real time. Boccioni + Marinetti + Russolo contents. Hardware: 70 LED tubes (each with 116 pixels), 9 slave controllers, 2 masters controller, custom 3D-printed components, 2 depth cameras, 6 channel dolby atmos audio system. Software: TouchDesigner.&#34;,[79,81,83],{&#34;title&#34;:14,&#34;content&#34;:80},&#34;Within the tunnel, visitors trigger a dynamic sensory experience through their movement, which is captured by depth cameras. As they progress along the path, lights and sound evolve in real time. Boccioni + Marinetti + Russolo contents.&#34;,{&#34;title&#34;:17,&#34;content&#34;:82},&#34;70 LED tubes (each with 116 pixels), 9 slave controllers, 2 masters controller, custom 3D-printed components, 2 depth cameras, 6 channel dolby atmos audio system.&#34;,{&#34;title&#34;:52,&#34;content&#34;:84},&#34;TouchDesigner.&#34;,&#34;interactive Art&#34;,&#34;Magister Art&#34;,[88,89],&#34;gnam01.webp&#34;,&#34;gnam02.webp&#34;,{&#34;client&#34;:91,&#34;project&#34;:92,&#34;description&#34;:93,&#34;details&#34;:94,&#34;info&#34;:95,&#34;category&#34;:19,&#34;agency&#34;:102,&#34;month&#34;:103,&#34;year&#34;:40,&#34;location&#34;:31,&#34;thumb&#34;:104,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Holy Fest&#34;,&#34;R00T:s Project&#34;,&#34;Interactive LED structures&#34;,&#34;Interaction: User voice inputs are detected via a microphone. These vocal impulses activate a 12-meter vertical chandelier, with six creative algorithms generating dynamically varied effects. Hardware: 20 poles (each with 116 pixels), 4 slave controllers, 1 master controller, and 82 extensions, complemented by paracord and custom 3D-printed components. microphone, 4 RJ45 Ethernet cables (20 meters each), 82 three-core extensions, and a computer. Software: ArtNet/DMX protocol, with visual control managed through Resolume Arena.&#34;,[96,98,100],{&#34;title&#34;:14,&#34;content&#34;:97},&#34;User voice inputs are detected via a microphone. These vocal impulses activate a 12-meter vertical chandelier, with six creative algorithms generating dynamically varied effects.&#34;,{&#34;title&#34;:17,&#34;content&#34;:99},&#34;20 poles (each with 116 pixels), 4 slave controllers, 1 master controller, and 82 extensions, complemented by paracord and custom 3D-printed components. microphone, 4 RJ45 Ethernet cables (20 meters each), 82 three-core extensions, and a computer.&#34;,{&#34;title&#34;:52,&#34;content&#34;:101},&#34;ArtNet/DMX protocol, with visual control managed through Resolume Arena.&#34;,&#34;One Bridge To&#34;,&#34;october&#34;,[105],&#34;holy01.webp&#34;,{&#34;client&#34;:44,&#34;project&#34;:107,&#34;description&#34;:46,&#34;details&#34;:108,&#34;info&#34;:109,&#34;category&#34;:54,&#34;agency&#34;:55,&#34;month&#34;:103,&#34;year&#34;:40,&#34;location&#34;:115,&#34;thumb&#34;:116,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Chiming Watches - Watches and Wonders&#34;,&#34;Interaction: Users engage with the installation via a touchscreen, playing two simple yet captivating games that first reveal the notes and then the rhythm of a melody created specifically for Bulgari Octo. Hardware: The system features two displays: a 15″ Espresso Display multitouch screen (FullHD, 60fps) and a 65″ vertical monitor, computer and soundbar. Software: TouchDesigner&#34;,[110,112,114],{&#34;title&#34;:14,&#34;content&#34;:111},&#34;Users engage with the installation via a touchscreen, playing two simple yet captivating games that first reveal the notes and then the rhythm of a melody created specifically for Bulgari Octo.&#34;,{&#34;title&#34;:17,&#34;content&#34;:113},&#34;The system features two displays: a 15″ Espresso Display multitouch screen (FullHD, 60fps) and a 65″ vertical monitor, computer and soundbar.&#34;,{&#34;title&#34;:52,&#34;content&#34;:84},&#34;Geneva&#34;,[],{&#34;client&#34;:118,&#34;project&#34;:92,&#34;description&#34;:93,&#34;details&#34;:119,&#34;info&#34;:120,&#34;category&#34;:19,&#34;agency&#34;:102,&#34;month&#34;:127,&#34;year&#34;:40,&#34;location&#34;:31,&#34;thumb&#34;:128,&#34;video1&#34;:130,&#34;video2&#34;:131},&#34;Mani Fest&#34;,&#34;Interaction: Visitors enter a 50-meter circular space formed by 64 tilted poles. As they move their hands within the center, every gesture triggers dynamic shifts in light and sound, transforming the installation into a living, luminous organism. Hardware: 64 LED poles (116 pixels each) are managed by a master-slave controller system with 64 extensions, integrated with a Leap Motion sensor, router, PoE network switch, and essential equipment (stands, Dante speakers, and necessary cabling). The system runs on a 2100W, 220V power supply. Software: The experience is driven by the ArtNet/DMX protocol, with Resolume Arena and TouchDesigner orchestrating the real-time interplay of visuals and audio.&#34;,[121,123,125],{&#34;title&#34;:14,&#34;content&#34;:122},&#34;Visitors enter a 50-meter circular space formed by 64 tilted poles. As they move their hands within the center, every gesture triggers dynamic shifts in light and sound, transforming the installation into a living, luminous organism.&#34;,{&#34;title&#34;:17,&#34;content&#34;:124},&#34;64 LED poles (116 pixels each) are managed by a master-slave controller system with 64 extensions, integrated with a Leap Motion sensor, router, PoE network switch, and essential equipment (stands, Dante speakers, and necessary cabling). The system runs on a 2100W, 220V power supply.&#34;,{&#34;title&#34;:52,&#34;content&#34;:126},&#34;The experience is driven by the ArtNet/DMX protocol, with Resolume Arena and TouchDesigner orchestrating the real-time interplay of visuals and audio.&#34;,&#34;september&#34;,[129],&#34;mani01.webp&#34;,&#34;https://youtu.be/ddaHLWXxUtQ&#34;,&#34;https://youtu.be/UIUhXbbYbAU&#34;,{&#34;client&#34;:133,&#34;project&#34;:134,&#34;description&#34;:135,&#34;details&#34;:136,&#34;info&#34;:137,&#34;category&#34;:19,&#34;agency&#34;:143,&#34;month&#34;:144,&#34;year&#34;:40,&#34;location&#34;:145,&#34;thumb&#34;:146,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Pacha&#34;,&#34;Super Privè Corridor&#34;,&#34;Interactive Ledwall tunnel&#34;,&#34;Interaction: We designed a dynamic LED wall tunnel for Pacha Ibiza and Music On that creates an immersive, interactive experience. The seamless corridor reacts to visitors&#39; movements, transforming into a real-time evolving canvas of visuals. A custom control room interface allows the team to easily modify the creative visuals on the fly. Hardware: LED wall with 0.9 pitch, 15360x2160 resolution, powered by a Novastar H9 processor, Custom-built computer (128GB RAM, AMD Threadripper, RTX A6000 Ada 48GB, 10Gb Ethernet), 10 Luxonis OAK-D Pro W cameras, Network switch with 8-port PoE 1Gb and 2-port 10Gb SFP+. Software: TouchDesigner&#34;,[138,140,142],{&#34;title&#34;:14,&#34;content&#34;:139},&#34;We designed a dynamic LED wall tunnel for Pacha Ibiza and Music On that creates an immersive, interactive experience. The seamless corridor reacts to visitors&#39; movements, transforming into a real-time evolving canvas of visuals. A custom control room interface allows the team to easily modify the creative visuals on the fly&#34;,{&#34;title&#34;:17,&#34;content&#34;:141},&#34;LED wall with 0.9 pitch, 15360x2160 resolution, powered by a Novastar H9 processor, Custom-built computer (128GB RAM, AMD Threadripper, RTX A6000 Ada 48GB, 10Gb Ethernet), 10 Luxonis OAK-D Pro W cameras, Network switch with 8-port PoE 1Gb and 2-port 10Gb SFP+.&#34;,{&#34;title&#34;:52,&#34;content&#34;:84},&#34;Gola Studio&#34;,&#34;july&#34;,&#34;Ibiza&#34;,[147,148],&#34;pacha07.webp&#34;,&#34;pacha06.webp&#34;,{&#34;client&#34;:150,&#34;project&#34;:151,&#34;description&#34;:151,&#34;details&#34;:152,&#34;info&#34;:153,&#34;category&#34;:54,&#34;agency&#34;:55,&#34;month&#34;:161,&#34;year&#34;:40,&#34;location&#34;:162,&#34;thumb&#34;:163,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Masseto&#34;,&#34;Custom Remote Control&#34;,&#34;Interaction: Using this custom remote, users can choose which chapter of the story to explore and pause the narrative at any moment. The narrative details and chapters are projected onto a monolith that replicates the winery&#39;s vineyards. Hardware: PCB with 11 inputs, 2.4GHz transmitter/receiver, LiPo charging system with USB-C connector and LED status, powered by a 250mAh LiPo battery. Design: Encased in a PLA-CF 3D printed case with 0.8mm laser-cut steel and carbon laser-engraved text.&#34;,[154,156,158],{&#34;title&#34;:14,&#34;content&#34;:155},&#34;Using this custom remote, users can choose which chapter of the story to explore and pause the narrative at any moment. The narrative details and chapters are projected onto a monolith that replicates the winery&#39;s vineyards.&#34;,{&#34;title&#34;:17,&#34;content&#34;:157},&#34;PCB with 11 inputs, 2.4GHz transmitter/receiver, LiPo charging system with USB-C connector and LED status, powered by a 250mAh LiPo battery. Design: Encased in a PLA-CF 3D printed case with 0.8mm laser-cut steel and carbon laser-engraved text.&#34;,{&#34;title&#34;:159,&#34;content&#34;:160},&#34;Design&#34;,&#34;Encased in a PLA-CF 3D printed case with 0.8mm laser-cut steel and carbon laser-engraved text.&#34;,&#34;june&#34;,&#34;Livorno&#34;,[],{&#34;client&#34;:165,&#34;project&#34;:166,&#34;description&#34;:167,&#34;details&#34;:168,&#34;info&#34;:169,&#34;category&#34;:54,&#34;agency&#34;:55,&#34;month&#34;:176,&#34;year&#34;:40,&#34;location&#34;:71,&#34;thumb&#34;:177,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Weekend Max Mara&#34;,&#34;Pasticcino Bag Japan&#34;,&#34;Custom Vending Machine + Interactive LED forest&#34;,&#34;Interaction: Weekend Max Mara&#39;s Pasticcino Bag Treasures of Japan campaign features two interactive installations—a bamboo forest with dynamic lighting and a Japanese-inspired vending machine—that blend cultural storytelling with innovative, phygital experiences at Palazzo Bovara in Milan. Hardware: The vending machine integrates a wooden structure with a bag chute, 4 custom conveyor belts, a coin reader, a user sensor, speakers, dual 27\&#34; monitors, a computer, and two Arduino Nano 33 boards. The LED installation comprises 80 poles (116 pixels each), managed by 10 slave and 2 master controllers, alongside custom PoE depth sensors, a router, and a PoE network switch. Software: system&#39;s control and coordination using ArtNet/DMX protocol with Resolume Arena&#34;,[170,172,174],{&#34;title&#34;:14,&#34;content&#34;:171},&#34;Weekend Max Mara&#39;s Pasticcino Bag Treasures of Japan campaign features two interactive installations—a bamboo forest with dynamic lighting and a Japanese-inspired vending machine—that blend cultural storytelling with innovative, phygital experiences at Palazzo Bovara in Milan.&#34;,{&#34;title&#34;:17,&#34;content&#34;:173},&#34;The vending machine integrates a wooden structure with a bag chute, 4 custom conveyor belts, a coin reader, a user sensor, speakers, dual 27\&#34; monitors, a computer, and two Arduino Nano 33 boards. The LED installation comprises 80 poles (116 pixels each), managed by 10 slave and 2 master controllers, alongside custom PoE depth sensors, a router, and a PoE network switch.&#34;,{&#34;title&#34;:52,&#34;content&#34;:175},&#34;system&#39;s control and coordination using ArtNet/DMX protocol with Resolume Arena&#34;,&#34;may&#34;,[178,179],&#34;wwm01.webp&#34;,&#34;wwm02.webp&#34;,{&#34;client&#34;:44,&#34;project&#34;:181,&#34;description&#34;:182,&#34;details&#34;:183,&#34;info&#34;:184,&#34;category&#34;:85,&#34;agency&#34;:55,&#34;month&#34;:191,&#34;year&#34;:40,&#34;location&#34;:23,&#34;thumb&#34;:192,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Mixology Consolle&#34;,&#34;Custom Perfume Consolle&#34;,&#34;Interaction:A global AI experience where users mix scents and visuals on a console to create personalized audio-visual art. Hardware: A modular system featuring custom 3D-printed spacers, a PCB with over 200 RGBW LEDs, and an Arduino Uno R4 Minima for connectivity. Design: Custom 3D-printed controls paired with laser-cut plexiglass and illuminated acetate rings for a refined finish.&#34;,[185,187,189],{&#34;title&#34;:14,&#34;content&#34;:186},&#34;A global AI experience where users mix scents and visuals on a console to create personalized audio-visual art.&#34;,{&#34;title&#34;:17,&#34;content&#34;:188},&#34;A modular system featuring custom 3D-printed spacers, a PCB with over 200 RGBW LEDs, and an Arduino Uno R4 Minima for connectivity.&#34;,{&#34;title&#34;:159,&#34;content&#34;:190},&#34;Custom 3D-printed controls paired with laser-cut plexiglass and illuminated acetate rings for a refined finish.&#34;,&#34;april&#34;,[],{&#34;client&#34;:194,&#34;project&#34;:195,&#34;description&#34;:195,&#34;details&#34;:29,&#34;category&#34;:30,&#34;agency&#34;:20,&#34;month&#34;:191,&#34;year&#34;:40,&#34;location&#34;:31,&#34;thumb&#34;:196,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;machinezero&#34;,&#34;Company established&#34;,[],{&#34;client&#34;:198,&#34;project&#34;:199,&#34;description&#34;:200,&#34;details&#34;:201,&#34;info&#34;:202,&#34;category&#34;:19,&#34;agency&#34;:211,&#34;month&#34;:70,&#34;year&#34;:212,&#34;location&#34;:31,&#34;thumb&#34;:213,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Bob Sinclar&#34;,&#34;Fieracavalli closing event&#34;,&#34;AI Content &amp; live VJ&#34;,&#34;Interaction: During the closing event featuring guest DJ Bob Sinclar, we performed a live VJ set for the international Fieracavalli fair, showcasing animated visual content we created using AI tools. Equipment: 1 computer with resolume arena and touchdesigner, 1 computer with milkdrop and experimental software, Akai Fire, NI F1. Visuals: streamdiffusion, comfyui, touchdesigner, resolume arena, milkdrop. Protocols: NDI, ArtNet.&#34;,[203,205,208],{&#34;title&#34;:14,&#34;content&#34;:204},&#34;During the closing event featuring guest DJ Bob Sinclar, we performed a live VJ set for the international Fieracavalli fair, showcasing animated visual content we created using AI tools.&#34;,{&#34;title&#34;:206,&#34;content&#34;:207},&#34;Equipment&#34;,&#34;1 computer with resolume arena and touchdesigner, 1 computer with milkdrop and experimental software, Akai Fire, NI F1.&#34;,{&#34;title&#34;:209,&#34;content&#34;:210},&#34;Visuals&#34;,&#34;streamdiffusion, comfyui, touchdesigner, resolume arena, milkdrop.&#34;,&#34;Fieracavalli&#34;,&#34;2023&#34;,[],{&#34;header&#34;:215},&#34;2023 ///&#34;,{&#34;client&#34;:217,&#34;project&#34;:218,&#34;description&#34;:62,&#34;details&#34;:219,&#34;info&#34;:220,&#34;category&#34;:19,&#34;agency&#34;:227,&#34;month&#34;:127,&#34;year&#34;:212,&#34;location&#34;:228,&#34;thumb&#34;:229,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Angelini&#34;,&#34;Ilae Epilepsy Congress 2023&#34;,&#34;Interaction: The user wore an EEG brain sensor that measured their brain frequencies in real time. A live data visualization transformed these frequencies into corresponding colors and shapes, offering an immediate, visual representation of the user&#39;s cerebral activity. Hardware: EEG brain sensors, bluetooth 5.2 receiver, 10mt usb 3.0 optical extension cable, custom macro keypad, 960x960px ledwall, portable 14\&#34; usb-c screen. Equipment: 1 computer with the chromium interactive installation, 1 computer with resolume arena.&#34;,[221,223,225],{&#34;title&#34;:14,&#34;content&#34;:222},&#34;The user wore an EEG brain sensor that measured their brain frequencies in real time. A live data visualization transformed these frequencies into corresponding colors and shapes, offering an immediate, visual representation of the user&#39;s cerebral activity.&#34;,{&#34;title&#34;:17,&#34;content&#34;:224},&#34;EEG brain sensors, bluetooth 5.2 receiver, 10mt usb 3.0 optical extension cable, custom macro keypad, 960x960px ledwall, portable 14\&#34; usb-c screen.&#34;,{&#34;title&#34;:206,&#34;content&#34;:226},&#34;1 computer with the chromium interactive installation, 1 computer with resolume arena.&#34;,&#34;Accurat/Ogilvy&#34;,&#34;Dublin&#34;,[],{&#34;client&#34;:165,&#34;project&#34;:231,&#34;description&#34;:232,&#34;details&#34;:233,&#34;info&#34;:234,&#34;category&#34;:54,&#34;agency&#34;:20,&#34;month&#34;:191,&#34;year&#34;:212,&#34;location&#34;:23,&#34;thumb&#34;:241,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Pasticcino Bag France&#34;,&#34;Interactive Product&#34;,&#34;Interaction: Using the bag as a joystick, the user navigates a 3D space. Each piece of content adds a unique color or texture to the virtual bag. In the end, they receive a custom digital bag reflecting their experience. Hardware: Hardware: 7\&#34; touchscreen, mini pc, custom bluetooth gyroscope and accelerometer, wireless charging system, 2000mAh battery. Software: Unity 3D, Python.&#34;,[235,237,239],{&#34;title&#34;:14,&#34;content&#34;:236},&#34;Using the bag as a joystick, the user navigates a 3D space. Each piece of content adds a unique color or texture to the virtual bag. In the end, they receive a custom digital bag reflecting their experience.&#34;,{&#34;title&#34;:17,&#34;content&#34;:238},&#34;7\&#34; touchscreen, mini pc, custom bluetooth gyroscope and accelerometer, wireless charging system, 2000mAh battery.&#34;,{&#34;title&#34;:52,&#34;content&#34;:240},&#34;Unity 3D, Python.&#34;,[],{&#34;client&#34;:243,&#34;project&#34;:244,&#34;description&#34;:244,&#34;details&#34;:245,&#34;info&#34;:246,&#34;category&#34;:85,&#34;agency&#34;:20,&#34;month&#34;:253,&#34;year&#34;:212,&#34;location&#34;:71,&#34;thumb&#34;:254,&#34;video1&#34;:26,&#34;video2&#34;:26},&#34;Accurat&#34;,&#34;Physical Data Viz&#34;,&#34;Interaction: One real-time dataset is processed by three distinct hardware modules, each designed to reveal its components and functions through frames dedicated to power, processing, and output. Data is shown through blue cables, while electricity is highlighted in orange. Hardware: computers, lcd screen, crt screens, thermal printer, custom pcb, meanwell psu, thermoforming machine, tpu 0.5mm clear plastic. Software: DietPi, custom shell scripts, chromium. Design: Iron frames, plexiglass, water based paint (custom colors), 2.5 nuts and screws.&#34;,[247,249,251],{&#34;title&#34;:14,&#34;content&#34;:248},&#34;One real-time dataset is processed by three distinct hardware modules, each designed to reveal its components and functions through frames dedicated to power, processing, and output. Data is shown through blue cables, while electricity is highlighted in orange.&#34;,{&#34;title&#34;:17,&#34;content&#34;:250},&#34;computers, lcd screen, crt screens, thermal printer, custom pcb, meanwell psu, thermoforming machine, tpu 0.5mm clear plastic.&#34;,{&#34;title&#34;:52,&#34;content&#34;:252},&#34;DietPi, custom shell scripts, chromium.&#34;,&#34;march&#34;,[255,256,257,258],&#34;accurat01.webp&#34;,&#34;accurat02.webp&#34;,&#34;accurat03.webp&#34;,&#34;accurat04.webp&#34;,[&#34;Reactive&#34;,260],{&#34;$sloadingStorage&#34;:261,&#34;$stheme&#34;:262,&#34;$slockScroll&#34;:263,&#34;$sanchorList&#34;:264,&#34;$scurrentAnchor&#34;:265,&#34;$scurrentIndex&#34;:266,&#34;$smobileMenuOpen&#34;:267,&#34;$spageLoading&#34;:263,&#34;$ssite-config&#34;:268},{},&#34;dark&#34;,true,[],null,0,false,{&#34;_priority&#34;:269,&#34;env&#34;:271,&#34;name&#34;:194,&#34;url&#34;:272},{&#34;name&#34;:266,&#34;env&#34;:270,&#34;url&#34;:266},-15,&#34;production&#34;,&#34;https://machinezero.it&#34;,[&#34;Set&#34;],[&#34;ShallowReactive&#34;,275],{&#34;j9WApIYhTz&#34;:265}]
+    </script>
+    <script>
+      window.__NUXT__={};window.__NUXT__.config={public:{NODE_BUILD:&#34;&#34;,gtag:{enabled:true,initMode:&#34;auto&#34;,id:&#34;G-NYLQL9ZF7E&#34;,initCommands:[],config:{},tags:[],loadingStrategy:&#34;defer&#34;,url:&#34;https://www.googletagmanager.com/gtag/js&#34;}},app:{baseURL:&#34;/&#34;,buildId:&#34;9b4eb1a4-48db-466d-90e1-e8ec5fe84352&#34;,buildAssetsDir:&#34;/_nuxt/&#34;,cdnURL:&#34;&#34;}}
+    </script>
+  </body>
+</html>
