@@ -136,7 +136,7 @@ function Pill({ label, zone, driftX, driftY, onComplete }: {
           : 'none',
       }}
     >
-      <span style={{ opacity: 0.4, marginRight: 6, color: COLORS.accentInfrared }}>●</span>
+      <span style={{ opacity: 0.4, marginRight: 6, color: isHovered ? COLORS.bgAbyss : COLORS.accentInfrared }}>●</span>
       {displayText}
     </motion.div>
   );

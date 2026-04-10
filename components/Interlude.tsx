@@ -12,11 +12,11 @@ const LINES = [
     { text: "an [ANTHROPOLOGIST] and [DESIGNER]", delay: 0.08 },
     { text: "based in Buenos Aires.", delay: 0.16 },
     { text: "", delay: 0 },
-    { text: "I'm interested in design as a", delay: 0.24 },
-    { text: "situated practice shaped by [LISTENING],", delay: 0.30 },
-    { text: "[DIALOGUE], and the many ways people", delay: 0.36 },
-    { text: "inhabit, interpret, and re-signify", delay: 0.42 },
-    { text: "their [WORLDS].", delay: 0.48 },
+    { text: "Most design talks at people.", delay: 0.24 },
+    { text: "I'm interested in the kind that comes from [LISTENING],", delay: 0.32 },
+    { text: "that moves through [DIALOGUE],", delay: 0.40 },
+    { text: "and holds its shape inside the [WORLDS]", delay: 0.48 },
+    { text: "it was made for.", delay: 0.54 },
 ];
 
 const FILLED_PILLS = new Set(['ANTHROPOLOGIST', 'DESIGNER']);

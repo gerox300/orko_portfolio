@@ -22,6 +22,15 @@ import type { CardProject } from '@/components/works/FloatingCard';
 
 const PROJECTS_BASE = [
   {
+    key: 'sama',
+    client: 'SAMA',
+    fullName: 'SAMA',
+    type: 'VISUAL IDENTITY',
+    sector: 'CREATIVE COLLECTIVE',
+    year: '2025',
+    copy: 'Visual identity and branding for SAMA, a multidisciplinary creative collective. Born from a deeply personal story, the identity balances raw emotion with a modern, "cool" aesthetic designed for the live performance and art scene.',
+  },
+  {
     key: 'cantus_avi',
     client: 'CANTUS AVI',
     fullName: 'CANTUS AVI',
@@ -34,8 +43,8 @@ const PROJECTS_BASE = [
     key: 'frihcun',
     client: 'FRIHCUN',
     fullName: 'FRIHCUN',
-    type: 'SYSTEM ARCHITECTURE',
-    sector: 'INDUSTRIAL',
+    type: 'Sophisticated Trade Interface',
+    sector: 'Global Industrial Trade',
     year: '2025',
     copy: 'System architecture and industrial visual identity. Engineering-led design for high-performance environments.',
   },
@@ -43,8 +52,8 @@ const PROJECTS_BASE = [
     key: 'acau',
     client: 'ACAU',
     fullName: 'ACAU',
-    type: 'INDUSTRIAL VISIBILITY',
-    sector: 'MINING & AGRO',
+    type: 'High-Status Industrial Presence',
+    sector: 'Industrial Lighting',
     year: '2025',
     copy: 'High-Contrast Industrial UI. Designed for the harsh environments of mining and agro-tech.',
   },
@@ -52,8 +61,8 @@ const PROJECTS_BASE = [
     key: 'legendary',
     client: 'LEGENDARY NAMES',
     fullName: 'LEGENDARY NAMES',
-    type: 'ART CONCEPT & VISUAL ID',
-    sector: 'DOMAINS',
+    type: 'Mystical Branding & Platform',
+    sector: 'Domain Assets & Naming',
     year: '2025',
     copy: 'The Infinite Possibility Engine. A generative visual system where typography mutates to represent endless naming assets.',
   },
@@ -79,8 +88,8 @@ const PROJECTS_BASE = [
     key: 'xii',
     client: 'XII',
     fullName: 'XII IMMIGRATIONS & INCORPORATIONS',
-    type: 'BRANDING & INTELLIGENT UI',
-    sector: 'LEGAL TECH',
+    type: 'Strategic Landing & AI',
+    sector: 'Immigrations & Incorporations',
     year: '2025',
     copy: 'Biometric Lead Qualification. Integrated AI-driven logic to score applicant profiles in real-time.',
   },
@@ -88,8 +97,8 @@ const PROJECTS_BASE = [
     key: 'happener',
     client: 'HAPPENER',
     fullName: 'HAPPENER',
-    type: 'BRAND IDENTITY & PLATFORM',
-    sector: 'EVENTS',
+    type: 'Branding & Web Design',
+    sector: 'Event Design',
     year: '2025',
     copy: 'Autonomous Event Infrastructure. Engineered a robust, operator-independent ecosystem for the Dubai event market.',
   },
@@ -97,8 +106,8 @@ const PROJECTS_BASE = [
     key: 'rejus',
     client: 'REJUS',
     fullName: 'REJUS',
-    type: 'INSTITUTIONAL ACTIVATION',
-    sector: 'JUSTICE',
+    type: 'Fresh Institutional Identity',
+    sector: 'Legal Network / Social Action',
     year: '2025',
     copy: 'Justice Network Visualization. Injecting modern visual semantics into judicial structures.',
   },
@@ -126,6 +135,17 @@ const PROJECT_MEDIA: Partial<Record<ProjectKey, ProjectMedia>> = {
       '/projects/cantus_avi/identity-02.webp',
       '/projects/cantus_avi/identity-03.webp',
       '/projects/cantus_avi/identity-04.webp',
+    ],
+  },
+  sama: {
+    views: ['scroll', 'identity'],
+    scrollVideo: '/projects/sama/scroll.webm',
+    videoAspectRatio: '16 / 10',
+    identitySlides: [
+      '/projects/sama/identity-01.webp',
+      '/projects/sama/identity-02.webp',
+      '/projects/sama/identity-03.webp',
+      '/projects/sama/identity-04.webp',
     ],
   },
   frihcun: {
@@ -1068,7 +1088,13 @@ export function Works() {
                               transition: 'all 0.2s ease',
                             }}
                           >
-                            {tab === 'scroll' ? 'PAGE SCROLL' : tab === 'identity' ? 'IDENTITY' : 'SYSTEM'}
+                            {tab === 'scroll'
+                              ? (activeModalProject?.key === 'cantus_avi' || activeModalProject?.key === 'sama'
+                                ? (t('hud.langCurrent') === 'LANG: [ES]' ? 'PROPÓSITO' : 'PROPOSAL')
+                                : 'PAGE SCROLL')
+                              : tab === 'identity'
+                                ? 'IDENTITY'
+                                : 'SYSTEM'}
                           </button>
                         );
                       })}

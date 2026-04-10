@@ -69,40 +69,40 @@ export function Bio() {
         zIndex: 3,
       }}
     >
-      <motion.div
-        initial="hidden" whileInView="visible" viewport={viewportOpts} variants={fadeUp}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 'calc(0.55rem + 3px)',
-          letterSpacing: '0.2em', color: COLORS.textBone, opacity: 1,
-          textTransform: 'uppercase', marginBottom: 'clamp(16px, 2.5vh, 24px)',
-          position: 'relative', zIndex: 1,
-        }}
-      >
-        {t('bio.label')}
-      </motion.div>
-
-      <motion.h2
-        initial="hidden" whileInView="visible" viewport={viewportOpts} variants={fadeUp}
-        transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-        style={{
-          fontFamily: 'var(--font-headline), sans-serif', fontWeight: 700,
-          fontSize: 'clamp(1.4rem, 4vw, 3rem)', letterSpacing: '-0.02em',
-          textTransform: 'uppercase', color: COLORS.textBone, margin: 0,
-          marginBottom: 'clamp(40px, 6vh, 64px)', lineHeight: 1.05,
-          position: 'relative', zIndex: 1,
-        }}
-      >
-        <GlitchText text={t('bio.role')} />
-      </motion.h2>
-
       <div style={{
         display: 'grid',
         gridTemplateColumns: isMobile ? '1fr' : 'clamp(280px, 60%, 700px) 1fr',
-        gap: 'clamp(40px, 6vw, 80px)', alignItems: 'start',
+        gap: isMobile ? '32px' : 'clamp(40px, 6vw, 80px)', 
+        alignItems: 'start',
         position: 'relative', zIndex: 1,
       }}>
+        {/* Left Column: Headers + Body + Stats */}
         <div>
+          <motion.div
+            initial="hidden" whileInView="visible" viewport={viewportOpts} variants={fadeUp}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 'calc(0.55rem + 3px)',
+              letterSpacing: '0.2em', color: COLORS.textBone, opacity: 1,
+              textTransform: 'uppercase', marginBottom: 'clamp(16px, 2.5vh, 24px)',
+            }}
+          >
+            {t('bio.label')}
+          </motion.div>
+
+          <motion.h2
+            initial="hidden" whileInView="visible" viewport={viewportOpts} variants={fadeUp}
+            transition={{ duration: 0.65, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{
+              fontFamily: 'var(--font-headline), sans-serif', fontWeight: 700,
+              fontSize: 'clamp(1.4rem, 4vw, 3rem)', letterSpacing: '-0.02em',
+              textTransform: 'uppercase', color: COLORS.textBone, margin: 0,
+              marginBottom: 'clamp(40px, 6vh, 56px)', lineHeight: 1.05,
+            }}
+          >
+            <GlitchText text={t('bio.role')} />
+          </motion.h2>
+
           <motion.p
             initial="hidden" whileInView="visible" viewport={viewportOpts} variants={fadeUp}
             transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
@@ -126,10 +126,16 @@ export function Bio() {
           </div>
         </div>
 
+        {/* Right Column: ID Card */}
         <motion.div
           initial="hidden" whileInView="visible" viewport={viewportOpts} variants={fadeUp}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-          style={{ display: 'flex', justifyContent: isMobile ? 'flex-start' : 'center' }}
+          style={{ 
+            display: 'flex', 
+            justifyContent: isMobile ? 'flex-start' : 'center',
+            // Increase top offset on desktop to align with the role title instead of the label
+            paddingTop: isMobile ? 0 : 'clamp(40px, 8vh, 80px)' 
+          }}
         >
           <IDCard />
         </motion.div>
