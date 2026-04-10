@@ -14,7 +14,7 @@
  */
 
 import { useRef, useCallback, useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useLanguage } from '@/components/providers/LanguageProvider';
@@ -25,7 +25,7 @@ import { playSound } from '@/lib/audioEngine';
 gsap.registerPlugin(ScrollTrigger);
 
 // Contact email — exception to i18n rule (legal/contact text)
-const EMAIL = 'geronimo.astorga@gmail.com';
+const EMAIL = 'hello@orko.studio';
 
 // Calendly link — placeholder until real URL wired (CLOS-03)
 const CALENDLY_URL = 'https://calendly.com/orko_lab/60min';
@@ -47,18 +47,6 @@ export function Footer() {
 
   // Email copy state
   const [isCopied, setIsCopied] = useState(false);
-
-  // Processing state for Handshake
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [statusText, setStatusText] = useState('');
-
-  const STATUS_STEPS = [
-    'ESTABLISHING_VECTORS...',
-    'PINGING_AVAILABILITY_LAB...',
-    'ENCRYPTING_HANDSHAKE...',
-    'OPENING_BOOKING_PORTAL...',
-  ];
 
   // Initialize CTA text after mount (avoids SSR mismatch)
   useEffect(() => {
@@ -97,9 +85,8 @@ export function Footer() {
     const fill = ctaFillRef.current;
     const text = ctaTextRef.current;
     if (!fill || !text) return;
-    gsap.killTweensOf([fill, text]);
-    gsap.to(fill, { scaleY: 1, duration: 0.6, ease: GSAP_EASE.aggro });
-    gsap.to(text, { color: COLORS.bgAbyss, duration: 0.25, delay: 0.18 });
+    gsap.to(fill, { scaleY: 1, duration: 0.6, ease: GSAP_EASE.aggro, overwrite: 'auto' });
+    gsap.to(text, { color: COLORS.bgAbyss, duration: 0.25, delay: 0.18, overwrite: 'auto' });
   }, [isActivated]);
 
   const handleCtaLeave = useCallback(() => {
@@ -107,14 +94,12 @@ export function Footer() {
     const fill = ctaFillRef.current;
     const text = ctaTextRef.current;
     if (!fill || !text) return;
-    gsap.killTweensOf([fill, text]);
-    gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
-    gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
+    gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut', overwrite: 'auto' });
+    gsap.to(text, { color: COLORS.textBone, duration: 0.2, overwrite: 'auto' });
   }, [isActivated]);
 
   const handleCtaClick = useCallback(() => {
-    if (isActivated || isProcessing) return;
-    setIsActivated(true);
+    if (isActivated) return;
     cancelScrambleRef.current?.();
     playSound(AUDIO_IDS.glitchBurst);
 
@@ -123,48 +108,11 @@ export function Footer() {
       480,
       setCtaDisplay,
       () => {
-        // Scramble done! Now start the process
-        setIsProcessing(true);
-        setStatusText(STATUS_STEPS[0]);
-        
-        // Progress bar simulation
-        const duration = 2800;
-        const startTime = Date.now();
-        
-        const update = () => {
-          const elapsed = Date.now() - startTime;
-          const p = Math.min(1, elapsed / duration);
-          setProgress(p);
-          
-          const stepIdx = Math.floor(p * STATUS_STEPS.length);
-          if (stepIdx < STATUS_STEPS.length) setStatusText(STATUS_STEPS[stepIdx]);
-
-          if (p < 1) {
-            requestAnimationFrame(update);
-          } else {
-            // DONE! Open the portal
-            window.open(CALENDLY_URL, '_blank', 'noopener,noreferrer');
-            
-            setTimeout(() => {
-              setIsProcessing(false);
-              setIsActivated(false);
-              setProgress(0);
-              setCtaDisplay(t('footer.cta'));
-              
-              const fill = ctaFillRef.current;
-              const text = ctaTextRef.current;
-              if (fill && text) {
-                gsap.killTweensOf([fill, text]);
-                gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
-                gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
-              }
-            }, 1000);
-          }
-        };
-        requestAnimationFrame(update);
+        setIsActivated(true);
+        window.open(CALENDLY_URL, '_blank', 'noopener,noreferrer');
       },
     );
-  }, [isActivated, isProcessing, t]);
+  }, [isActivated, t]);
 
   // ── Email copy ──
   async function handleCopyEmail() {
@@ -204,10 +152,10 @@ export function Footer() {
           data-glitchable
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: '1rem', // Enlarged
+            fontSize: '0.5rem',
             letterSpacing: '0.2em',
             color: COLORS.textBone,
-            opacity: 0.6,
+            opacity: 0.25,
             textTransform: 'uppercase',
           }}
         >
@@ -232,7 +180,7 @@ export function Footer() {
           <span
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: '0.95rem', // Enlarged
+              fontSize: '0.5rem',
               letterSpacing: '0.15em',
               color: COLORS.systemGreen,
               textTransform: 'uppercase',
@@ -251,15 +199,12 @@ export function Footer() {
         disabled={isActivated}
         aria-label={isActivated ? t('footer.ctaActive') : t('footer.cta')}
         style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
+          display: 'block',
           width: '100%',
-          minHeight: 'clamp(240px, 35vh, 440px)', // Stable height
           border: 'none',
           borderBottom: `1px solid ${COLORS.lineAsh}`,
           backgroundColor: 'transparent',
-          padding: 'clamp(32px, 5vh, 64px) clamp(20px, 4vw, 40px)',
+          padding: 'clamp(48px, 9vh, 88px) clamp(20px, 4vw, 40px)',
           position: 'relative',
           overflow: 'hidden',
           cursor: isActivated ? 'default' : 'crosshair',
@@ -281,27 +226,6 @@ export function Footer() {
           }}
         />
 
-        {/* Schedule hint - NOW ABOVE (Positioned relative to button flex) */}
-        {!isActivated && (
-          <span
-            aria-hidden="true"
-            style={{
-              position: 'relative',
-              zIndex: 1,
-              display: 'block',
-              marginBottom: 'clamp(12px, 2vh, 20px)',
-              fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 'min(1.2rem, 4.5vw)', // Enlarged
-              letterSpacing: '0.22em',
-              color: '#FFFFFF',
-              opacity: 0.9,
-              textTransform: 'uppercase',
-            }}
-          >
-            {t('footer.cursor')}
-          </span>
-        )}
-
         {/* CTA text */}
         <span
           ref={ctaTextRef}
@@ -311,7 +235,7 @@ export function Footer() {
             zIndex: 1,
             fontFamily: 'var(--font-headline), sans-serif',
             fontWeight: 700,
-            fontSize: isActivated ? 'clamp(1.5rem, 5.5vw, 6rem)' : 'clamp(2rem, 7.5vw, 8rem)',
+            fontSize: 'clamp(2rem, 7.5vw, 8rem)',
             letterSpacing: '-0.03em',
             textTransform: 'uppercase',
             color: COLORS.textBone,
@@ -324,90 +248,26 @@ export function Footer() {
           {ctaDisplay || t('footer.cta')}
         </span>
 
-        {/* ── Handshake Overlay ── */}
-        <AnimatePresence>
-          {isProcessing && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 1.05, y: -10 }}
-              style={{
-                position: 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                zIndex: 10,
-                backgroundColor: 'rgba(5, 5, 5, 0.92)',
-                border: `1px solid ${COLORS.accentInfrared}`,
-                backdropFilter: 'blur(12px)',
-                width: 'clamp(280px, 40vw, 400px)',
-                padding: '24px 28px',
-                boxShadow: `0 24px 48px rgba(0,0,0,0.5), 0 0 20px ${COLORS.accentInfrared}33`,
-              }}
-            >
-              <div style={{ marginBottom: 16 }}>
-                <span style={{ 
-                  fontFamily: 'var(--font-jetbrains-mono), monospace',
-                  fontSize: '0.55rem',
-                  letterSpacing: '0.2em',
-                  color: COLORS.accentInfrared,
-                  display: 'block',
-                  marginBottom: 4,
-                  opacity: 0.8
-                }}>
-                  [ CALL_HANDSHAKE_INIT ]
-                </span>
-                <span style={{ 
-                  fontFamily: 'var(--font-jetbrains-mono), monospace',
-                  fontSize: '0.75rem',
-                  letterSpacing: '0.05em',
-                  color: COLORS.textBone,
-                  display: 'block',
-                  fontWeight: 600
-                }}>
-                  {statusText}
-                </span>
-              </div>
-
-              {/* Progress Bar Container */}
-              <div style={{ 
-                height: 4, 
-                backgroundColor: 'rgba(240,240,240,0.1)', 
-                position: 'relative',
-                overflow: 'hidden'
-              }}>
-                <motion.div 
-                  initial={{ width: 0 }}
-                  animate={{ width: `${progress * 100}%` }}
-                  style={{ 
-                    height: '100%', 
-                    backgroundColor: COLORS.accentInfrared,
-                    boxShadow: `0 0 10px ${COLORS.accentInfrared}`
-                  }}
-                />
-              </div>
-
-              <div style={{ marginTop: 12, display: 'flex', justifyContent: 'space-between' }}>
-                <span style={{ 
-                  fontFamily: 'var(--font-jetbrains-mono), monospace',
-                  fontSize: '0.45rem',
-                  color: COLORS.textBone,
-                  opacity: 0.3
-                }}>
-                  PORT_8080:CONNECTED
-                </span>
-                <span style={{ 
-                  fontFamily: 'var(--font-jetbrains-mono), monospace',
-                  fontSize: '0.45rem',
-                  color: COLORS.textBone,
-                  opacity: 0.3
-                }}>
-                  {Math.round(progress * 100)}%
-                </span>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Schedule hint */}
+        {!isActivated && (
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'relative',
+              zIndex: 1,
+              display: 'block',
+              marginTop: 'clamp(16px, 2.5vh, 28px)',
+              fontFamily: 'var(--font-jetbrains-mono), monospace',
+              fontSize: '0.55rem',
+              letterSpacing: '0.2em',
+              color: COLORS.textBone,
+              opacity: 0.28,
+              textTransform: 'uppercase',
+            }}
+          >
+            {t('footer.cursor')}
+          </span>
+        )}
       </button>
 
       {/* ── Bottom bar: email copy + legal (CLOS-04) ── */}
@@ -426,10 +286,10 @@ export function Footer() {
           <span
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+              fontSize: '0.62rem',
               letterSpacing: '0.06em',
               color: COLORS.textBone,
-              opacity: 0.8,
+              opacity: 0.45,
             }}
           >
             {EMAIL}
@@ -440,19 +300,19 @@ export function Footer() {
             onClick={handleCopyEmail}
             style={{
               fontFamily: 'var(--font-jetbrains-mono), monospace',
-              fontSize: '0.75rem',
+              fontSize: '0.5rem',
               letterSpacing: '0.15em',
-              color: isCopied ? COLORS.systemGreen : COLORS.textBone,
-              opacity: isCopied ? 1 : 0.65,
+              color: isCopied ? COLORS.accentInfrared : COLORS.textBone,
+              opacity: isCopied ? 1 : 0.35,
               textTransform: 'uppercase',
               background: 'none',
-              border: 'none',
+              border: `1px solid ${isCopied ? COLORS.accentInfrared : COLORS.lineAsh}`,
               padding: '4px 8px',
               cursor: 'crosshair',
-              transition: 'color 0.2s ease, opacity 0.2s ease',
+              transition: 'color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease',
             }}
           >
-            {isCopied ? '[ COPIED! ]' : '[ COPY EMAIL ]'}
+            {isCopied ? t('footer.copied') : t('footer.copyEmail')}
           </button>
         </div>
 
@@ -460,14 +320,14 @@ export function Footer() {
         <span
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: '0.55rem', // Smaller
+            fontSize: '0.48rem',
             letterSpacing: '0.12em',
-            color: '#B0B0B0',
-            opacity: 0.7,
+            color: COLORS.textBone,
+            opacity: 0.18,
             textTransform: 'uppercase',
           }}
         >
-          © {new Date().getFullYear()} orko_ — ALL RIGHTS RESERVED
+          © {new Date().getFullYear()} orko_
         </span>
       </div>
     </footer>

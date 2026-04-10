@@ -38,37 +38,16 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
     const num = numberRef.current;
     const ttl = titleRef.current;
     const dsc = descRef.current;
-    if (!fill || !ttl) return;
+    if (!fill) return;
 
     playSound(AUDIO_IDS.hoverBeep);
-
-    gsap.killTweensOf([fill, num, ttl, dsc]);
-
-    // Scramble title effect
-    let iteration = 0;
-    const maxIterations = 8;
-    const originalText = title;
-    const interval = setInterval(() => {
-      if (iteration >= maxIterations) {
-        clearInterval(interval);
-        ttl.innerText = originalText;
-      } else {
-        ttl.innerText = originalText
-          .split('')
-          .map((char) => {
-            if (char === ' ') return ' ';
-            return '░▒▓█▐▌╳·'[Math.floor(Math.random() * 8)];
-          })
-          .join('');
-      }
-      iteration++;
-    }, 30);
 
     // Infrared fill: bottom → top, 600ms, aggro ease
     gsap.to(fill, {
       scaleY: 1,
       duration: 0.6,
       ease: GSAP_EASE.aggro,
+      overwrite: 'auto',
     });
 
     // Text → bgAbyss (delayed to match when fill reaches text)
@@ -76,32 +55,29 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
       color: COLORS.bgAbyss,
       duration: 0.25,
       delay: 0.18,
+      overwrite: 'auto',
     });
-  }, [title]);
+  }, []);
 
   const handleMouseLeave = useCallback(() => {
     const fill = fillRef.current;
     const num = numberRef.current;
     const ttl = titleRef.current;
     const dsc = descRef.current;
-    if (!fill || !ttl) return;
-
-    gsap.killTweensOf([fill, num, ttl, dsc]);
-    
-    // Ensure title reverted in case scramble was running
-    ttl.innerText = title;
+    if (!fill) return;
 
     // Retract fill
     gsap.to(fill, {
       scaleY: 0,
       duration: 0.45,
       ease: 'power2.inOut',
+      overwrite: 'auto',
     });
 
     // Revert text colors
-    gsap.to(num, { color: COLORS.accentInfrared, duration: 0.2 });
-    gsap.to([ttl, dsc], { color: COLORS.textBone, duration: 0.2 });
-  }, [title]);
+    gsap.to(num, { color: COLORS.accentInfrared, duration: 0.2, overwrite: 'auto' });
+    gsap.to([ttl, dsc], { color: COLORS.textBone, duration: 0.2, overwrite: 'auto' });
+  }, []);
 
   return (
     <motion.div
@@ -125,7 +101,6 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
         display: 'flex',
         flexDirection: 'column',
         gap: 0,
-        minHeight: 'clamp(320px, 45vh, 400px)',
       }}
     >
       {/* Infrared fill layer */}
@@ -184,7 +159,7 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
           ref={descRef}
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: 'clamp(0.7rem, 1.2vw, 0.85rem)',
+            fontSize: 'clamp(0.62rem, 1vw, 0.76rem)',
             lineHeight: 1.7,
             color: COLORS.textBone,
             opacity: 0.52,
