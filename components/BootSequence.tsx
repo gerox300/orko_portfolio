@@ -374,7 +374,7 @@ export function BootSequence() {
                         <button
                           onClick={handleEnter}
                           style={{
-                            background: 'transparent', border: 'none', outline: 'none',
+                            background: 'transparent', outline: 'none',
                             color: COLORS.textBone,
                             fontFamily: 'var(--font-jetbrains-mono), monospace',
                             fontSize: isMobile ? 'clamp(0.9rem, 4vw, 1.1rem)' : 'clamp(0.7rem, 1.6vw, 0.85rem)',
