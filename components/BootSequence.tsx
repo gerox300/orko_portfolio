@@ -235,7 +235,9 @@ export function BootSequence() {
     const t1 = setTimeout(() => setPhase('collapse'), CHAOS_DURATION);
     const t2 = setTimeout(() => setPhase('ko'), CHAOS_DURATION + COLLAPSE_DURATION);
     const t3 = setTimeout(() => { setPhase('terminal'); setCurrentLine(0); }, TERMINAL_START);
-    return () => [t1, t2, t3].forEach(clearTimeout);
+    // Safety: always show button after 10s max in case typing gets stuck
+    const safety = setTimeout(() => { setShowBars(true); setShowButton(true); }, TERMINAL_START + 8000);
+    return () => [t1, t2, t3, safety].forEach(clearTimeout);
   }, [hasBooted]);
 
   const handleLineComplete = useCallback((idx: number) => {
@@ -307,39 +309,52 @@ export function BootSequence() {
             <AnimatePresence>
               {(isKO || isTerminal) && (
                 <motion.div key="ko"
-                  initial={{ opacity: 0, scale: 1.3 }}
-                  animate={{ opacity: isKO ? 0.9 : 0.025, scale: 1 }}
-                  transition={{ duration: isKO ? 0.5 : 0.8, ease: [0.4, 0, 0.2, 1] }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
                   aria-hidden="true"
                   style={{
-                    position: 'absolute', top: '50%', left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    fontFamily: 'var(--font-headline), sans-serif', fontWeight: 900,
-                    fontSize: isKO ? (isMobile ? 'clamp(80px,22vw,160px)' : 'clamp(140px,24vw,320px)') : (isMobile ? 'clamp(60px,18vw,120px)' : 'clamp(80px,18vw,260px)'),
-                    color: COLORS.textBone, letterSpacing: '-0.04em',
-                    pointerEvents: 'none', userSelect: 'none', whiteSpace: 'nowrap', zIndex: 4,
-                    animation: isKO ? 'ko-pulse 1s ease-in-out' : 'none', textAlign: 'center',
+                    position: 'absolute', inset: 0,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    pointerEvents: 'none', zIndex: 4,
                   }}
                 >
-                  [K_O]
+                  <motion.span
+                    initial={{ scale: 1.3, opacity: 0 }}
+                    animate={{ opacity: isKO ? 0.9 : 0.025, scale: 1 }}
+                    transition={{ duration: isKO ? 0.5 : 0.8, ease: [0.4, 0, 0.2, 1] }}
+                    style={{
+                      fontFamily: 'var(--font-headline), sans-serif', fontWeight: 900,
+                      fontSize: isKO ? (isMobile ? 'clamp(80px,22vw,160px)' : 'clamp(140px,24vw,320px)') : (isMobile ? 'clamp(60px,18vw,120px)' : 'clamp(80px,18vw,260px)'),
+                      color: COLORS.textBone, letterSpacing: '-0.04em',
+                      userSelect: 'none', whiteSpace: 'nowrap', display: 'block',
+                      animation: isKO ? 'ko-pulse 1s ease-in-out' : 'none', textAlign: 'center',
+                    }}
+                  >
+                    [K_O]
+                  </motion.span>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* Terminal — scrollable en mobile para que el botón siempre sea alcanzable */}
+            {/* Terminal */}
             <AnimatePresence>
               {isTerminal && (
                 <motion.div key="terminal"
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}
                   style={{
-                    position: 'relative', zIndex: 5,
-                    width: '100%', maxWidth: 640,
-                    padding: isMobile ? '0 20px' : '0 40px',
+                    // Mobile: fill entire screen and scroll — avoids all sticky/overflow issues
+                    position: isMobile ? 'absolute' : 'relative',
+                    inset: isMobile ? 0 : 'auto',
+                    zIndex: 5,
+                    width: isMobile ? '100%' : '100%',
+                    maxWidth: isMobile ? '100%' : 640,
+                    padding: isMobile ? '48px 24px 120px' : '0 40px',
                     display: 'flex', flexDirection: 'column',
                     alignItems: 'center',
-                    // Mobile: scroll vertical para que el botón sea siempre visible
-                    maxHeight: isMobile ? '90vh' : 'none',
                     overflowY: isMobile ? 'auto' : 'visible',
+                    WebkitOverflowScrolling: 'touch',
                   }}
                 >
                   <div style={{ width: '100%' }}>
@@ -355,20 +370,14 @@ export function BootSequence() {
                     <BioBars active={showBars} isMobile={isMobile} />
                   </div>
 
-                  {/* Botón — en mobile siempre visible con margin grande */}
                   <AnimatePresence>
                     {showButton && !exiting && (
                       <motion.div key="btn"
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}
                         style={{
-                          marginTop: isMobile ? '2rem' : '2.5rem',
+                          marginTop: isMobile ? '2.5rem' : '2.5rem',
                           textAlign: 'center',
-                          // En mobile sticky para que nunca quede fuera
-                          position: isMobile ? 'sticky' : 'relative',
-                          bottom: isMobile ? 16 : 'auto',
                           width: '100%',
-                          paddingBottom: isMobile ? 8 : 0,
-                          backgroundColor: isMobile ? COLORS.bgAbyss : 'transparent',
                         }}
                       >
                         <button
@@ -377,16 +386,17 @@ export function BootSequence() {
                             background: 'transparent', outline: 'none',
                             color: COLORS.textBone,
                             fontFamily: 'var(--font-jetbrains-mono), monospace',
-                            fontSize: isMobile ? 'clamp(0.9rem, 4vw, 1.1rem)' : 'clamp(0.7rem, 1.6vw, 0.85rem)',
+                            fontSize: isMobile ? 'clamp(1rem, 4.5vw, 1.2rem)' : 'clamp(0.7rem, 1.6vw, 0.85rem)',
                             letterSpacing: '0.25em', cursor: 'pointer',
                             textTransform: 'uppercase',
                             padding: isMobile ? '1em 2em' : '0.5em 0',
                             transition: 'color 150ms ease',
-                            // En mobile borde visible para que sea obvio que es clickeable
-                            border: isMobile ? `1px solid ${COLORS.textBone}` : 'none',
+                            border: `1px solid ${COLORS.textBone}`,
+                            minHeight: 48,
+                            display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                           }}
-                          onMouseEnter={e => { e.currentTarget.style.color = '#DC2828'; }}
-                          onMouseLeave={e => { e.currentTarget.style.color = COLORS.textBone; }}
+                          onMouseEnter={e => { e.currentTarget.style.color = '#DC2828'; e.currentTarget.style.borderColor = '#DC2828'; }}
+                          onMouseLeave={e => { e.currentTarget.style.color = COLORS.textBone; e.currentTarget.style.borderColor = COLORS.textBone; }}
                         >
                           [{lang === 'es' ? ' ENTRAR AL LAB ' : ' ENTER LAB '}]
                         </button>
