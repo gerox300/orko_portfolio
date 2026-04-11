@@ -265,11 +265,11 @@ export function BootSequence() {
 
   return (
     <>
-      <style>{\`
-        @font-face {font - family:'LunaObscura'; src:url('/hs_lunaobscura/HS_LunaObscura.woff2') format('woff2'), url('/hs_lunaobscura/HS_LunaObscura.otf') format('opentype'); }
-        @keyframes cursorblink {0 %, 100 % { opacity: 0.85 } 50%{opacity:0} }
-        @keyframes ko-pulse {0 %, 100 % { text- shadow:0 0 40px rgba(255,255,255,0.3)} 50%{text - shadow:0 0 80px rgba(255,255,255,0.7),0 0 120px rgba(0,255,65,0.3)} }
-      \`}</style>
+      <style>{`
+        @font-face { font-family:'LunaObscura'; src:url('/hs_lunaobscura/HS_LunaObscura.woff2') format('woff2'), url('/hs_lunaobscura/HS_LunaObscura.otf') format('opentype'); }
+        @keyframes cursorblink { 0%, 100% { opacity: 0.85 } 50%{opacity:0} }
+        @keyframes ko-pulse { 0%, 100% { text-shadow:0 0 40px rgba(255,255,255,0.3)} 50%{text-shadow:0 0 80px rgba(255,255,255,0.7),0 0 120px rgba(0,255,65,0.3)} }
+      `}</style>
 
       <AnimatePresence>
         {flashActive && (
