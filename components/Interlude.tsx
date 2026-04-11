@@ -162,7 +162,15 @@ export function Interlude() {
     const sectionRef = useRef<HTMLElement>(null);
     const cardWrapRef = useRef<HTMLDivElement>(null);
     const [textActive, setTextActive] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const { revealed, cursorVisible } = useTypewriter(LINES, textActive);
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
 
     useEffect(() => {
         const section = sectionRef.current;
@@ -211,10 +219,12 @@ export function Interlude() {
                 style={{
                     position: 'relative',
                     width: '100%',
-                    minHeight: '100vh',
+                    minHeight: isMobile ? 'auto' : '100vh',
                     display: 'flex',
                     alignItems: 'center',
-                    padding: 'clamp(40px, 12vh, 160px) clamp(20px, 5vw, 60px)',
+                    padding: isMobile
+                        ? 'clamp(64px, 10vh, 96px) clamp(20px, 4vw, 40px) clamp(48px, 8vh, 80px)'
+                        : 'clamp(40px, 12vh, 160px) clamp(20px, 5vw, 60px)',
                     overflow: 'hidden',
                 }}
             >
@@ -222,20 +232,22 @@ export function Interlude() {
                     maxWidth: 1100, width: '100%',
                     margin: '0 auto',
                     display: 'grid',
-                    gridTemplateColumns: '1fr 1.4fr',
-                    gap: 'clamp(40px, 6vw, 80px)',
+                    gridTemplateColumns: isMobile ? '1fr' : '1fr 1.4fr',
+                    gap: isMobile ? 'clamp(32px, 5vh, 48px)' : 'clamp(40px, 6vw, 80px)',
                     position: 'relative',
                     zIndex: 1,
                     alignItems: 'center',
                 }}>
-                    {/* Columna izquierda — SpecimenCard */}
-                    <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 40 }}>
-                        <div ref={cardWrapRef} style={{ transformOrigin: '50% 50%', width: '100%', maxWidth: 240 }}>
-                            <SpecimenCard />
+                    {/* Columna izquierda — SpecimenCard (hidden on mobile to keep focus on text) */}
+                    {!isMobile && (
+                        <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 40 }}>
+                            <div ref={cardWrapRef} style={{ transformOrigin: '50% 50%', width: '100%', maxWidth: 240 }}>
+                                <SpecimenCard />
+                            </div>
                         </div>
-                    </div>
+                    )}
 
-                    {/* Columna derecha — texto typewriter */}
+                    {/* Columna derecha (única en mobile) — texto typewriter */}
                     <motion.div
                         key={lang}
                         className="interlude-copy"
@@ -243,18 +255,20 @@ export function Interlude() {
                         whileInView={{ opacity: 1 }}
                         onViewportEnter={() => setTextActive(true)}
                         viewport={{ once: true, margin: "-10%" }}
-                        style={{ flex: '1 1 50%', minWidth: 280, width: '100%' }}
+                        style={{ flex: '1 1 50%', minWidth: 0, width: '100%' }}
                     >
                         {LINES.map((line, i) => (
                             <div key={i} style={{
                                 position: 'relative',
                                 fontFamily: 'var(--font-jetbrains-mono), monospace',
-                                fontSize: lang === 'es' ? 'clamp(1.1rem, 2.4vw, 1.4rem)' : 'clamp(0.95rem, 2.2vw, 1.25rem)',
-                                lineHeight: 2.1,
+                                fontSize: isMobile
+                                    ? (lang === 'es' ? 'clamp(0.9rem, 4.5vw, 1.15rem)' : 'clamp(0.85rem, 4.2vw, 1.05rem)')
+                                    : (lang === 'es' ? 'clamp(1.1rem, 2.4vw, 1.4rem)' : 'clamp(0.95rem, 2.2vw, 1.25rem)'),
+                                lineHeight: isMobile ? 1.9 : 2.1,
                                 letterSpacing: '0.02em',
                                 color: COLORS.textBone,
                             }}>
-                                {/* This invisible block takes up the final full width/height perfectly avoiding all layout shifts */}
+                                {/* Invisible ghost keeps layout stable — no shifts during typewriter */}
                                 <div style={{ visibility: 'hidden', pointerEvents: 'none' }}>
                                     {line.text ? renderLine(line.text) : <span dangerouslySetInnerHTML={{ __html: '&nbsp;' }} />}
                                 </div>

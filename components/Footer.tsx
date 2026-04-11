@@ -27,7 +27,15 @@ export function Footer() {
   const ctaWrapperRef = useRef<HTMLDivElement>(null);
 
   const [ctaDisplay, setCtaDisplay] = useState(() => t('footer.cta'));
+  const [isMobile, setIsMobile] = useState(false);
   const [isActivated, setIsActivated] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
   const cancelScrambleRef = useRef<(() => void) | null>(null);
   const [isCopied, setIsCopied] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
@@ -381,18 +389,23 @@ export function Footer() {
 
       {/* Bottom bar */}
       <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        flexWrap: 'wrap', gap: 12,
+        display: 'flex',
+        alignItems: isMobile ? 'flex-start' : 'center',
+        justifyContent: 'space-between',
+        flexDirection: isMobile ? 'column' : 'row',
+        flexWrap: 'wrap', gap: isMobile ? 8 : 12,
         padding: 'clamp(14px, 2vh, 22px) clamp(20px, 4vw, 40px)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 16, flexWrap: 'wrap' }}>
           <span style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: 'clamp(0.8rem, 1.5vw, 1rem)', letterSpacing: '0.06em',
+            fontSize: isMobile ? 'clamp(0.65rem, 3.5vw, 0.8rem)' : 'clamp(0.8rem, 1.5vw, 1rem)',
+            letterSpacing: '0.06em',
             color: COLORS.textBone, opacity: 0.8,
           }}>
             {EMAIL}
           </span>
+          {/* Copy button — 44px min touch target on mobile */}
           <button
             onClick={handleCopyEmail}
             style={{
@@ -401,9 +414,12 @@ export function Footer() {
               color: isCopied ? COLORS.systemGreen : COLORS.textBone,
               opacity: isCopied ? 1 : 0.65,
               textTransform: 'uppercase',
-              background: 'none', border: 'none', padding: '4px 8px',
+              background: 'none',
+              border: isMobile ? `1px solid ${isCopied ? COLORS.systemGreen : COLORS.lineAsh}` : 'none',
+              padding: isMobile ? '10px 14px' : '4px 8px',
+              minHeight: isMobile ? '44px' : undefined,
               cursor: 'crosshair',
-              transition: 'color 0.2s ease, opacity 0.2s ease',
+              transition: 'color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease',
             }}
           >
             {isCopied ? t('footer.copied') : t('footer.copyEmail')}

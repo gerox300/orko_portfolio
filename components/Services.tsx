@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -18,6 +18,14 @@ export function Services() {
   const { t } = useLanguage();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const services = [
     {
@@ -49,6 +57,12 @@ export function Services() {
     const cards = wrapper.querySelectorAll('[data-card]');
     if (!cards.length) return;
 
+    // On mobile: no pin, no GSAP scrub — cards are always visible
+    if (window.innerWidth < 768) {
+      gsap.set(cards, { opacity: 1, y: 0 });
+      return;
+    }
+
     // Use GSAP Context for React 18+ strict mode cleanup
     const ctx = gsap.context(() => {
       // Initial state
@@ -73,7 +87,7 @@ export function Services() {
     }, wrapperRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [isMobile]);
 
   return (
     <div
@@ -81,7 +95,8 @@ export function Services() {
       ref={wrapperRef}
       style={{
         position: 'relative',
-        height: '200vh', // Sets scroll length for scrub animation
+        // Desktop: 200vh gives the scroll-scrub effect; mobile: auto (normal flow)
+        height: isMobile ? 'auto' : '200vh',
         backgroundColor: 'transparent',
       }}
     >
@@ -90,14 +105,18 @@ export function Services() {
         ref={sectionRef}
         aria-label="Services — Mutation Vectors"
         style={{
-          position: 'sticky',
-          top: 0,
-          height: '100vh',
+          // Desktop: sticky pin so cards reveal over 200vh; mobile: normal flow
+          position: isMobile ? 'relative' : 'sticky',
+          top: isMobile ? 'auto' : 0,
+          height: isMobile ? 'auto' : '100vh',
+          minHeight: isMobile ? 'auto' : undefined,
           backgroundColor: 'transparent',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          padding: 'clamp(64px, 10vh, 100px) clamp(20px, 4vw, 40px)',
+          padding: isMobile
+            ? 'clamp(64px, 10vh, 96px) clamp(20px, 4vw, 40px) clamp(48px, 8vh, 80px)'
+            : 'clamp(64px, 10vh, 100px) clamp(20px, 4vw, 40px)',
           overflow: 'hidden',
         }}
       >
@@ -145,12 +164,12 @@ export function Services() {
             <GlitchText text={t('services.sectionTitle')} />
           </motion.h2>
 
-          {/* Cards grid */}
+          {/* Cards grid — 1 col on mobile, auto-fit on desktop */}
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-              gap: 'clamp(12px, 1.5vw, 20px)',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))',
+              gap: isMobile ? 'clamp(10px, 2vh, 16px)' : 'clamp(12px, 1.5vw, 20px)',
             }}
           >
             {services.map((service) => (

@@ -10,6 +10,7 @@ export function SmartCellCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [mounted, setMounted] = useState(false);
+  const [isTouch, setIsTouch] = useState(false);
 
   // Posición cruda del mouse (para la mira táctica precisa)
   const rawX = useMotionValue(-100);
@@ -27,6 +28,8 @@ export function SmartCellCursor() {
 
   useEffect(() => {
     setMounted(true);
+    // Hide cursor entirely on touch/coarse-pointer devices (phones, tablets)
+    setIsTouch(window.matchMedia('(pointer: coarse)').matches);
 
     const onMove = (e: MouseEvent) => {
       rawX.set(e.clientX);
@@ -70,7 +73,8 @@ export function SmartCellCursor() {
   }, [rawX, rawY]);
 
   // Evita el error de hidratación: no renderiza nada en el servidor
-  if (!mounted || !hasBooted) return null;
+  // On touch devices the cursor is never visible — skip entirely
+  if (!mounted || !hasBooted || isTouch) return null;
 
   return (
     <>

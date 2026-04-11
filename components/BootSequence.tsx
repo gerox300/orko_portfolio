@@ -345,7 +345,7 @@ export function BootSequence() {
                   <div style={{ width: '100%' }}>
                     {BOOT_LINES.map((line, i) => (
                       <TerminalLine key={i} text={line.text} color={line.color}
-                        startTyping={currentLine > i}
+                        startTyping={currentLine >= i}
                         onComplete={() => handleLineComplete(i)}
                       />
                     ))}

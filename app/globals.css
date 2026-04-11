@@ -162,6 +162,29 @@ h6 {
   outline-offset: 4px;
 }
 
+/* ─── TOUCH DEVICES: restore native cursor ───────────────────────────────── */
+/* On touch/mobile (no fine pointer), the custom JS cursor never activates.
+   We must restore the system cursor so the page is usable. */
+
+@media (hover: none), (pointer: coarse) {
+  body,
+  a,
+  button,
+  [role="button"],
+  input,
+  label,
+  select,
+  textarea {
+    cursor: auto !important;
+  }
+
+  button,
+  a,
+  [role="button"] {
+    cursor: pointer !important;
+  }
+}
+
 /* ─── REDUCED MOTION ─────────────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
