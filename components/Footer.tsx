@@ -24,6 +24,7 @@ export function Footer() {
   const sectionRef = useRef<HTMLElement>(null);
   const ctaFillRef = useRef<HTMLDivElement>(null);
   const ctaTextRef = useRef<HTMLSpanElement>(null);
+  const ctaWrapperRef = useRef<HTMLDivElement>(null);
 
   const [ctaDisplay, setCtaDisplay] = useState(() => t('footer.cta'));
   const [isActivated, setIsActivated] = useState(false);
@@ -73,6 +74,7 @@ export function Footer() {
     gsap.killTweensOf([fill, text]);
     gsap.to(fill, { scaleY: 1, duration: 0.6, ease: GSAP_EASE.aggro });
     gsap.to(text, { color: COLORS.bgAbyss, duration: 0.25, delay: 0.18 });
+    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.bgAbyss, duration: 0.25, delay: 0.18 });
   }, [isActivated]);
 
   const handleCtaLeave = useCallback(() => {
@@ -83,6 +85,7 @@ export function Footer() {
     gsap.killTweensOf([fill, text]);
     gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
     gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
+    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.2 });
   }, [isActivated]);
 
   const handleCtaClick = useCallback(() => {
@@ -121,6 +124,7 @@ export function Footer() {
                 gsap.killTweensOf([fill, text]);
                 gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
                 gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
+                if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.2 });
               }
             }, 1000);
           }
@@ -198,7 +202,7 @@ export function Footer() {
         style={{
           display: 'flex', flexDirection: 'column', justifyContent: 'center',
           width: '100%',
-          minHeight: 'clamp(240px, 35vh, 440px)',
+          minHeight: 'clamp(160px, 25vh, 440px)',
           border: 'none',
           borderBottom: `1px solid ${COLORS.lineAsh}`,
           backgroundColor: 'transparent',
@@ -237,17 +241,21 @@ export function Footer() {
             FIX: el layout space-between va en un div wrapper estático.
             motion.span solo maneja el color via GSAP ref — no toca el layout.
         */}
-        <div style={{
-          position: 'relative', zIndex: 1,
-          width: '100%',
-          display: 'flex',
-          alignItems: 'baseline',
-          justifyContent: (isTwoWords && lang === 'en') ? 'space-between' : 'flex-start',
-          gap: (isTwoWords && lang === 'es') ? 'clamp(0.5rem, 2vw, 2rem)' : 0,
-        }}>
+        <div
+          ref={ctaWrapperRef}
+          style={{
+            position: 'relative', zIndex: 1,
+            width: '100%',
+            display: 'flex',
+            alignItems: 'baseline',
+            justifyContent: (isTwoWords && lang === 'en') ? 'space-between' : 'flex-start',
+            gap: (isTwoWords && lang === 'es') ? 'clamp(0.5rem, 2vw, 2rem)' : 0,
+            color: COLORS.textBone,
+          }}
+        >
           {isTwoWords ? (
             <>
-              <motion.span
+              <span
                 ref={ctaTextRef}
                 data-corruptible
                 style={{
@@ -258,7 +266,7 @@ export function Footer() {
                     : 'clamp(2rem, 7.5vw, 8rem)',
                   letterSpacing: '-0.02em',
                   textTransform: 'uppercase',
-                  color: COLORS.textBone,
+                  color: 'inherit',
                   lineHeight: 0.88,
                   userSelect: 'none',
                   whiteSpace: 'nowrap',
@@ -266,8 +274,8 @@ export function Footer() {
                 }}
               >
                 {ctaParts[0]}
-              </motion.span>
-              <motion.span
+              </span>
+              <span
                 style={{
                   fontFamily: 'var(--font-headline), sans-serif',
                   fontWeight: 700,
@@ -276,7 +284,7 @@ export function Footer() {
                     : 'clamp(2rem, 7.5vw, 8rem)',
                   letterSpacing: '-0.02em',
                   textTransform: 'uppercase',
-                  color: COLORS.textBone,
+                  color: 'inherit',
                   lineHeight: 0.88,
                   userSelect: 'none',
                   whiteSpace: 'nowrap',
@@ -284,7 +292,7 @@ export function Footer() {
                 }}
               >
                 {ctaParts[1]}
-              </motion.span>
+              </span>
             </>
           ) : (
             <motion.span
