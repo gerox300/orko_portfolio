@@ -122,7 +122,12 @@ function renderLine(text: string) {
 }
 
 // ─── Typewriter ───────────────────────────────────────────────────────────────
-function useTypewriter(lines: typeof LINES, active: boolean) {
+interface TypewriterLine {
+    text: string;
+    delay: number;
+}
+
+function useTypewriter(lines: TypewriterLine[], active: boolean) {
     const [revealed, setRevealed] = useState<string[]>(lines.map(() => ''));
     const [cursorVisible, setCursorVisible] = useState(false);
     useEffect(() => {
