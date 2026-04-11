@@ -56,7 +56,11 @@ function createSpore(w: number, h: number, fromBottom = false): Spore {
 function getScrollZone(): { zone: string } {
     const hero = document.getElementById('hero');
     const interlude = document.getElementById('interlude');
+    const ticker = document.getElementById('ticker');
     const bio = document.getElementById('bio');
+    const services = document.getElementById('services-wrapper');
+    const works = document.getElementById('works');
+    const footer = document.getElementById('footer');
     const scrollY = window.scrollY;
     const vh = window.innerHeight;
 
@@ -69,10 +73,30 @@ function getScrollZone(): { zone: string } {
         const intBottom = intTop + interlude.offsetHeight;
         if (scrollY + vh > intTop && scrollY < intBottom) return { zone: 'interlude' };
     }
+    if (ticker) {
+        const tckTop = ticker.offsetTop;
+        const tckBottom = tckTop + ticker.offsetHeight;
+        if (scrollY + vh > tckTop && scrollY < tckBottom) return { zone: 'ticker' };
+    }
     if (bio) {
         const bioTop = bio.offsetTop;
         const bioBottom = bioTop + bio.offsetHeight;
         if (scrollY + vh > bioTop && scrollY < bioBottom) return { zone: 'bio' };
+    }
+    if (services) {
+        const srvTop = services.offsetTop;
+        const srvBottom = srvTop + services.offsetHeight;
+        if (scrollY + vh > srvTop && scrollY < srvBottom) return { zone: 'services' };
+    }
+    if (works) {
+        const wkTop = works.offsetTop;
+        const wkBottom = wkTop + works.offsetHeight;
+        if (scrollY + vh > wkTop && scrollY < wkBottom) return { zone: 'works' };
+    }
+    if (footer) {
+        const ftTop = footer.offsetTop;
+        const ftBottom = ftTop + footer.offsetHeight;
+        if (scrollY + vh > ftTop && scrollY < ftBottom) return { zone: 'footer' };
     }
     return { zone: 'ambient' };
 }
@@ -82,6 +106,7 @@ export function GlobalSpores() {
     const mouseRef = useRef({ x: -9999, y: -9999 });
     const sporesRef = useRef<Spore[]>([]);
     const rafRef = useRef<number>(0);
+    const currentOpacityMult = useRef(1);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -120,11 +145,25 @@ export function GlobalSpores() {
                     panicLevel = 0.4;      // mild agitation, not full panic
                     maxSpores = 80;
                     break;
+                case 'ticker':
+                    targetCount = 20;
+                    panicLevel = -0.8;     // we'll use negative panic to signify tranquility
+                    globalOpacityMult = 0.4;
+                    maxSpores = 30;
+                    break;
                 case 'bio':
-                    targetCount = 15;
+                case 'services':
+                    targetCount = 80;
                     panicLevel = 0;
-                    globalOpacityMult = 0.5;
+                    globalOpacityMult = 1.0;
                     spawnFromBottom = true; // new spores rise from bottom edge
+                    maxSpores = 120;
+                    break;
+                case 'works':
+                case 'footer':
+                    targetCount = 10;
+                    panicLevel = 0;
+                    globalOpacityMult = 0.0; // Dissolve gracefully into darkness
                     break;
                 case 'ambient':
                 default:
@@ -133,6 +172,10 @@ export function GlobalSpores() {
                     globalOpacityMult = 0.25;
                     break;
             }
+
+            // Lerp global opacity
+            currentOpacityMult.current += (globalOpacityMult - currentOpacityMult.current) * 0.03;
+            const appliedGlobalOpacity = currentOpacityMult.current;
 
             // Spawn / cull
             if (sRef.length < targetCount && Math.random() < 0.08) {
@@ -147,7 +190,9 @@ export function GlobalSpores() {
                 s.scrollPanic = lerp(s.scrollPanic, panicLevel, 0.04);
 
                 // Wander
-                const wanderMult = 1 + s.scrollPanic * 2;
+                const isTranquil = s.scrollPanic < 0;
+                const activePanic = Math.max(0, s.scrollPanic);
+                const wanderMult = isTranquil ? 0.2 : (1 + activePanic * 2);
                 s.wanderAngle += 0.03 * wanderMult;
                 s.homeX += Math.cos(s.wanderAngle) * s.wanderSpeed * wanderMult;
                 s.homeY += Math.sin(s.wanderAngle) * s.wanderSpeed * wanderMult;
@@ -185,30 +230,33 @@ export function GlobalSpores() {
                 }
 
                 // Panic jitter
-                if (s.scrollPanic > 0.2) {
-                    const jitter = s.scrollPanic * 1.0;
+                if (activePanic > 0.2) {
+                    const jitter = activePanic * 1.0;
                     s.vx += (Math.random() - 0.5) * jitter;
                     s.vy += (Math.random() - 0.5) * jitter;
                 }
 
-                // Physics
-                s.vx += (s.homeX - s.x) * SPRING_K;
-                s.vy += (s.homeY - s.y) * SPRING_K;
+                // Physics (calmer spring if tranquil)
+                const currentSpring = isTranquil ? SPRING_K * 0.3 : SPRING_K;
+                s.vx += (s.homeX - s.x) * currentSpring;
+                s.vy += (s.homeY - s.y) * currentSpring;
                 s.vx *= FRICTION; s.vy *= FRICTION;
                 s.x += s.vx; s.y += s.vy;
 
                 // Color
-                const intensity = Math.max(s.fleeIntensity, s.scrollPanic);
-                const targetColor = s.scrollPanic > s.fleeIntensity ? INFRARED : TOXIC_GREEN;
+                const intensity = Math.max(s.fleeIntensity, activePanic);
+                const targetColor = activePanic > s.fleeIntensity ? INFRARED : TOXIC_GREEN;
                 const r = Math.round(lerp(BONE.r, targetColor.r, intensity));
                 const g = Math.round(lerp(BONE.g, targetColor.g, intensity));
                 const b = Math.round(lerp(BONE.b, targetColor.b, intensity));
-                const alpha = (s.baseOpacity + intensity * (1 - s.baseOpacity)) * globalOpacityMult;
+                const alpha = (s.baseOpacity + intensity * (1 - s.baseOpacity)) * appliedGlobalOpacity;
 
-                ctx!.beginPath();
-                ctx!.arc(s.x, s.y, s.radius * (1 + s.scrollPanic * 0.2), 0, Math.PI * 2);
-                ctx!.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(2)})`;
-                ctx!.fill();
+                if (alpha > 0.01) {
+                    ctx!.beginPath();
+                    ctx!.arc(s.x, s.y, s.radius * (1 + activePanic * 0.2), 0, Math.PI * 2);
+                    ctx!.fillStyle = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
+                    ctx!.fill();
+                }
             }
         }
 

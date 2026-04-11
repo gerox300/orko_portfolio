@@ -736,7 +736,7 @@ export function Works() {
           style={{
             position: 'relative',
             minHeight: '100vh',
-            backgroundColor: COLORS.bgAbyss,
+            backgroundColor: 'transparent',
             padding: 'clamp(64px, 10vh, 100px) 0',
           }}
         >
@@ -796,10 +796,10 @@ export function Works() {
               }}
             >
               <span />
-              <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.5rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.3, textTransform: 'uppercase' }}>CLIENT</span>
-              {!isMobile && <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.5rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.3, textTransform: 'uppercase' }}>TYPE</span>}
-              {!isMobile && <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.5rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.3, textTransform: 'uppercase' }}>SECTOR</span>}
-              <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.5rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.3, textTransform: 'uppercase', textAlign: 'right' }}>YEAR</span>
+              <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.62rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.45, textTransform: 'uppercase' }}>{t('works.col.client')}</span>
+              {!isMobile && <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.62rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.45, textTransform: 'uppercase' }}>{t('works.col.type')}</span>}
+              {!isMobile && <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.62rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.45, textTransform: 'uppercase' }}>{t('works.col.sector')}</span>}
+              <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.62rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.45, textTransform: 'uppercase', textAlign: 'right' }}>{t('works.col.year')}</span>
             </div>
 
             {projects.map((project, i) => (

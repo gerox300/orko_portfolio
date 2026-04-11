@@ -35,6 +35,7 @@ import { Footer } from '@/components/Footer';
 import { GlitchController } from '@/components/GlitchController';
 import { EchoSystem } from '@/components/EchoSystem';
 import { SectionDivider } from '@/components/SectionDivider';
+import { TickerSection } from '@/components/TickerSection';
 
 export default function Home() {
   return (
@@ -55,6 +56,8 @@ export default function Home() {
 
       {/* Interlude — personal statement materializes */}
       <Interlude />
+
+      <TickerSection />
 
       {/* Bio — The Operator */}
       <Bio />

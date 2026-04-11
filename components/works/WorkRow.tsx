@@ -91,6 +91,7 @@ export function WorkRow({
             opacity: 0.7,
             fontSize: '0.55rem',
             letterSpacing: '0.12em',
+            width: '32px', // Narrower column for number
           }}
         >
           {number}

@@ -20,6 +20,15 @@ const jetbrainsMono = JetBrains_Mono({
   display: 'swap',
 });
 
+import { Unbounded } from 'next/font/google';
+
+const unbounded = Unbounded({
+  variable: '--font-unbounded',
+  subsets: ['latin'],
+  weight: ['400', '700', '900'],
+  display: 'swap',
+});
+
 // ─── METADATA ─────────────────────────────────────────────────────────────────
 
 export const metadata: Metadata = {
@@ -68,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${headlineFont.variable} ${jetbrainsMono.variable}`}
+      className={`${headlineFont.variable} ${jetbrainsMono.variable} ${unbounded.variable}`}
     >
       <body suppressHydrationWarning>
         {/* Skip to content for keyboard navigation */}

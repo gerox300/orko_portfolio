@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* ─── FIX: Accented characters in headline font ──────────────────────────────
+   HS LunaObscura doesn't include accented glyphs (É, Ó, Ñ, etc.), so browsers
+   fall back to a system font that renders them at different metrics (too tall).
+   This @font-face intercepts ONLY those unicode points and forces the same
+   font but with size-adjust to normalise them visually.
+   Unicode ranges: uppercase and lowercase accented vowels + ñ/Ñ
+─────────────────────────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "HS LunaObscura";
+  src: local("Unbounded"), local("Arial"), sans-serif;
+  unicode-range:
+    U+00C1, U+00C9, U+00CD, U+00D3, U+00DA, U+00C1, U+00C9, U+00CD, U+00D3, U+00DA, U+00D1,
+    U+00E1, U+00E9, U+00ED, U+00F3, U+00FA, U+00F1;
+  font-weight: 700;
+  size-adjust: 68%;
+}
+
 /* ─── DESIGN TOKENS (orko_ Brutalist System) ─────────────────────────────── */
 
 @theme inline {
@@ -13,6 +30,9 @@
   /* Typography */
   --font-headline: "HS LunaObscura", var(--font-headline), sans-serif;
   --font-data: "JetBrains Mono", monospace;
+
+  /* Accent Character Fix: Avoid "Gigante" accents by forcing a cleaner fallback for those specific glyphs */
+  --font-accent-fix: "Inter", "system-ui", sans-serif;
 
   /* Motion — keep in sync with lib/constants.ts */
   --ease-hero: cubic-bezier(0.16, 1, 0.3, 1);
@@ -99,7 +119,9 @@ textarea {
   color: #050505;
 }
 
-/* ─── TYPOGRAPHY SCALE ───────────────────────────────────────────────────── */
+html[lang="es"] {
+  --font-headline: var(--font-unbounded), sans-serif !important;
+}
 
 h1,
 h2,

@@ -118,27 +118,26 @@ function Logo() {
 }
 
 // ─── NavLink ──────────────────────────────────────────────────────────────
-function NavLink({ item }: { item: string }) {
-  const [display, setDisplay] = useState(`[ ${item} ]`);
+function NavLink({ labelKey, targetId }: { labelKey: Parameters<ReturnType<typeof useLanguage>['t']>[0]; targetId: string }) {
+  const { t } = useLanguage();
+  const label = t(labelKey).replace(/[\[\]]/g, '').trim();
+  const [display, setDisplay] = useState(`[ ${label} ]`);
   const cancelRef = useRef<(() => void) | null>(null);
 
-  const targetMap: Record<string, string> = {
-    'WORK': 'works',
-    'LAB': 'services',
-    'INTEL': 'bio',
-  };
+  useEffect(() => {
+    const newLabel = t(labelKey).replace(/[\[\]]/g, '').trim();
+    setDisplay(`[ ${newLabel} ]`);
+  }, [labelKey, t]);
 
   const handleEnter = () => {
+    const currentLabel = t(labelKey).replace(/[\[\]]/g, '').trim();
     cancelRef.current?.();
-    cancelRef.current = scramble(`[ ${item} ]`, 300, setDisplay);
+    cancelRef.current = scramble(`[ ${currentLabel} ]`, 300, setDisplay);
   };
 
   const handleClick = () => {
-    const targetId = targetMap[item];
-    if (targetId) {
-      const el = document.getElementById(targetId);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    const el = document.getElementById(targetId);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   return (
@@ -228,14 +227,20 @@ export function HUD() {
             padding: '0 clamp(20px, 4vw, 40px)', height: 80,
             display: 'flex', alignItems: 'center', justifyContent: 'space-between',
             pointerEvents: 'auto',
+            backgroundColor: 'rgba(5, 5, 5, 0.4)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            maskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 60%, transparent 100%)',
+            borderBottom: `1px solid ${COLORS.lineAsh}22`,
           }}
         >
           <Logo />
           <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(20px, 4vw, 40px)' }}>
             <nav style={{ display: 'flex', gap: '32px', alignItems: 'center' }}>
-              <NavLink item="WORK" />
-              <NavLink item="LAB" />
-              <NavLink item="INTEL" />
+              <NavLink labelKey="hud.work" targetId="works" />
+              <NavLink labelKey="hud.lab" targetId="services" />
+              <NavLink labelKey="hud.intel" targetId="bio" />
             </nav>
             <LangToggle />
             <BueClock />

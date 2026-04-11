@@ -3,8 +3,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { scramble } from '@/lib/textScramble';
 import { COLORS } from '@/lib/constants';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 
-const STRINGS = [
+const STRINGS_EN = [
   '> WE DESIGN UNIQUE VISUAL IDENTITIES_',
   '> WE DIRECT GLOBAL ART NARRATIVES_',
   '> WE RESEARCH STRATEGIC BRAND DIRECTIONS_',
@@ -15,16 +16,29 @@ const STRINGS = [
   '> WE ANALYZE VISUAL SEMANTICS_',
 ];
 
+const STRINGS_ES = [
+  '> DISENAMOS IDENTIDADES VISUALES UNICAS_',
+  '> DIRIGIMOS NARRATIVAS DE ARTE GLOBALES_',
+  '> INVESTIGAMOS DIRECCIONES ESTRATEGICAS_',
+  '> CONSTRUIMOS BRANDBOOKS EXHAUSTIVOS_',
+  '> DESARROLLAMOS EXPERIENCIAS INTERACTIVAS_',
+  '> CREAMOS LOGOTIPOS DE ALTO NIVEL_',
+  '> DEFINIMOS ESTRATEGIAS DE MARCA_',
+  '> ANALIZAMOS SEMANTICAS VISUALES_',
+];
+
 const HOLD_DURATION = 3500;
 
-function SocialLink({ label }: { label: string }) {
+function SocialLink({ label, href }: { label: string, href: string }) {
   const [display, setDisplay] = useState(`[ ${label} ]`);
   const [isHover, setIsHover] = useState(false);
   const cancelRef = useRef<(() => void) | null>(null);
 
   return (
     <a
-      href="#"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
       onMouseEnter={() => {
         setIsHover(true);
         cancelRef.current?.();
@@ -58,10 +72,17 @@ function SocialLink({ label }: { label: string }) {
 }
 
 export function TerminalTicker() {
+  const { lang } = useLanguage();
+  const STRINGS = lang === 'es' ? STRINGS_ES : STRINGS_EN;
   const [index, setIndex] = useState(0);
   const [display, setDisplay] = useState(STRINGS[0]);
   const [isLogoHover, setIsLogoHover] = useState(false);
   const cancelRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    setIndex(0);
+    setDisplay(STRINGS[0]);
+  }, [lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -75,7 +96,7 @@ export function TerminalTicker() {
       clearTimeout(timer);
       cancelRef.current?.();
     };
-  }, [index]);
+  }, [index, lang]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleLogoAction = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -130,8 +151,8 @@ export function TerminalTicker() {
 
       {/* SOCIALS Y LOGO */}
       <div style={{ display: 'flex', gap: 28, alignItems: 'center', pointerEvents: 'auto', zIndex: 10 }}>
-        <SocialLink label="INSTAGRAM" />
-        <SocialLink label="LINKEDIN" />
+        <SocialLink label="INSTAGRAM" href="https://www.instagram.com/geronimo.astorga/" />
+        <SocialLink label="LINKEDIN" href="https://www.linkedin.com/in/geroastorga/" />
 
         <div
           onMouseDown={handleLogoAction}

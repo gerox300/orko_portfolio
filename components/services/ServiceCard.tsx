@@ -150,7 +150,7 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
           ref={numberRef}
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: '0.55rem',
+            fontSize: '0.75rem',
             letterSpacing: '0.2em',
             color: COLORS.accentInfrared,
             opacity: 0.75,

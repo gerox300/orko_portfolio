@@ -2,7 +2,17 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 import { COLORS } from '@/lib/constants';
+import type { DictionaryKey } from '@/lib/i18n';
+
+interface ActivePill {
+  id: number;
+  labelKey: DictionaryKey;
+  zone: { top: string; left: string };
+  driftX: number;
+  driftY: number;
+}
 
 /**
  * SpecimenPills — Floating capability tags that orbit around the headline area.
@@ -15,15 +25,15 @@ import { COLORS } from '@/lib/constants';
  * - On hover: pill glitches with RGB split then stabilizes
  */
 
-const SPECIMENS = [
-  'WEB DESIGN',
-  'BRANDING',
-  'LOGO DESIGN',
-  'WRITING',
-  'AUTOMATIONS',
-  'CULTURAL RESEARCH',
-  'VISUAL IDENTITY',
-  'ART DIRECTION',
+const SPECIMENS: DictionaryKey[] = [
+  'pill.webDesign',
+  'pill.branding',
+  'pill.logoDesign',
+  'pill.writing',
+  'pill.automations',
+  'pill.research',
+  'pill.identity',
+  'pill.artDirection',
 ];
 
 // Predefined spawn zones (relative to the container) — scattered around the headline
@@ -41,27 +51,23 @@ const SPAWN_ZONES = [
   { top: '55%', left: '2%' },
 ];
 
-interface ActivePill {
-  id: number;
-  label: string;
-  zone: { top: string; left: string };
-  driftX: number;
-  driftY: number;
-}
-
-function Pill({ label, zone, driftX, driftY, onComplete }: {
-  label: string;
+function Pill({ labelKey, zone, driftX, driftY, onComplete }: {
+  labelKey: DictionaryKey;
   zone: { top: string; left: string };
   driftX: number;
   driftY: number;
   onComplete: () => void;
 }) {
+  const { t } = useLanguage();
+  const label = t(labelKey);
   const [isHovered, setIsHovered] = useState(false);
   const [displayText, setDisplayText] = useState('');
   const charsRef = useRef(0);
 
   // Character-by-character type-in effect on mount
   useEffect(() => {
+    setDisplayText('');
+    charsRef.current = 0;
     const interval = setInterval(() => {
       charsRef.current += 1;
       if (charsRef.current <= label.length) {
@@ -145,7 +151,7 @@ function Pill({ label, zone, driftX, driftY, onComplete }: {
 export function SpecimenPills() {
   const [activePills, setActivePills] = useState<ActivePill[]>([]);
   const counterRef = useRef(0);
-  const usedLabelsRef = useRef<Set<string>>(new Set());
+  const usedLabelsRef = useRef<Set<DictionaryKey>>(new Set());
   const usedZonesRef = useRef<Set<number>>(new Set());
 
   const spawnPill = () => {
@@ -170,7 +176,7 @@ export function SpecimenPills() {
 
     const newPill: ActivePill = {
       id,
-      label,
+      labelKey: label,
       zone,
       driftX: 4 + Math.random() * 8,
       driftY: 3 + Math.random() * 6,
@@ -183,7 +189,7 @@ export function SpecimenPills() {
     setActivePills(prev => {
       const pill = prev.find(p => p.id === id);
       if (pill) {
-        usedLabelsRef.current.delete(pill.label);
+        usedLabelsRef.current.delete(pill.labelKey);
         const zoneIdx = SPAWN_ZONES.findIndex(
           z => z.top === pill.zone.top && z.left === pill.zone.left
         );
@@ -234,7 +240,7 @@ export function SpecimenPills() {
         {activePills.map(pill => (
           <Pill
             key={pill.id}
-            label={pill.label}
+            labelKey={pill.labelKey}
             zone={pill.zone}
             driftX={pill.driftX}
             driftY={pill.driftY}

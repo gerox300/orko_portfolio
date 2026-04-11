@@ -35,11 +35,11 @@ const dictionary = {
   // ─── HUD ──────────────────────────────────────────────────────────────────
   'hud.work': {
     en: '[ WORK ]',
-    es: '[ OBRA ]',
+    es: '[ PROYECTOS ]',
   },
   'hud.lab': {
     en: '[ LAB ]',
-    es: '[ LAB ]',
+    es: '[ SERVICIOS ]',
   },
   'hud.intel': {
     en: '[ INTEL ]',
@@ -111,7 +111,7 @@ const dictionary = {
   // ─── BIO ──────────────────────────────────────────────────────────────────
   'bio.label': {
     en: '[ THE_OPERATOR ]',
-    es: '[ EL_OPERADOR ]',
+    es: '[ DIR-CREATIVA ]',
   },
   'bio.role': {
     en: 'CREATIVE SPECIMEN',
@@ -119,7 +119,7 @@ const dictionary = {
   },
   'bio.body': {
     en: "I came to design through anthropology — which means I arrived sideways, through fieldwork rather than form. I've been running that same diagnostic ever since: reading cultures before touching pixels, mapping how meaning moves through a brand before proposing how it should look.\n\nThe output is what you'd expect from that kind of process — identities, narratives, and interfaces that mutate with the contexts they inhabit. Precise because they're situated. Alive because they're built from the inside.",
-    es: "Llegué al diseño a través de la antropología, lo que significa que entré de costado, a través del trabajo de campo antes que de la forma. Desde entonces aplico el mismo diagnóstico: leer culturas antes de tocar píxeles, mapear cómo se mueve el sentido en una marca antes de proponer cómo debería verse.\n\nEl resultado es lo que se espera de ese tipo de proceso, identidades, narrativas e interfaces que mutan con los contextos que habitan. Precisas porque están situadas. Vivas porque se construyen desde adentro.",
+    es: "Llegué al diseño a través de la antropología, lo que significa que llegué de costado, a través del trabajo de campo y no de la forma. Desde entonces aplico el mismo diagnóstico: leer culturas antes de tocar píxeles, mapear cómo se mueve el significado en una marca antes de proponer cómo debería verse.\nEl resultado es lo que esperarías de ese tipo de proceso, identidades, narrativas e interfaces que mutan con los contextos que habitan. Precisas porque están situadas. Vivas porque están construidas desde adentro.",
   },
   'bio.stat.research': {
     en: 'RESEARCH',
@@ -137,11 +137,21 @@ const dictionary = {
     en: 'AUTOMATION',
     es: 'AUTOMATIZACIÓN',
   },
+  'bio.id.classified': {
+    en: 'CLASSIFIED',
+    es: 'CLASIFICADO',
+  },
+  'bio.id.age': { en: 'AGE', es: 'EDAD' },
+  'bio.id.sign': { en: 'SIGN', es: 'SIGNO' },
+  'bio.id.origin': { en: 'ORIGIN', es: 'ORIGEN' },
+  'bio.id.audio_op': { en: 'AUDIO_OP', es: 'OP_AUDIO' },
+  'bio.id.langs': { en: 'LANGS', es: 'IDIOMAS' },
+  'bio.id.status': { en: 'STATUS', es: 'ESTADO' },
 
   // ─── SERVICES ─────────────────────────────────────────────────────────────
   'services.sectionLabel': {
-    en: '[ WHAT_WE_DO ]',
-    es: '[ LO_QUE_HACEMOS ]',
+    en: '[ SERVICES ]',
+    es: '[ SERVICIOS ]',
   },
   'services.sectionTitle': {
     en: 'MUTATION VECTORS',
@@ -153,26 +163,26 @@ const dictionary = {
     es: 'IDENTIDAD DE MARCA Y DIRECCIÓN DE ARTE',
   },
   'services.brand.desc': {
-    en: 'Constructing visual systems with strict rules. Reducing brand chaos into a singular, undeniable signal.',
-    es: 'Construimos sistemas visuales con reglas estrictas. Reducimos el caos de marca a una señal única e innegable.',
+    en: 'Synthesizing visual DNA. Distilling chaotic brand matter into highly concentrated, unmistakable market signals.',
+    es: 'Sintetizando ADN visual. Destilando la materia caótica de la marca en señales en estado puro, de alta concentración e inconfundibles.',
   },
 
   'services.research.title': {
-    en: 'STRATEGIC INSIGHTS & RESEARCH',
-    es: 'INSIGHTS ESTRATÉGICOS E INVESTIGACIÓN',
+    en: 'STRATEGIC RESEARCH',
+    es: 'INVESTIGACION DIGITAL',
   },
   'services.research.desc': {
-    en: 'Decoding the human variable. Deep qualitative investigation to uncover hidden patterns before code.',
-    es: 'Decodificamos la variable humana. Investigación cualitativa profunda para descubrir patrones ocultos antes del código.',
+    en: 'Decoding the human variable. Deep qualitative investigation to uncover hidden behavioral patterns before writing a single line of code. Strategic mapping of cultural meaning within your niche.',
+    es: 'Decodificamos la variable humana. Investigación cualitativa profunda para descubrir patrones de comportamiento ocultos. Mapeo estratégico de los significados culturales en tu nicho para fundar la marca.',
   },
 
   'services.digital.title': {
-    en: 'DIGITAL ARCHITECTURE',
-    es: 'ARQUITECTURA DIGITAL',
+    en: 'DESIGN ECOSYSTEMS',
+    es: 'ECOSISTEMAS DE DISEÑO',
   },
   'services.digital.desc': {
-    en: 'Bespoke digital ecosystems. Zero templates. High-performance code designed for maximum immersion.',
-    es: 'Ecosistemas digitales a medida. Cero templates. Código de alto rendimiento diseñado para máxima inmersión.',
+    en: 'Bespoke digital ecosystems. Zero templates. High-performance code designed for maximum immersion. Web, apps, and platform development.',
+    es: 'Desarrollo de webs, apps, software y plataformas a medida. Cero templates. Código de alto rendimiento diseñado para inmersión total.',
   },
 
   'services.ai.title': {
@@ -180,18 +190,18 @@ const dictionary = {
     es: 'AUTOMATIZACIONES Y SOLUCIONES IA',
   },
   'services.ai.desc': {
-    en: 'Replacing manual labor with autonomous logic.',
-    es: 'Reemplazamos el trabajo manual con lógica autónoma.',
+    en: 'Intelligent automation flows and autonomous agents. Replacing manual labor with scalable, self-operating logic.',
+    es: 'Flujos de automatización inteligente y agentes autónomos. Reemplazamos el trabajo manual con lógica escalable que opera por sí sola.',
   },
 
   // ─── WORKS SECTION ────────────────────────────────────────────────────────
   'works.sectionLabel': {
     en: '[ THE_ARCHIVE ]',
-    es: '[ EL_ARCHIVO ]',
+    es: '[ ARCHIVO ]',
   },
   'works.sectionTitle': {
     en: 'CASE FILES',
-    es: 'ARCHIVOS DE CASO',
+    es: 'PROYECTOS',
   },
 
   // ─── WORKS TABLE HEADERS ──────────────────────────────────────────────────
@@ -357,6 +367,23 @@ const dictionary = {
     en: 'Development of a realistic 3D globe visualization showing real-time operational markets.',
     es: 'Desarrollo de una visualización realista de un globo terráqueo 3D que muestra los mercados reales.',
   },
+  'works.cantus_avi.sector': {
+    en: 'Choral / Music',
+    es: 'Coral / Musica',
+  },
+  'works.cantus_avi.type': {
+    en: 'Visual Identity Redesign',
+    es: 'Rediseno de Identidad',
+  },
+  'works.rodrigo.sector': {
+    en: 'Photography',
+    es: 'Fotografia',
+  },
+  'works.rodrigo.type': {
+    en: 'Photography Portfolio',
+    es: 'Portfolio Fotografico',
+  },
+
   'works.cantus_avi.copy': {
     en: 'Visual transformation for a youthful academic choir. We transitioned their choral heritage into a professional, high-impact brand system designed for commercial integration. The result is a jovial yet sophisticated identity that bridges the gap between academic excellence and the professional event market, with a special focus on weddings and high-end ceremonies.',
     es: 'Transformación visual para un coro académico de jóvenes. Transicionamos su herencia coral hacia un sistema de marca profesional y de alto impacto diseñado para la inserción comercial. El resultado es una identidad jovial pero sofisticada que cierra la brecha entre la excelencia académica y el mercado de eventos profesionales, con un enfoque especial en casamientos y ceremonias de gran nivel.',
@@ -454,12 +481,12 @@ const dictionary = {
 
   // ─── FOOTER ───────────────────────────────────────────────────────────────
   'footer.copyEmail': {
-    en: 'COPY EMAIL [↗]',
-    es: 'COPIAR EMAIL [↗]',
+    en: '[ COPY EMAIL ]',
+    es: '[ COPIAR EMAIL ]',
   },
   'footer.copied': {
-    en: '[ COPIED ]',
-    es: '[ COPIADO ]',
+    en: '[ COPIED! ]',
+    es: '[ ¡COPIADO! ]',
   },
   'footer.systemStatus': {
     en: 'ALL SYSTEMS OPERATIONAL',
@@ -467,15 +494,39 @@ const dictionary = {
   },
   'footer.cta': {
     en: 'START MUTATION',
-    es: 'INICIAR MUTACIÓN',
+    es: 'INICIAR PROYECTO',
   },
   'footer.ctaActive': {
     en: '[ MUTATION INITIATED ]',
-    es: '[ MUTACIÓN INICIADA ]',
+    es: '[ SECUENCIA INICIADA ]',
   },
   'footer.cursor': {
     en: '[ SCHEDULE_CALL ]',
     es: '[ AGENDAR ]',
+  },
+
+  // ─── SPECIMEN PILLS (HERO) ────────────────────────────────────────────────
+  'pill.webDesign': { en: 'WEB DESIGN', es: 'DISEÑO WEB' },
+  'pill.branding': { en: 'BRANDING', es: 'BRANDING' },
+  'pill.logoDesign': { en: 'LOGO DESIGN', es: 'DISEÑO DE LOGO' },
+  'pill.writing': { en: 'WRITING', es: 'REDACCIÓN' },
+  'pill.automations': { en: 'AUTOMATIONS', es: 'AUTOMATIZACIONES' },
+  'pill.research': { en: 'CULTURAL RESEARCH', es: 'INVESTIGACIÓN CULTURAL' },
+  'pill.identity': { en: 'VISUAL IDENTITY', es: 'IDENTIDAD VISUAL' },
+  'pill.artDirection': { en: 'ART DIRECTION', es: 'DIRECCIÓN DE ARTE' },
+
+  // ─── FOOTER EXTRA ─────────────────────────────────────────────────────────
+  'footer.labLabel': {
+    en: 'orko_ | MUTATION LABORATORY',
+    es: 'orko_ | LABORATORIO CREATIVO',
+  },
+  'footer.step1': { en: 'ESTABLISHING_VECTORS...', es: 'ESTABLECIENDO_VECTORES...' },
+  'footer.step2': { en: 'PINGING_AVAILABILITY_LAB...', es: 'VERIFICANDO_LABORATORIO...' },
+  'footer.step3': { en: 'ENCRYPTING_HANDSHAKE...', es: 'ENCRIPTANDO_ENLACE...' },
+  'footer.step4': { en: 'OPENING_BOOKING_PORTAL...', es: 'ABRIENDO_AGENDA...' },
+  'footer.rights': {
+    en: 'ALL RIGHTS RESERVED',
+    es: 'TODOS LOS DERECHOS RESERVADOS',
   },
 } as const;
 

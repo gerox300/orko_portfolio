@@ -20,6 +20,7 @@
 
 import { useRef, useState, useEffect, useCallback } from 'react';
 import gsap from 'gsap';
+import { useLanguage } from '@/components/providers/LanguageProvider';
 import { COLORS } from '@/lib/constants';
 
 // ─── Static Noise ─────────────────────────────────────────────────────────────
@@ -68,13 +69,65 @@ function useStaticNoise(
   }, [active, canvasRef, FRAME_MS]);
 }
 
+// ─── Chunky Glitch ────────────────────────────────────────────────────────────
+
+function useChunkyGlitch(
+  canvasRef: React.RefObject<HTMLCanvasElement | null>,
+  active: boolean,
+) {
+  const rafRef = useRef<number>(0);
+  const lastFrameRef = useRef<number>(0);
+  const FPS = 12;
+  const FRAME_MS = 1000 / FPS;
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    if (!active) {
+      cancelAnimationFrame(rafRef.current);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      return;
+    }
+
+    function draw(now: number) {
+      rafRef.current = requestAnimationFrame(draw);
+      if (now - lastFrameRef.current < FRAME_MS) return;
+      lastFrameRef.current = now;
+      if (!canvas || !ctx) return;
+      
+      const { width, height } = canvas;
+      ctx.clearRect(0, 0, width, height);
+
+      const blockSize = 16;
+      for (let y = 0; y < height; y += blockSize) {
+        for (let x = 0; x < width; x += blockSize) {
+          if (Math.random() < 0.35) {
+            ctx.fillStyle = Math.random() > 0.7 
+              ? 'rgba(255,255,255,0.7)' 
+              : (Math.random() > 0.5 ? 'rgba(150,150,150,0.8)' : 'rgba(30,30,30,0.9)');
+            ctx.fillRect(x, y, blockSize, blockSize);
+          }
+        }
+      }
+    }
+
+    rafRef.current = requestAnimationFrame(draw);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [active, canvasRef, FRAME_MS]);
+}
+
 // ─── Constants ────────────────────────────────────────────────────────────────
 
 const META_ROWS = [
-  { label: 'LAT', value: '-34.6037° S' },
-  { label: 'LON', value: '-58.3816° W' },
-  { label: 'CLEARANCE', value: 'LEVEL 3' },
-  { label: 'STATUS', value: 'ACTIVE' },
+  { label: 'age', value: '30' },
+  { label: 'sign', value: 'SCORPIO' },
+  { label: 'origin', value: 'CHILE' },
+  { label: 'audio_op', value: 'PIANO / DJ / PRODUCER' },
+  { label: 'langs', value: 'ES / EN / FR' },
+  { label: 'status', value: 'ACTIVE' },
 ] as const;
 
 const CORNERS = ['top-left', 'top-right', 'bottom-left', 'bottom-right'] as const;
@@ -82,11 +135,14 @@ const CORNERS = ['top-left', 'top-right', 'bottom-left', 'bottom-right'] as cons
 // ─── IDCard ───────────────────────────────────────────────────────────────────
 
 export function IDCard() {
+  const { t } = useLanguage();
   const cardRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const chunkyRef = useRef<HTMLCanvasElement>(null);
   const [isHovered, setIsHovered] = useState(false);
 
   useStaticNoise(canvasRef, isHovered);
+  useChunkyGlitch(chunkyRef, isHovered);
 
   const handleMouseEnter = useCallback(() => {
     setIsHovered(true);
@@ -168,7 +224,7 @@ export function IDCard() {
             opacity: 0.85,
           }}
         >
-          CLASSIFIED
+          {t('bio.id.classified')}
         </span>
         <span
           style={{
@@ -208,26 +264,80 @@ export function IDCard() {
           }}
         />
 
-        {/* ASSET: Replace with actual profile image — grayscale, high-contrast */}
-        <span
+        <img
+          src="/gero_portrait.jpg"
+          alt="Geronimo Astorga Portrait"
           style={{
-            fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: '0.5rem',
-            letterSpacing: '0.12em',
-            color: COLORS.textBone,
-            opacity: 0.12,
-            textAlign: 'center',
-            lineHeight: 1.8,
-            position: 'relative',
+            position: 'absolute',
+            inset: 0,
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            filter: 'contrast(1.15)',
             zIndex: 1,
+            opacity: 0.95,
           }}
-        >
-          SPECIMEN
-          <br />
-          VISUAL
-          <br />
-          [AWAITING]
-        </span>
+        />
+
+        {/* Chunky Glitch Censorship Backdrop */}
+        <canvas
+          ref={chunkyRef}
+          width={240}
+          height={240}
+          style={{
+            position: 'absolute',
+            top: 'calc(35% + 20px)',
+            left: 'calc(50% - 3px)',
+            transform: 'translate(-50%, -50%)',
+            width: '80%',
+            height: '60%',
+            maskImage: 'radial-gradient(circle at center, rgba(0,0,0,1) 25%, rgba(0,0,0,0) 70%)',
+            WebkitMaskImage: 'radial-gradient(circle at center, rgba(0,0,0,1) 25%, rgba(0,0,0,0) 70%)',
+            opacity: isHovered ? 1 : 0,
+            transition: 'opacity 0.2s ease',
+            pointerEvents: 'none',
+            zIndex: 2,
+            mixBlendMode: 'overlay', // Blends violently with the face
+          }}
+        />
+
+        {/* Blurred Darkening layer for visibility */}
+        <div style={{
+          position: 'absolute',
+          top: 'calc(35% + 20px)',
+          left: 'calc(50% - 3px)',
+          transform: 'translate(-50%, -50%)',
+          width: '70%',
+          height: '45%',
+          backgroundColor: 'rgba(5,5,5,0.4)',
+          backdropFilter: 'blur(10px) contrast(1.2) grayscale(1)',
+          WebkitBackdropFilter: 'blur(10px) contrast(1.2) grayscale(1)',
+          maskImage: 'radial-gradient(circle at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%)',
+          WebkitMaskImage: 'radial-gradient(circle at center, rgba(0,0,0,1) 30%, rgba(0,0,0,0) 70%)',
+          opacity: isHovered ? 1 : 0,
+          transition: 'opacity 0.2s ease',
+          pointerEvents: 'none',
+          zIndex: 1,
+        }} />
+
+        {/* Censorship Logo (Hover) */}
+        <img
+          src="/logo_isologo.png"
+          alt="Classified"
+          style={{
+            position: 'absolute',
+            top: 'calc(35% + 20px)', // Lowered an extra 5px
+            left: 'calc(50% - 3px)', // Moved left by 3px
+            width: '45%',
+            height: 'auto',
+            filter: 'brightness(0) invert(1)',
+            opacity: isHovered ? 0.95 : 0,
+            transform: isHovered ? 'translate(-50%, -50%) scale(1.1)' : 'translate(-50%, -50%) scale(0.9)',
+            transition: 'opacity 0.15s ease, transform 0.15s ease',
+            zIndex: 3,
+            pointerEvents: 'none',
+          }}
+        />
 
         {/* Corner crosshairs */}
         {CORNERS.map((corner) => (
@@ -280,7 +390,7 @@ export function IDCard() {
                 opacity: 0.3,
               }}
             >
-              {label}
+              {t(`bio.id.${label}` as any)}
             </span>
             <span
               style={{

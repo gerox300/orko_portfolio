@@ -18,10 +18,10 @@ import type { DictionaryKey } from '@/lib/i18n';
 gsap.registerPlugin(ScrollTrigger);
 
 const STATS: { key: DictionaryKey; pct: number }[] = [
-  { key: 'bio.stat.research', pct: 78 },
+  { key: 'bio.stat.research', pct: 99 },
   { key: 'bio.stat.development', pct: 90 },
   { key: 'bio.stat.artDirection', pct: 95 },
-  { key: 'bio.stat.automation', pct: 72 },
+  { key: 'bio.stat.automation', pct: 83 },
 ];
 
 const fadeUp = {
@@ -62,8 +62,8 @@ export function Bio() {
       aria-label="Bio — The Operator"
       style={{
         position: 'relative',
-        // More transparent bg so video echo and spores bleed through
-        backgroundColor: 'rgba(5, 5, 5, 0.78)',
+        // Total transparency so spores and texture bleed through 100%
+        backgroundColor: 'transparent',
         padding: 'clamp(72px, 12vh, 120px) clamp(20px, 4vw, 40px)',
         overflow: 'hidden',
         zIndex: 3,
