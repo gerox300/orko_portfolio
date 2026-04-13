@@ -802,6 +802,23 @@ export function Works() {
               <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.62rem', letterSpacing: '0.2em', color: COLORS.textBone, opacity: 0.45, textTransform: 'uppercase', textAlign: 'right' }}>{t('works.col.year')}</span>
             </div>
 
+            {/* Mobile-only tap hint */}
+            {isMobile && (
+              <div style={{
+                padding: 'clamp(8px, 1.5vw, 12px) clamp(20px, 4vw, 40px)',
+                fontFamily: 'var(--font-jetbrains-mono), monospace',
+                fontSize: '0.6rem',
+                letterSpacing: '0.18em',
+                color: COLORS.accentInfrared,
+                opacity: 0.65,
+                textTransform: 'uppercase',
+                display: 'flex', alignItems: 'center', gap: 6,
+              }}>
+                <span>▾</span>
+                <span>TAP ROW TO EXPAND</span>
+              </div>
+            )}
+
             {projects.map((project, i) => (
               <WorkRow
                 key={project.key}
@@ -825,6 +842,7 @@ export function Works() {
                   }
                 }}
                 onClick={() => openProject(project, i)}
+                onOpenProject={() => openProject(project, i)}
               />
             ))}
           </div>

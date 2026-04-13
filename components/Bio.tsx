@@ -76,8 +76,8 @@ export function Bio() {
         alignItems: 'start',
         position: 'relative', zIndex: 1,
       }}>
-        {/* Left Column: Headers + Body + Stats — order:2 on mobile so card shows first */}
-        <div style={{ order: isMobile ? 2 : 1 }}>
+        {/* Left Column: Headers + Body + Stats — order:1 on mobile so text+stats show first */}
+        <div style={{ order: 1 }}>
           <motion.div
             initial="hidden" whileInView="visible" viewport={viewportOpts} variants={fadeUp}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -126,7 +126,7 @@ export function Bio() {
           </div>
         </div>
 
-        {/* Right Column: ID Card — order:1 on mobile so it renders above text */}
+        {/* Right Column: ID Card — order:2 on mobile so it renders BELOW text+stats */}
         <motion.div
           initial="hidden" whileInView="visible" viewport={viewportOpts} variants={fadeUp}
           transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
@@ -134,7 +134,7 @@ export function Bio() {
             display: 'flex',
             justifyContent: isMobile ? 'flex-start' : 'center',
             paddingTop: isMobile ? 0 : 'clamp(40px, 8vh, 80px)',
-            order: isMobile ? 1 : 2,
+            order: 2,
           }}
         >
           <IDCard />

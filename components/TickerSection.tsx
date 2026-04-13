@@ -158,10 +158,21 @@ const ROWS: RowDef[] = [
 export function TickerSection() {
     const sectionRef = useRef<HTMLElement>(null);
     const rowRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [isMobile, setIsMobile] = useState(false);
+
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
 
     useEffect(() => {
         const section = sectionRef.current;
         if (!section) return;
+
+        // Mobile: no GSAP scrub — rows are positioned statically
+        if (window.innerWidth < 768) return;
 
         // Small delay to ensure fonts are loaded and layout is settled
         const raf = requestAnimationFrame(() => {
@@ -206,6 +217,7 @@ export function TickerSection() {
                                 trigger: section,
                                 start: 'top 80%',
                                 end: 'bottom 20%',
+                                // Reduced scrub on mobile-ish screens for responsiveness
                                 scrub: row.scrub,
                             },
                         }
@@ -221,7 +233,7 @@ export function TickerSection() {
             cancelAnimationFrame(raf);
             ctxRef.current?.revert();
         };
-    }, []);
+    }, [isMobile]);
 
     return (
         <>
@@ -232,6 +244,8 @@ export function TickerSection() {
                          url('/hs_lunaobscura/HS_LunaObscura.otf') format('opentype');
                 }
                 @keyframes rec-blink-tk { 0%,100%{opacity:1} 50%{opacity:0.2} }
+                @keyframes ticker-scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+                @keyframes ticker-scroll-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
             `}</style>
 
             <section
@@ -241,9 +255,9 @@ export function TickerSection() {
                 style={{
                     position: 'relative',
                     width: '100%',
-                    height: '65vh',
-                    marginTop: 120,
-                    marginBottom: 120,
+                    height: isMobile ? '40vh' : '65vh',
+                    marginTop: isMobile ? 40 : 120,
+                    marginBottom: isMobile ? 40 : 120,
                     backgroundColor: '#050505',
                     overflow: 'hidden',
                     isolation: 'isolate',
@@ -274,6 +288,10 @@ export function TickerSection() {
                             willChange: 'transform',
                             lineHeight: 1,
                             margin: 0, padding: 0,
+                            // Mobile: CSS auto-scroll animation (no GSAP scrub lag)
+                            ...(isMobile ? {
+                                animation: `${row.direction === -1 ? 'ticker-scroll-left' : 'ticker-scroll-right'} ${20 + i * 4}s linear infinite`,
+                            } : {}),
                         }}
                     >
                         <RowContent row={row} />

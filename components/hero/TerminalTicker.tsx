@@ -77,7 +77,15 @@ export function TerminalTicker() {
   const [index, setIndex] = useState(0);
   const [display, setDisplay] = useState(STRINGS[0]);
   const [isLogoHover, setIsLogoHover] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const cancelRef = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     setIndex(0);
@@ -137,22 +145,25 @@ export function TerminalTicker() {
       {/* TEXTO IZQUIERDO */}
       <div style={{
         fontFamily: 'var(--font-jetbrains-mono), monospace',
-        fontSize: '0.85rem',
+        fontSize: isMobile ? '0.7rem' : '0.85rem',
         color: COLORS.accentInfrared,
         opacity: 0.9,
         display: 'flex',
         gap: '0.5ch',
-        pointerEvents: 'auto', // ...pero el texto y los links sí
-        zIndex: 10
+        pointerEvents: 'auto',
+        zIndex: 10,
+        overflow: 'hidden',
+        minWidth: 0,
+        flex: 1,
       }}>
         <span style={{ flexShrink: 0 }}>{'>'}</span>
-        <span>{display.startsWith('>') ? display.substring(2) : display}</span>
+        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{display.startsWith('>') ? display.substring(2) : display}</span>
       </div>
 
       {/* SOCIALS Y LOGO */}
-      <div style={{ display: 'flex', gap: 28, alignItems: 'center', pointerEvents: 'auto', zIndex: 10 }}>
-        <SocialLink label="INSTAGRAM" href="https://www.instagram.com/geronimo.astorga/" />
-        <SocialLink label="LINKEDIN" href="https://www.linkedin.com/in/geroastorga/" />
+      <div style={{ display: 'flex', gap: isMobile ? 16 : 28, alignItems: 'center', pointerEvents: 'auto', zIndex: 10, flexShrink: 0 }}>
+        <SocialLink label={isMobile ? 'IG' : 'INSTAGRAM'} href="https://www.instagram.com/geronimo.astorga/" />
+        <SocialLink label={isMobile ? 'LK' : 'LINKEDIN'} href="https://www.linkedin.com/in/geroastorga/" />
 
         <div
           onMouseDown={handleLogoAction}

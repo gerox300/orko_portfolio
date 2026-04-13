@@ -78,10 +78,19 @@ function ChaosLayer({ active }: { active: boolean }) {
     let id = 0;
     const iv = setInterval(() => {
       const src = CREATURE_VIDEOS[Math.floor(Math.random() * CREATURE_VIDEOS.length)];
+      // Cap video size so it stays within the viewport on mobile
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+      const maxW = Math.min(300, vw * 0.6);
+      const w = 100 + Math.random() * (maxW - 100);
+      const h = w * (0.8 + Math.random() * 0.4);
+      // Keep position so the video stays fully on-screen
+      const maxX = Math.max(0, vw - w);
+      const maxY = Math.max(0, vh - h);
       const flash = {
         id: id++, src,
-        x: Math.random() * 80, y: Math.random() * 80,
-        w: 150 + Math.random() * 250, h: 120 + Math.random() * 200,
+        x: Math.random() * maxX, y: Math.random() * maxY,
+        w, h,
         opacity: 0.3 + Math.random() * 0.5,
         tint: Math.random() > 0.5 ? 'rgba(0,255,65,0.3)' : 'rgba(220,40,40,0.3)',
       };
@@ -106,7 +115,7 @@ function ChaosLayer({ active }: { active: boolean }) {
         {scramble}
       </div>
       {flashes.map(f => (
-        <div key={f.id} style={{ position: 'absolute', left: `${f.x}%`, top: `${f.y}%`, width: f.w, height: f.h, overflow: 'hidden', opacity: f.opacity, pointerEvents: 'none', zIndex: 3, border: '1px solid rgba(255,255,255,0.1)' }}>
+        <div key={f.id} style={{ position: 'absolute', left: f.x, top: f.y, width: f.w, height: f.h, overflow: 'hidden', opacity: f.opacity, pointerEvents: 'none', zIndex: 3, border: '1px solid rgba(255,255,255,0.1)' }}>
           <video src={f.src} autoPlay muted playsInline style={{ width: '100%', height: '100%', objectFit: 'cover', mixBlendMode: 'screen' }} />
           <div style={{ position: 'absolute', inset: 0, backgroundColor: f.tint, mixBlendMode: 'overlay' }} />
         </div>
@@ -153,8 +162,8 @@ function BioBars({ active, isMobile }: { active: boolean; isMobile: boolean }) {
         const barStr = '█'.repeat(filled) + '░'.repeat(barLength - filled);
         const lbl = isMobile ? bar.labelMobile : bar.label;
         return (
-          <div key={bar.label} style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: isMobile ? '0.5rem' : 'clamp(0.55rem, 1.2vw, 0.68rem)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 12 }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', width: isMobile ? 56 : 130, flexShrink: 0 }}>{lbl}</span>
+          <div key={bar.label} style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: isMobile ? 'clamp(0.62rem, 2.5vw, 0.72rem)' : 'clamp(0.55rem, 1.2vw, 0.68rem)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12 }}>
+            <span style={{ color: 'rgba(255,255,255,0.35)', width: isMobile ? 72 : 130, flexShrink: 0 }}>{lbl}</span>
             <span style={{ color, fontFamily: 'monospace', letterSpacing: 0 }}>{barStr}</span>
             <span style={{ color, width: 30, textAlign: 'right', flexShrink: 0 }}>{status === 'fail' ? 'ERR' : `${Math.round(pct)}%`}</span>
           </div>
@@ -201,7 +210,7 @@ function TerminalLine({ text, color, startTyping, onComplete }: { text: string; 
   }, [startTyping]);
   if (!startTyping && !done) return null;
   return (
-    <div style={{ color, fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 'clamp(0.5rem, 1.8vw, 0.75rem)', lineHeight: 1.6, letterSpacing: '0.04em', whiteSpace: 'pre', minHeight: '1.6em', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+    <div style={{ color, fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: 'clamp(0.72rem, 3.2vw, 0.88rem)', lineHeight: 1.7, letterSpacing: '0.04em', whiteSpace: 'pre-wrap', wordBreak: 'break-word', minHeight: '1.7em' }}>
       {displayed}
       {!done && <span style={{ display: 'inline-block', width: '0.5em', height: '1em', backgroundColor: COLORS.textBone, marginLeft: 1, animation: 'cursorblink 0.8s step-end infinite', verticalAlign: 'text-bottom' }} />}
     </div>
@@ -229,6 +238,13 @@ export function BootSequence() {
     window.addEventListener('resize', check);
     return () => window.removeEventListener('resize', check);
   }, []);
+
+  // Block body scroll while boot is active
+  useEffect(() => {
+    if (hasBooted) return;
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, [hasBooted]);
 
   useEffect(() => {
     if (hasBooted) return;
@@ -383,20 +399,19 @@ export function BootSequence() {
                         <button
                           onClick={handleEnter}
                           style={{
-                            background: 'transparent', outline: 'none',
+                            background: 'transparent', outline: 'none', border: 'none',
                             color: COLORS.textBone,
                             fontFamily: 'var(--font-jetbrains-mono), monospace',
-                            fontSize: isMobile ? 'clamp(1rem, 4.5vw, 1.2rem)' : 'clamp(0.7rem, 1.6vw, 0.85rem)',
+                            fontSize: isMobile ? 'clamp(1rem, 4.5vw, 1.2rem)' : 'clamp(0.8rem, 1.8vw, 1rem)',
                             letterSpacing: '0.25em', cursor: 'pointer',
                             textTransform: 'uppercase',
-                            padding: isMobile ? '1em 2em' : '0.5em 0',
+                            padding: '0.6em 0',
                             transition: 'color 150ms ease',
-                            border: `1px solid ${COLORS.textBone}`,
                             minHeight: 48,
                             display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                           }}
-                          onMouseEnter={e => { e.currentTarget.style.color = '#DC2828'; e.currentTarget.style.borderColor = '#DC2828'; }}
-                          onMouseLeave={e => { e.currentTarget.style.color = COLORS.textBone; e.currentTarget.style.borderColor = COLORS.textBone; }}
+                          onMouseEnter={e => { e.currentTarget.style.color = COLORS.accentInfrared; }}
+                          onMouseLeave={e => { e.currentTarget.style.color = COLORS.textBone; }}
                         >
                           [{lang === 'es' ? ' ENTRAR AL LAB ' : ' ENTER LAB '}]
                         </button>

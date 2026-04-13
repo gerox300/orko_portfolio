@@ -15,7 +15,7 @@
  *   description — service description (translated)
  */
 
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { COLORS, GSAP_EASE, AUDIO_IDS } from '@/lib/constants';
@@ -32,6 +32,14 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
   const numberRef = useRef<HTMLSpanElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   const handleMouseEnter = useCallback(() => {
     const fill = fillRef.current;
@@ -104,28 +112,26 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
   }, [title]);
 
   return (
-    <motion.div
+    <div
       data-card
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      animate={{
-        boxShadow: [
-          `inset 0 0 0 1px ${COLORS.lineAsh}`,
-          `inset 0 0 0 1px #2C2C2C`,
-          `inset 0 0 0 1px ${COLORS.lineAsh}`,
-        ],
-      }}
-      transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+      onMouseEnter={isMobile ? undefined : handleMouseEnter}
+      onMouseLeave={isMobile ? undefined : handleMouseLeave}
       style={{
         position: 'relative',
-        border: `1px solid ${COLORS.lineAsh}`,
-        padding: 'clamp(24px, 3.5vh, 36px) clamp(20px, 2.5vw, 28px)',
+        // Mobile: red border; Desktop: lineAsh
+        border: isMobile
+          ? `1px solid ${COLORS.accentInfrared}44`
+          : `1px solid ${COLORS.lineAsh}`,
+        padding: isMobile
+          ? 'clamp(20px, 4vw, 28px)'
+          : 'clamp(24px, 3.5vh, 36px) clamp(20px, 2.5vw, 28px)',
         overflow: 'hidden',
-        cursor: 'crosshair',
+        cursor: isMobile ? 'default' : 'crosshair',
         display: 'flex',
         flexDirection: 'column',
         gap: 0,
-        minHeight: 'clamp(320px, 45vh, 400px)',
+        // Mobile: auto height so content determines size; desktop: fixed min
+        minHeight: isMobile ? 'auto' : 'clamp(280px, 38vh, 360px)',
       }}
     >
       {/* Infrared fill layer */}
@@ -167,7 +173,7 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
           style={{
             fontFamily: 'var(--font-headline), sans-serif',
             fontWeight: 700,
-            fontSize: 'clamp(0.82rem, 1.4vw, 1.05rem)',
+            fontSize: isMobile ? 'clamp(1rem, 4.5vw, 1.2rem)' : 'clamp(0.82rem, 1.4vw, 1.05rem)',
             letterSpacing: '-0.01em',
             textTransform: 'uppercase',
             color: COLORS.textBone,
@@ -184,16 +190,16 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
           ref={descRef}
           style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: 'clamp(0.7rem, 1.2vw, 0.85rem)',
-            lineHeight: 1.7,
+            fontSize: isMobile ? 'clamp(0.82rem, 3.2vw, 0.95rem)' : 'clamp(0.7rem, 1.2vw, 0.85rem)',
+            lineHeight: 1.75,
             color: COLORS.textBone,
-            opacity: 0.52,
+            opacity: 0.6,
             margin: 0,
           }}
         >
           {description}
         </p>
       </div>
-    </motion.div>
+    </div>
   );
 }

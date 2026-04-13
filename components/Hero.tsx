@@ -57,15 +57,15 @@ function Subheadline() {
   return (
     <motion.p
       initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 0.5, y: 0 }}
+      animate={{ opacity: 0.6, y: 0 }}
       transition={{ delay: SUBHEADLINE_DELAY / 1000, duration: 0.7, ease: heroEase }}
       style={{
         fontFamily: 'var(--font-jetbrains-mono), monospace',
-        fontSize: 'clamp(0.82rem, 1.5vw, 0.95rem)',
-        lineHeight: 1.6,
+        fontSize: 'clamp(0.9rem, 2.2vw, 0.95rem)',
+        lineHeight: 1.7,
         letterSpacing: '0.02em',
         color: COLORS.textBone,
-        maxWidth: 480,
+        maxWidth: 520,
         margin: 0,
         marginTop: 'clamp(20px, 4vh, 32px)',
       }}
@@ -83,6 +83,14 @@ export function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const tickerRef = useRef<HTMLDivElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -157,14 +165,23 @@ export function Hero() {
         backgroundColor: 'transparent',
       }}
     >
-      {/* Overlays */}
+      {/* Overlays — DataNodes hidden on mobile to prevent overflow */}
+      {!isMobile && (
+        <div className="hero-overlay" style={{
+          position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2,
+        }}>
+          <DataNodes />
+        </div>
+      )}
+      {/* SpecimenPills: on mobile, keep below the copy to avoid obscuring text */}
       <div className="hero-overlay" style={{
-        position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 2,
-      }}>
-        <DataNodes />
-      </div>
-      <div className="hero-overlay" style={{
-        position: 'absolute', inset: 0, zIndex: 15, pointerEvents: 'none',
+        position: 'absolute',
+        // On mobile: pin pills near bottom so they don't overlap title/subtext
+        top: isMobile ? 'auto' : 0,
+        bottom: isMobile ? '22vh' : 'auto',
+        left: 0, right: 0,
+        height: isMobile ? 'auto' : '100%',
+        zIndex: 15, pointerEvents: 'none',
       }}>
         <SpecimenPills />
       </div>
@@ -180,7 +197,10 @@ export function Hero() {
           flexDirection: 'column',
           justifyContent: 'center',
           padding: '0 clamp(20px, 4vw, 40px)',
-          maxWidth: '55vw',
+          // Mobile: full width + center align; Desktop: constrained to left 55%
+          maxWidth: isMobile ? '100%' : '55vw',
+          textAlign: isMobile ? 'center' : 'left',
+          alignItems: isMobile ? 'center' : 'flex-start',
         }}
       >
         <Headline />

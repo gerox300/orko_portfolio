@@ -18,6 +18,7 @@ interface WorkRowProps {
   onMouseEnter: (e: React.MouseEvent<HTMLDivElement>) => void;
   onMouseLeave: () => void;
   onClick: () => void;
+  onOpenProject?: () => void;
 }
 
 export function WorkRow({
@@ -29,6 +30,7 @@ export function WorkRow({
   onMouseEnter,
   onMouseLeave,
   onClick,
+  onOpenProject,
 }: WorkRowProps) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -239,15 +241,51 @@ export function WorkRow({
               <p
                 style={{
                   fontFamily: 'var(--font-jetbrains-mono), monospace',
-                  fontSize: '0.62rem',
-                  lineHeight: 1.7,
+                  fontSize: '0.72rem',
+                  lineHeight: 1.75,
                   color: COLORS.textBone,
-                  opacity: 0.5,
+                  opacity: 0.6,
                   margin: 0,
                 }}
               >
                 {project.copy}
               </p>
+
+              {/* Open Project button */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onOpenProject?.();
+                }}
+                style={{
+                  marginTop: 8,
+                  background: 'transparent',
+                  border: `1px solid ${COLORS.accentInfrared}`,
+                  color: COLORS.accentInfrared,
+                  fontFamily: 'var(--font-jetbrains-mono), monospace',
+                  fontSize: '0.65rem',
+                  letterSpacing: '0.18em',
+                  textTransform: 'uppercase',
+                  padding: '10px 16px',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  minHeight: 44,
+                  alignSelf: 'flex-start',
+                  transition: 'background 150ms ease, color 150ms ease',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.background = COLORS.accentInfrared;
+                  e.currentTarget.style.color = COLORS.bgAbyss;
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.color = COLORS.accentInfrared;
+                }}
+              >
+                OPEN PROJECT ↗
+              </button>
             </div>
           </motion.div>
         )}

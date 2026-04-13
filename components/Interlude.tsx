@@ -223,7 +223,7 @@ export function Interlude() {
                     display: 'flex',
                     alignItems: 'center',
                     padding: isMobile
-                        ? 'clamp(64px, 10vh, 96px) clamp(20px, 4vw, 40px) clamp(48px, 8vh, 80px)'
+                        ? 'clamp(48px, 8vh, 72px) clamp(20px, 4vw, 40px) clamp(24px, 4vh, 36px)'
                         : 'clamp(40px, 12vh, 160px) clamp(20px, 5vw, 60px)',
                     overflow: 'hidden',
                 }}
@@ -262,9 +262,9 @@ export function Interlude() {
                                 position: 'relative',
                                 fontFamily: 'var(--font-jetbrains-mono), monospace',
                                 fontSize: isMobile
-                                    ? (lang === 'es' ? 'clamp(0.9rem, 4.5vw, 1.15rem)' : 'clamp(0.85rem, 4.2vw, 1.05rem)')
+                                    ? (lang === 'es' ? 'clamp(1.05rem, 5.2vw, 1.3rem)' : 'clamp(1rem, 5vw, 1.25rem)')
                                     : (lang === 'es' ? 'clamp(1.1rem, 2.4vw, 1.4rem)' : 'clamp(0.95rem, 2.2vw, 1.25rem)'),
-                                lineHeight: isMobile ? 1.9 : 2.1,
+                                lineHeight: isMobile ? 2.0 : 2.1,
                                 letterSpacing: '0.02em',
                                 color: COLORS.textBone,
                             }}>
