@@ -18,7 +18,7 @@ const HEADLINE_SCRAMBLE_DURATION = 1100;
 const SUBHEADLINE_DELAY = 500;
 
 // ─── Headline ─────────────────────────────────────────────────────────────
-function Headline() {
+function Headline({ isMobile }: { isMobile: boolean }) {
   const { t } = useLanguage();
   const target = t('hero.headline');
   const [display, setDisplay] = useState('');
@@ -37,15 +37,16 @@ function Headline() {
     <h1 style={{
       fontFamily: 'var(--font-headline), sans-serif',
       fontWeight: 700,
-      fontSize: 'clamp(2.6rem, 7vw, 6.5rem)',
-      lineHeight: 0.9,
+      fontSize: isMobile ? 'clamp(2.2rem, 9vw, 3.8rem)' : 'clamp(2.6rem, 7vw, 6.5rem)',
+      lineHeight: isMobile ? 1.08 : 0.9,
       letterSpacing: '-0.02em',
       textTransform: 'uppercase',
       color: COLORS.textBone,
       margin: 0,
-      minHeight: '2em',
+      minHeight: isMobile ? 'auto' : '2em',
       cursor: 'none',
-      maxWidth: '100%',
+      width: '100%',
+      textAlign: isMobile ? 'center' : 'left',
     }}>
       <GlitchText text={display} />
     </h1>
@@ -196,14 +197,17 @@ export function Hero() {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
-          padding: '0 clamp(20px, 4vw, 40px)',
+          padding: isMobile
+            ? '0 clamp(20px, 6vw, 40px)'
+            : '0 clamp(20px, 4vw, 40px)',
           // Mobile: full width + center align; Desktop: constrained to left 55%
+          width: '100%',
           maxWidth: isMobile ? '100%' : '55vw',
           textAlign: isMobile ? 'center' : 'left',
           alignItems: isMobile ? 'center' : 'flex-start',
         }}
       >
-        <Headline />
+        <Headline isMobile={isMobile} />
         <Subheadline />
       </div>
 

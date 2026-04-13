@@ -260,29 +260,24 @@ export function WorkRow({
                 style={{
                   marginTop: 8,
                   background: 'transparent',
-                  border: `1px solid ${COLORS.accentInfrared}`,
+                  border: 'none',
                   color: COLORS.accentInfrared,
                   fontFamily: 'var(--font-jetbrains-mono), monospace',
                   fontSize: '0.65rem',
                   letterSpacing: '0.18em',
                   textTransform: 'uppercase',
-                  padding: '10px 16px',
+                  padding: '10px 0',
                   cursor: 'pointer',
                   display: 'flex',
                   alignItems: 'center',
-                  gap: 8,
+                  gap: 6,
                   minHeight: 44,
                   alignSelf: 'flex-start',
-                  transition: 'background 150ms ease, color 150ms ease',
+                  opacity: 0.9,
+                  transition: 'opacity 150ms ease',
                 }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.background = COLORS.accentInfrared;
-                  e.currentTarget.style.color = COLORS.bgAbyss;
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.background = 'transparent';
-                  e.currentTarget.style.color = COLORS.accentInfrared;
-                }}
+                onMouseEnter={e => { e.currentTarget.style.opacity = '1'; }}
+                onMouseLeave={e => { e.currentTarget.style.opacity = '0.9'; }}
               >
                 OPEN PROJECT ↗
               </button>

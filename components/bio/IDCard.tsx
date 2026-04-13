@@ -384,7 +384,7 @@ export function IDCard() {
             <span
               style={{
                 fontFamily: 'var(--font-jetbrains-mono), monospace',
-                fontSize: '0.5rem',
+                fontSize: '0.62rem',
                 letterSpacing: '0.1em',
                 color: COLORS.textBone,
                 opacity: 0.3,
@@ -395,7 +395,7 @@ export function IDCard() {
             <span
               style={{
                 fontFamily: 'var(--font-jetbrains-mono), monospace',
-                fontSize: '0.5rem',
+                fontSize: '0.62rem',
                 letterSpacing: '0.1em',
                 color: COLORS.textBone,
                 opacity: 0.7,

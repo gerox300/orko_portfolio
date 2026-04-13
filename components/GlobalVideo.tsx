@@ -5,7 +5,7 @@
  * Exits with Hero: grows + drifts right + blur + fade.
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -14,8 +14,17 @@ gsap.registerPlugin(ScrollTrigger);
 export function GlobalVideo() {
     const containerRef = useRef<HTMLDivElement>(null);
     const brumaRef = useRef<HTMLDivElement>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
+
+    useEffect(() => {
+        if (isMobile) return;
         const el = containerRef.current;
         const bruma = brumaRef.current;
         if (!el || !bruma) return;
@@ -44,7 +53,9 @@ export function GlobalVideo() {
         });
 
         return () => ctx.revert();
-    }, []);
+    }, [isMobile]);
+
+    if (isMobile) return null;
 
     return (
         <div

@@ -145,25 +145,25 @@ export function TerminalTicker() {
       {/* TEXTO IZQUIERDO */}
       <div style={{
         fontFamily: 'var(--font-jetbrains-mono), monospace',
-        fontSize: isMobile ? '0.7rem' : '0.85rem',
+        fontSize: isMobile ? '0.62rem' : '0.85rem',
         color: COLORS.accentInfrared,
         opacity: 0.9,
-        display: 'flex',
-        gap: '0.5ch',
         pointerEvents: 'auto',
         zIndex: 10,
         overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
         minWidth: 0,
         flex: 1,
+        letterSpacing: isMobile ? '0.04em' : '0.06em',
       }}>
-        <span style={{ flexShrink: 0 }}>{'>'}</span>
-        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{display.startsWith('>') ? display.substring(2) : display}</span>
+        {'> '}{display.startsWith('>') ? display.substring(2).trimStart() : display}
       </div>
 
       {/* SOCIALS Y LOGO */}
       <div style={{ display: 'flex', gap: isMobile ? 16 : 28, alignItems: 'center', pointerEvents: 'auto', zIndex: 10, flexShrink: 0 }}>
-        <SocialLink label={isMobile ? 'IG' : 'INSTAGRAM'} href="https://www.instagram.com/geronimo.astorga/" />
-        <SocialLink label={isMobile ? 'LK' : 'LINKEDIN'} href="https://www.linkedin.com/in/geroastorga/" />
+        {!isMobile && <SocialLink label="INSTAGRAM" href="https://www.instagram.com/geronimo.astorga/" />}
+        {!isMobile && <SocialLink label="LINKEDIN" href="https://www.linkedin.com/in/geroastorga/" />}
 
         <div
           onMouseDown={handleLogoAction}

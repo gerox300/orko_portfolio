@@ -263,11 +263,11 @@ function MobileMenuOverlay({ onClose }: { onClose: () => void }) {
         padding: '80px 40px 40px',
       }}
     >
-      {/* Logo */}
+      {/* Logo — isologo [K_O] mark in overlay */}
       <img
-        src="/logo_logotipo.png"
-        alt="orko_"
-        style={{ height: 40, width: 'auto', opacity: 0.9, marginBottom: 8 }}
+        src="/logo_isologo.png"
+        alt="[K_O]"
+        style={{ height: 48, width: 'auto', opacity: 0.85, marginBottom: 8 }}
         onError={(e) => { e.currentTarget.style.display = 'none'; }}
       />
 

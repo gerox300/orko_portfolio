@@ -98,6 +98,11 @@ export function Footer() {
 
   const handleCtaClick = useCallback(() => {
     if (isActivated || isProcessing) return;
+    // Mobile: open Calendly directly without animation sequence
+    if (isMobile) {
+      window.open(CALENDLY_URL, '_blank', 'noopener,noreferrer');
+      return;
+    }
     setIsActivated(true);
     cancelScrambleRef.current?.();
     playSound(AUDIO_IDS.glitchBurst);
@@ -167,7 +172,8 @@ export function Footer() {
     >
       {/* Status bar */}
       <div style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        display: 'flex', alignItems: 'center',
+        justifyContent: isMobile ? 'center' : 'space-between',
         flexWrap: 'wrap', gap: 12,
         padding: 'clamp(14px, 2vh, 22px) clamp(20px, 4vw, 40px)',
         borderBottom: `1px solid ${COLORS.lineAsh}`,
@@ -201,23 +207,27 @@ export function Footer() {
 
       {/* CTA button */}
       <button
-        onMouseEnter={handleCtaEnter}
-        onMouseLeave={handleCtaLeave}
+        onMouseEnter={isMobile ? undefined : handleCtaEnter}
+        onMouseLeave={isMobile ? undefined : handleCtaLeave}
         onClick={handleCtaClick}
         disabled={isActivated}
         key={lang}
         aria-label={isActivated ? t('footer.ctaActive') : t('footer.cta')}
         style={{
-          display: 'flex', flexDirection: 'column', justifyContent: 'center',
+          display: 'flex', flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: isMobile ? 'center' : 'flex-start',
           width: '100%',
-          minHeight: 'clamp(160px, 25vh, 440px)',
+          minHeight: isMobile ? 'clamp(140px, 20vh, 240px)' : 'clamp(160px, 25vh, 440px)',
           border: 'none',
           borderBottom: `1px solid ${COLORS.lineAsh}`,
           backgroundColor: 'transparent',
-          padding: 'clamp(32px, 5vh, 64px) clamp(20px, 4vw, 40px)',
+          padding: isMobile
+            ? 'clamp(28px, 4vh, 48px) clamp(20px, 4vw, 40px)'
+            : 'clamp(32px, 5vh, 64px) clamp(20px, 4vw, 40px)',
           position: 'relative', overflow: 'hidden',
           cursor: isActivated ? 'default' : 'crosshair',
-          textAlign: 'left',
+          textAlign: isMobile ? 'center' : 'left',
         }}
       >
         {/* Infrared fill */}
@@ -238,8 +248,10 @@ export function Footer() {
             position: 'relative', zIndex: 1, display: 'block',
             marginBottom: 'clamp(12px, 2vh, 20px)',
             fontFamily: 'var(--font-jetbrains-mono), monospace',
-            fontSize: 'min(1.2rem, 4.5vw)', letterSpacing: '0.22em',
+            fontSize: isMobile ? 'clamp(0.7rem, 3.5vw, 0.9rem)' : 'min(1.2rem, 4.5vw)',
+            letterSpacing: '0.22em',
             color: '#FFFFFF', opacity: 0.9, textTransform: 'uppercase',
+            textAlign: isMobile ? 'center' : 'left',
           }}>
             {t('footer.cursor')}
           </span>
@@ -255,9 +267,10 @@ export function Footer() {
             position: 'relative', zIndex: 1,
             width: '100%',
             display: 'flex',
-            alignItems: 'baseline',
-            justifyContent: (isTwoWords && lang === 'en') ? 'space-between' : 'flex-start',
-            gap: (isTwoWords && lang === 'es') ? 'clamp(0.5rem, 2vw, 2rem)' : 0,
+            alignItems: isMobile ? 'center' : 'baseline',
+            flexDirection: isMobile ? 'column' : 'row',
+            justifyContent: (!isMobile && isTwoWords && lang === 'en') ? 'space-between' : 'flex-start',
+            gap: isMobile ? 4 : ((isTwoWords && lang === 'es') ? 'clamp(0.5rem, 2vw, 2rem)' : 0),
             color: COLORS.textBone,
           }}
         >
@@ -269,16 +282,16 @@ export function Footer() {
                 style={{
                   fontFamily: 'var(--font-headline), sans-serif',
                   fontWeight: 700,
-                  fontSize: lang === 'es'
-                    ? 'clamp(2rem, 6vw, 6.5rem)'
-                    : 'clamp(2rem, 7.5vw, 8rem)',
+                  fontSize: isMobile
+                    ? 'clamp(1.8rem, 10vw, 3.2rem)'
+                    : (lang === 'es' ? 'clamp(2rem, 6vw, 6.5rem)' : 'clamp(2rem, 7.5vw, 8rem)'),
                   letterSpacing: '-0.02em',
                   textTransform: 'uppercase',
                   color: 'inherit',
-                  lineHeight: 0.88,
+                  lineHeight: isMobile ? 1.0 : 0.88,
                   userSelect: 'none',
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0,
+                  whiteSpace: isMobile ? 'normal' : 'nowrap',
+                  flexShrink: isMobile ? 1 : 0,
                 }}
               >
                 {ctaParts[0]}
@@ -287,16 +300,16 @@ export function Footer() {
                 style={{
                   fontFamily: 'var(--font-headline), sans-serif',
                   fontWeight: 700,
-                  fontSize: lang === 'es'
-                    ? 'clamp(2rem, 6vw, 6.5rem)'
-                    : 'clamp(2rem, 7.5vw, 8rem)',
+                  fontSize: isMobile
+                    ? 'clamp(1.8rem, 10vw, 3.2rem)'
+                    : (lang === 'es' ? 'clamp(2rem, 6vw, 6.5rem)' : 'clamp(2rem, 7.5vw, 8rem)'),
                   letterSpacing: '-0.02em',
                   textTransform: 'uppercase',
                   color: 'inherit',
-                  lineHeight: 0.88,
+                  lineHeight: isMobile ? 1.0 : 0.88,
                   userSelect: 'none',
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0,
+                  whiteSpace: isMobile ? 'normal' : 'nowrap',
+                  flexShrink: isMobile ? 1 : 0,
                 }}
               >
                 {ctaParts[1]}
@@ -309,13 +322,15 @@ export function Footer() {
               style={{
                 fontFamily: 'var(--font-headline), sans-serif',
                 fontWeight: 700,
-                fontSize: lang === 'es'
-                  ? (isActivated ? 'clamp(1.5rem, 5.5vw, 5.5rem)' : 'clamp(1.5rem, 6.8vw, 6.8rem)')
-                  : (isActivated ? 'clamp(1.5rem, 5.5vw, 6rem)' : 'clamp(2rem, 7.5vw, 8rem)'),
+                fontSize: isMobile
+                  ? 'clamp(1.5rem, 9vw, 3rem)'
+                  : (lang === 'es'
+                    ? (isActivated ? 'clamp(1.5rem, 5.5vw, 5.5rem)' : 'clamp(1.5rem, 6.8vw, 6.8rem)')
+                    : (isActivated ? 'clamp(1.5rem, 5.5vw, 6rem)' : 'clamp(2rem, 7.5vw, 8rem)')),
                 letterSpacing: '-0.02em',
                 textTransform: 'uppercase',
                 color: COLORS.textBone,
-                lineHeight: 0.88,
+                lineHeight: isMobile ? 1.0 : 0.88,
                 userSelect: 'none',
               }}
             >
@@ -390,13 +405,19 @@ export function Footer() {
       {/* Bottom bar */}
       <div style={{
         display: 'flex',
-        alignItems: isMobile ? 'flex-start' : 'center',
-        justifyContent: 'space-between',
+        alignItems: 'center',
+        justifyContent: isMobile ? 'center' : 'space-between',
         flexDirection: isMobile ? 'column' : 'row',
-        flexWrap: 'wrap', gap: isMobile ? 8 : 12,
+        flexWrap: 'wrap', gap: isMobile ? 10 : 12,
         padding: 'clamp(14px, 2vh, 22px) clamp(20px, 4vw, 40px)',
+        textAlign: isMobile ? 'center' : 'left',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 16, flexWrap: 'wrap' }}>
+        <div style={{
+          display: 'flex', alignItems: 'center',
+          flexDirection: isMobile ? 'column' : 'row',
+          gap: isMobile ? 10 : 16, flexWrap: 'wrap',
+          justifyContent: isMobile ? 'center' : 'flex-start',
+        }}>
           <span style={{
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: isMobile ? 'clamp(0.65rem, 3.5vw, 0.8rem)' : 'clamp(0.8rem, 1.5vw, 1rem)',
@@ -416,7 +437,7 @@ export function Footer() {
               textTransform: 'uppercase',
               background: 'none',
               border: isMobile ? `1px solid ${isCopied ? COLORS.systemGreen : COLORS.lineAsh}` : 'none',
-              padding: isMobile ? '10px 14px' : '4px 8px',
+              padding: isMobile ? '10px 20px' : '4px 8px',
               minHeight: isMobile ? '44px' : undefined,
               cursor: 'crosshair',
               transition: 'color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease',

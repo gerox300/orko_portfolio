@@ -179,10 +179,10 @@ export function Interlude() {
 
         const ctx = gsap.context(() => {
 
-            // Typewriter — arranca cuando la sección entra en vista
+            // Typewriter — arranca cuando la sección entra en vista al 50%
             ScrollTrigger.create({
                 trigger: section,
-                start: 'top 70%',
+                start: 'top 55%',
                 onEnter: () => setTextActive(true),
                 once: true,
             });
@@ -253,7 +253,6 @@ export function Interlude() {
                         className="interlude-copy"
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        onViewportEnter={() => setTextActive(true)}
                         viewport={{ once: true, margin: "-10%" }}
                         style={{ flex: '1 1 50%', minWidth: 0, width: '100%' }}
                     >

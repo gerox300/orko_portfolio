@@ -96,6 +96,9 @@ const W3 = 'rgba(200,200,200,0.11)';
 
 const MAX_TRAVEL = 900; // máximo de píxeles de recorrido horizontal — controla la velocidad real
 
+// Mobile font sizes (much smaller so 3 rows fit in 40vh)
+const ROWS_MOBILE_FS = ['clamp(44px, 11vw, 60px)', 'clamp(56px, 14vw, 76px)', 'clamp(48px, 12vw, 64px)'];
+
 const ROWS: RowDef[] = [
     {
         fontSize: 'clamp(100px, 13vw, 155px)',
@@ -255,9 +258,9 @@ export function TickerSection() {
                 style={{
                     position: 'relative',
                     width: '100%',
-                    height: isMobile ? '40vh' : '65vh',
-                    marginTop: isMobile ? 40 : 120,
-                    marginBottom: isMobile ? 40 : 120,
+                    height: isMobile ? '30vh' : '65vh',
+                    marginTop: isMobile ? 32 : 120,
+                    marginBottom: isMobile ? 32 : 120,
                     backgroundColor: '#050505',
                     overflow: 'hidden',
                     isolation: 'isolate',
@@ -277,7 +280,12 @@ export function TickerSection() {
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '12vh', background: 'linear-gradient(to bottom,#050505,transparent)', zIndex: 9, pointerEvents: 'none' }} />
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '12vh', background: 'linear-gradient(to top,#050505,transparent)', zIndex: 9, pointerEvents: 'none' }} />
 
-                {ROWS.map((row, i) => (
+                {ROWS.map((row, i) => {
+                    // On mobile, all rows scroll left for consistent, jump-free animation
+                    const mobileFontSize = ROWS_MOBILE_FS[i];
+                    const mobileRow = { ...row, fontSize: mobileFontSize };
+                    const displayRow = isMobile ? mobileRow : row;
+                    return (
                     <div
                         key={i}
                         ref={el => { rowRefs.current[i] = el; }}
@@ -288,17 +296,18 @@ export function TickerSection() {
                             willChange: 'transform',
                             lineHeight: 1,
                             margin: 0, padding: 0,
-                            // Mobile: CSS auto-scroll animation (no GSAP scrub lag)
+                            // Mobile: CSS auto-scroll always left, avoids jump glitch
                             ...(isMobile ? {
-                                animation: `${row.direction === -1 ? 'ticker-scroll-left' : 'ticker-scroll-right'} ${20 + i * 4}s linear infinite`,
+                                animation: `ticker-scroll-left ${22 + i * 5}s linear infinite`,
                             } : {}),
                         }}
                     >
-                        <RowContent row={row} />
+                        <RowContent row={displayRow} />
                         {/* Duplicado para loop continuo */}
-                        <RowContent row={row} />
+                        <RowContent row={displayRow} />
                     </div>
-                ))}
+                    );
+                })}
             </section>
         </>
     );
