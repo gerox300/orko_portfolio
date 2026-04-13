@@ -62,7 +62,7 @@ export default function Home() {
       {/* Bio — The Operator */}
       <Bio />
 
-      <SectionDivider height="15vh" showLine />
+      <SectionDivider height="8vh" showLine />
 
       {/* Services — Mutation Vectors */}
       <Services />

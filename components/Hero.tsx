@@ -93,6 +93,16 @@ export function Hero() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
+  // Pin section height to actual viewport (accounts for browser chrome on mobile)
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const setH = () => { section.style.height = `${window.innerHeight}px`; };
+    setH();
+    window.addEventListener('resize', setH);
+    return () => window.removeEventListener('resize', setH);
+  }, []);
+
   useEffect(() => {
     const section = sectionRef.current;
     const content = contentRef.current;
@@ -211,8 +221,14 @@ export function Hero() {
         <Subheadline />
       </div>
 
-      {/* Ticker */}
-      <div ref={tickerRef} style={{ position: 'relative', zIndex: 10 }}>
+      {/* Ticker — absolute bottom on mobile so it always stays within viewport */}
+      <div ref={tickerRef} style={{
+        position: isMobile ? 'absolute' : 'relative',
+        bottom: isMobile ? 0 : 'auto',
+        left: 0,
+        right: 0,
+        zIndex: 10,
+      }}>
         <TerminalTicker />
       </div>
     </motion.section>

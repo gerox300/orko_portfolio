@@ -64,7 +64,10 @@ export function Bio() {
         position: 'relative',
         // Total transparency so spores and texture bleed through 100%
         backgroundColor: 'transparent',
-        padding: 'clamp(72px, 12vh, 120px) clamp(20px, 4vw, 40px)',
+        paddingTop: 'clamp(72px, 12vh, 120px)',
+        paddingBottom: isMobile ? 'clamp(32px, 5vh, 56px)' : 'clamp(72px, 12vh, 120px)',
+        paddingLeft: 'clamp(20px, 4vw, 40px)',
+        paddingRight: 'clamp(20px, 4vw, 40px)',
         overflow: 'hidden',
         zIndex: 3,
       }}

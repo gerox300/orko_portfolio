@@ -96,9 +96,6 @@ const W3 = 'rgba(200,200,200,0.11)';
 
 const MAX_TRAVEL = 900; // máximo de píxeles de recorrido horizontal — controla la velocidad real
 
-// Mobile font sizes (much smaller so 3 rows fit in 40vh)
-const ROWS_MOBILE_FS = ['clamp(44px, 11vw, 60px)', 'clamp(56px, 14vw, 76px)', 'clamp(48px, 12vw, 64px)'];
-
 const ROWS: RowDef[] = [
     {
         fontSize: 'clamp(100px, 13vw, 155px)',
@@ -177,8 +174,13 @@ export function TickerSection() {
         // Mobile: no GSAP scrub — rows are positioned statically
         if (window.innerWidth < 768) return;
 
-        // Small delay to ensure fonts are loaded and layout is settled
-        const raf = requestAnimationFrame(() => {
+        // Wait for fonts to be fully loaded before measuring widths
+        // (LunaObscura loads async; RAF alone isn't enough — font swap changes element widths)
+        const fontPromise = document.fonts ? document.fonts.ready : Promise.resolve();
+        let cancelled = false;
+
+        fontPromise.then(() => {
+            if (cancelled) return;
             const ctx = gsap.context(() => {
                 ROWS.forEach((row, i) => {
                     const el = rowRefs.current[i];
@@ -233,7 +235,7 @@ export function TickerSection() {
 
         const ctxRef = { current: null as gsap.Context | null };
         return () => {
-            cancelAnimationFrame(raf);
+            cancelled = true;
             ctxRef.current?.revert();
         };
     }, [isMobile]);
@@ -259,8 +261,8 @@ export function TickerSection() {
                     position: 'relative',
                     width: '100%',
                     height: isMobile ? '30vh' : '65vh',
-                    marginTop: isMobile ? 32 : 120,
-                    marginBottom: isMobile ? 32 : 120,
+                    marginTop: isMobile ? 24 : 80,
+                    marginBottom: isMobile ? 24 : 60,
                     backgroundColor: '#050505',
                     overflow: 'hidden',
                     isolation: 'isolate',
@@ -280,12 +282,7 @@ export function TickerSection() {
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '12vh', background: 'linear-gradient(to bottom,#050505,transparent)', zIndex: 9, pointerEvents: 'none' }} />
                 <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '12vh', background: 'linear-gradient(to top,#050505,transparent)', zIndex: 9, pointerEvents: 'none' }} />
 
-                {ROWS.map((row, i) => {
-                    // On mobile, all rows scroll left for consistent, jump-free animation
-                    const mobileFontSize = ROWS_MOBILE_FS[i];
-                    const mobileRow = { ...row, fontSize: mobileFontSize };
-                    const displayRow = isMobile ? mobileRow : row;
-                    return (
+                {ROWS.map((row, i) => (
                     <div
                         key={i}
                         ref={el => { rowRefs.current[i] = el; }}
@@ -302,12 +299,11 @@ export function TickerSection() {
                             } : {}),
                         }}
                     >
-                        <RowContent row={displayRow} />
+                        <RowContent row={row} />
                         {/* Duplicado para loop continuo */}
-                        <RowContent row={displayRow} />
+                        <RowContent row={row} />
                     </div>
-                    );
-                })}
+                ))}
             </section>
         </>
     );

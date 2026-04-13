@@ -279,7 +279,7 @@ export function WorkRow({
                 onMouseEnter={e => { e.currentTarget.style.opacity = '1'; }}
                 onMouseLeave={e => { e.currentTarget.style.opacity = '0.9'; }}
               >
-                OPEN PROJECT ↗
+                OPEN PROJECT +
               </button>
             </div>
           </motion.div>

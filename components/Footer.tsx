@@ -436,7 +436,7 @@ export function Footer() {
               opacity: isCopied ? 1 : 0.65,
               textTransform: 'uppercase',
               background: 'none',
-              border: isMobile ? `1px solid ${isCopied ? COLORS.systemGreen : COLORS.lineAsh}` : 'none',
+              border: 'none',
               padding: isMobile ? '10px 20px' : '4px 8px',
               minHeight: isMobile ? '44px' : undefined,
               cursor: 'crosshair',

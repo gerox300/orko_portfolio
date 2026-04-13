@@ -784,7 +784,7 @@ export function Works() {
           </div>
 
           <div>
-            {/* Mobile-only tap hint — above the column headers */}
+            {/* Mobile-only tap hint — above the column headers, right-aligned */}
             {isMobile && (
               <div style={{
                 padding: 'clamp(8px, 1.5vw, 12px) clamp(20px, 4vw, 40px)',
@@ -794,10 +794,9 @@ export function Works() {
                 color: COLORS.accentInfrared,
                 opacity: 0.65,
                 textTransform: 'uppercase',
-                display: 'flex', alignItems: 'center', gap: 6,
+                display: 'flex', alignItems: 'center', justifyContent: 'flex-end',
               }}>
-                <span>▾</span>
-                <span>TAP ROW TO EXPAND</span>
+                TAP ROW TO EXPAND ▾
               </div>
             )}
 
@@ -859,7 +858,7 @@ export function Works() {
 
         <AnimatePresence mode="popLayout" initial={false}>
           {activeModalProject && isMobile && (
-            /* ── MOBILE MODAL ── full-screen, media top, info below ── */
+            /* ── MOBILE MODAL ── full-screen bottom sheet ── */
             <div style={{ position: 'fixed', inset: 0, zIndex: 100, pointerEvents: 'auto' }}>
               <motion.div
                 initial={{ opacity: 0 }}
@@ -875,17 +874,15 @@ export function Works() {
                 exit={{ y: '100%' }}
                 transition={{ type: 'spring', stiffness: 280, damping: 30 }}
                 style={{
-                  position: 'absolute', bottom: 0, left: 0, right: 0,
-                  height: '92vh',
+                  position: 'absolute', inset: 0,
                   backgroundColor: COLORS.bgAbyss,
                   border: `1px solid ${COLORS.lineAsh}`,
-                  borderBottom: 'none',
                   display: 'flex', flexDirection: 'column',
                   overflow: 'hidden',
                   zIndex: 101,
                 }}
               >
-                {/* Mobile modal header */}
+                {/* Header */}
                 <div style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   padding: '14px 18px',
@@ -936,56 +933,107 @@ export function Works() {
                   >×</button>
                 </div>
 
-                {/* Media preview */}
+                {/* Media viewer — viewerMode-aware */}
                 <div style={{
-                  flexShrink: 0, position: 'relative',
-                  width: '100%', aspectRatio: activeModalProject && getProjectMedia(activeModalProject.key).videoAspectRatio
-                    ? getProjectMedia(activeModalProject.key).videoAspectRatio
-                    : '16 / 9',
-                  maxHeight: '40vh',
+                  flexShrink: 0,
+                  height: '42vh',
                   backgroundColor: '#050505',
+                  position: 'relative',
                   overflow: 'hidden',
                 }}>
                   {(() => {
                     const media = getProjectMedia(activeModalProject.key);
-                    if (media.scrollVideo) {
+                    if (viewerMode === 'scroll' && media.scrollVideo) {
                       return (
                         <video
                           src={media.scrollVideo}
                           autoPlay muted loop playsInline preload="metadata"
-                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                        />
-                      );
-                    } else if (media.identitySlides?.[0]) {
-                      return (
-                        <img
-                          src={media.identitySlides[0]}
-                          alt=""
-                          style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
+                          style={{
+                            width: '100%', height: '100%',
+                            objectFit: 'contain', display: 'block',
+                            padding: '8px',
+                          }}
                         />
                       );
                     }
+                    if (viewerMode === 'identity' || (!media.scrollVideo && media.identitySlides?.[0])) {
+                      const slides = media.identitySlides ?? [];
+                      const slide = slides[identityIndex] ?? slides[0];
+                      return slide ? (
+                        <img
+                          src={slide}
+                          alt=""
+                          style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '8px' }}
+                        />
+                      ) : (
+                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.55rem', letterSpacing: '0.16em', color: COLORS.textBone, opacity: 0.25, textTransform: 'uppercase' }}>NO PREVIEW</span>
+                        </div>
+                      );
+                    }
                     return (
-                      <div style={{
-                        width: '100%', height: '100%',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      }}>
-                        <span style={{
-                          fontFamily: 'var(--font-jetbrains-mono), monospace',
-                          fontSize: '0.55rem', letterSpacing: '0.16em',
-                          color: COLORS.textBone, opacity: 0.25, textTransform: 'uppercase',
-                        }}>NO PREVIEW</span>
+                      <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.55rem', letterSpacing: '0.16em', color: COLORS.textBone, opacity: 0.25, textTransform: 'uppercase' }}>NO PREVIEW</span>
                       </div>
                     );
                   })()}
                 </div>
 
-                {/* Info section — scrollable */}
+                {/* Tabs — below media, above scrollable info */}
+                {availableTabs.length > 1 && (
+                  <div style={{
+                    flexShrink: 0,
+                    display: 'flex', gap: 8, alignItems: 'center',
+                    padding: '10px 18px',
+                    borderBottom: `1px solid rgba(240,240,240,0.08)`,
+                    background: 'rgba(8,8,8,0.96)',
+                    overflowX: 'auto',
+                  }}>
+                    {availableTabs.map((tab) => {
+                      const isActive = viewerMode === tab;
+                      return (
+                        <button
+                          key={tab}
+                          onClick={() => setViewerMode(tab)}
+                          style={{
+                            fontFamily: 'var(--font-jetbrains-mono), monospace',
+                            fontSize: '0.58rem',
+                            letterSpacing: '0.14em',
+                            textTransform: 'uppercase',
+                            color: isActive ? COLORS.accentInfrared : COLORS.textBone,
+                            opacity: isActive ? 1 : 0.48,
+                            background: isActive ? 'rgba(255,84,69,0.08)' : 'transparent',
+                            border: `1px solid ${isActive ? 'rgba(255,84,69,0.35)' : 'rgba(240,240,240,0.12)'}`,
+                            padding: '8px 12px',
+                            cursor: 'pointer',
+                            whiteSpace: 'nowrap',
+                            flexShrink: 0,
+                          }}
+                        >
+                          {tab === 'scroll' ? 'PAGE SCROLL' : tab === 'identity' ? 'IDENTITY' : 'SYSTEM'}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
+
+                {/* Scrollable info */}
                 <div style={{
                   flex: 1, overflowY: 'auto',
-                  padding: '20px 20px 32px',
-                  display: 'flex', flexDirection: 'column', gap: 16,
+                  padding: '20px 20px 36px',
+                  display: 'flex', flexDirection: 'column', gap: 18,
                 }}>
+                  {/* Sector */}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <div style={{ width: 6, height: 6, borderRadius: '50%', backgroundColor: COLORS.accentInfrared, flexShrink: 0 }} />
+                    <span style={{
+                      fontFamily: 'var(--font-jetbrains-mono), monospace',
+                      fontSize: '0.62rem', letterSpacing: '0.14em',
+                      color: COLORS.accentInfrared, textTransform: 'uppercase',
+                    }}>{activeModalProject.sector}</span>
+                  </div>
+
+                  {/* Copy */}
                   <p style={{
                     fontFamily: 'var(--font-jetbrains-mono), monospace',
                     fontSize: 'clamp(0.78rem, 3.5vw, 0.9rem)',
@@ -993,18 +1041,36 @@ export function Works() {
                     margin: 0,
                   }}>{activeModalProject.copy}</p>
 
-                  <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
-                    <span style={{
-                      fontFamily: 'var(--font-jetbrains-mono), monospace',
-                      fontSize: '0.58rem', letterSpacing: '0.12em',
-                      color: COLORS.textBone, opacity: 0.4, textTransform: 'uppercase',
-                    }}>SECTOR</span>
-                    <span style={{
-                      fontFamily: 'var(--font-jetbrains-mono), monospace',
-                      fontSize: '0.58rem', letterSpacing: '0.12em',
-                      color: COLORS.accentInfrared, textTransform: 'uppercase',
-                    }}>{activeModalProject.sector}</span>
-                  </div>
+                  {/* Approach items */}
+                  {(() => {
+                    const items = [
+                      getTranslatedOrFallback(`works.${activeModalProject.key}.approachItem1`),
+                      getTranslatedOrFallback(`works.${activeModalProject.key}.approachItem2`),
+                      getTranslatedOrFallback(`works.${activeModalProject.key}.approachItem3`),
+                    ].filter(Boolean);
+                    if (items.length === 0) return null;
+                    return (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        <span style={{
+                          fontFamily: 'var(--font-jetbrains-mono), monospace',
+                          fontSize: '0.55rem', letterSpacing: '0.18em',
+                          color: COLORS.textBone, opacity: 0.4, textTransform: 'uppercase',
+                          marginBottom: 2,
+                        }}>
+                          {getTranslatedOrFallback('works.panel.approachTitle', 'Approach')}
+                        </span>
+                        {items.map((item, idx) => (
+                          <span key={idx} style={{
+                            fontFamily: 'var(--font-jetbrains-mono), monospace',
+                            fontSize: '0.76rem',
+                            lineHeight: 1.6,
+                            color: COLORS.textBone,
+                            opacity: 0.7,
+                          }}>{item}</span>
+                        ))}
+                      </div>
+                    );
+                  })()}
                 </div>
               </motion.div>
             </div>

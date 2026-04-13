@@ -283,6 +283,46 @@ function MobileMenuOverlay({ onClose }: { onClose: () => void }) {
 
       {/* Language toggle */}
       <LangToggle large />
+
+      {/* Social links */}
+      <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
+        <a
+          href="https://www.instagram.com/orko.studio"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontFamily: 'var(--font-jetbrains-mono), monospace',
+            fontSize: '0.9rem',
+            letterSpacing: '0.18em',
+            color: COLORS.textBone,
+            opacity: 0.5,
+            textDecoration: 'none',
+            transition: 'opacity 150ms ease, color 150ms ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.color = COLORS.accentInfrared; }}
+          onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.5'; e.currentTarget.style.color = COLORS.textBone; }}
+        >
+          [IG]
+        </a>
+        <a
+          href="https://www.linkedin.com/in/geronimoastorga"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontFamily: 'var(--font-jetbrains-mono), monospace',
+            fontSize: '0.9rem',
+            letterSpacing: '0.18em',
+            color: COLORS.textBone,
+            opacity: 0.5,
+            textDecoration: 'none',
+            transition: 'opacity 150ms ease, color 150ms ease',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.color = COLORS.accentInfrared; }}
+          onMouseLeave={(e) => { e.currentTarget.style.opacity = '0.5'; e.currentTarget.style.color = COLORS.textBone; }}
+        >
+          [LK]
+        </a>
+      </div>
     </motion.div>
   );
 }
