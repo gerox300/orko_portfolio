@@ -103,7 +103,7 @@ const ROWS: RowDef[] = [
         direction: -1,
         scrub: 10,
         cardScrollOffset: 0.43,
-        card: { src: '/specimen_a.webm', label: 'SPEC_01', stage: 'III', status: 'ACTIVE' },
+        card: { src: '/specimen_a.webm', label: '01', stage: 'III', status: 'ACT' },
         segments: [
             'FIELDWORK ',
             { type: 'logo-iso' },
@@ -141,7 +141,7 @@ const ROWS: RowDef[] = [
         direction: -1,
         scrub: 10,
         cardScrollOffset: 0.58,
-        card: { src: '/specimen_b.webm', label: 'SPEC_02', stage: 'VII', status: 'CRITICAL' },
+        card: { src: '/specimen_b.webm', label: '02', stage: 'VII', status: 'CRIT' },
         segments: [
             'BIOLOGY ⊕ INTERFACE → ',
             { word: 'METAMORPHOSIS', color: RED },
@@ -210,25 +210,28 @@ export function TickerSection() {
                         endX = row.direction === -1 ? -travel : 0;
                     }
 
-                    gsap.fromTo(el,
-                        { x: startX },
-                        {
-                            x: endX,
-                            ease: 'none',
-                            scrollTrigger: {
-                                trigger: section,
-                                start: 'top 80%',
-                                end: 'bottom 20%',
-                                scrub: row.scrub,
-                            },
-                        }
-                    );
+                    // gsap.set is synchronous — positions the element in the DOM
+                    // BEFORE any RAF fires, so there's no x:0→startX snap on reveal.
+                    gsap.set(el, { x: startX });
 
-                    // Reveal row now that GSAP has set the correct starting x.
-                    // Defer one frame so the fromTo initial state is applied first.
+                    gsap.to(el, {
+                        x: endX,
+                        ease: 'none',
+                        scrollTrigger: {
+                            trigger: section,
+                            start: 'top 80%',
+                            end: 'bottom 20%',
+                            scrub: row.scrub,
+                        },
+                    });
+
+                    // Double-RAF: ensures GSAP's own RAF tick has run (and positioned
+                    // the element via the scrub) before we make it visible.
                     requestAnimationFrame(() => {
-                        el.style.opacity = '1';
-                        el.style.transition = 'opacity 0.25s ease';
+                        requestAnimationFrame(() => {
+                            el.style.opacity = '1';
+                            el.style.transition = 'opacity 0.3s ease';
+                        });
                     });
                 });
             }, section);
@@ -499,11 +502,9 @@ function SpecimenCardInline({
             }}>
                 <span style={{
                     fontFamily: "'LunaObscura',monospace",
-                    fontSize: fs, letterSpacing: '0.08em',
+                    fontSize: fs, letterSpacing: '0.06em',
                     color: 'rgba(255,255,255,0.6)',
                     textTransform: 'uppercase', whiteSpace: 'nowrap', lineHeight: 1,
-                    overflow: 'hidden', textOverflow: 'clip',
-                    maxWidth: '62%',
                 }}>{label}</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                     <span style={{
@@ -567,17 +568,17 @@ function SpecimenCardInline({
             }}>
                 <span style={{
                     fontFamily: "'LunaObscura',monospace",
-                    fontSize: fs, letterSpacing: '0.12em',
+                    fontSize: fs, letterSpacing: '0.06em',
                     color: 'rgba(200,200,200,0.65)',
                     textTransform: 'uppercase', lineHeight: 1,
-                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '48%',
-                }}>STG {stage}</span>
+                    whiteSpace: 'nowrap',
+                }}>{stage}</span>
                 <span style={{
                     fontFamily: "'LunaObscura',monospace",
-                    fontSize: fs, letterSpacing: '0.1em',
+                    fontSize: fs, letterSpacing: '0.06em',
                     color: statusColor,
                     textTransform: 'uppercase', lineHeight: 1,
-                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '48%',
+                    whiteSpace: 'nowrap',
                 }}>{status}</span>
             </span>
         </span>

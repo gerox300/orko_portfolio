@@ -153,12 +153,7 @@ export function Hero() {
 
     }, section);
 
-    // Force ScrollTrigger to re-measure after setup — ensures correct start/end
-    // positions when fonts and images have finished loading.
-    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
-
     return () => {
-      clearTimeout(refreshTimer);
       ctx.revert();
     };
   }, []);
