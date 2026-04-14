@@ -219,11 +219,17 @@ export function TickerSection() {
                                 trigger: section,
                                 start: 'top 80%',
                                 end: 'bottom 20%',
-                                // Reduced scrub on mobile-ish screens for responsiveness
                                 scrub: row.scrub,
                             },
                         }
                     );
+
+                    // Reveal row now that GSAP has set the correct starting x.
+                    // Defer one frame so the fromTo initial state is applied first.
+                    requestAnimationFrame(() => {
+                        el.style.opacity = '1';
+                        el.style.transition = 'opacity 0.25s ease';
+                    });
                 });
             }, section);
 
@@ -290,6 +296,8 @@ export function TickerSection() {
                             willChange: 'transform',
                             lineHeight: 1,
                             margin: 0, padding: 0,
+                            // Hidden until GSAP sets the initial x position — prevents snap from x:0
+                            opacity: 0,
                         }}
                     >
                         <RowContent row={row} />
@@ -480,6 +488,8 @@ function SpecimenCardInline({
                     fontSize: fs, letterSpacing: '0.1em',
                     color: 'rgba(255,255,255,0.6)',
                     textTransform: 'uppercase', whiteSpace: 'nowrap', lineHeight: 1,
+                    overflow: 'hidden', textOverflow: 'ellipsis',
+                    maxWidth: '65%',
                 }}>{label}</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                     <span style={{
@@ -546,12 +556,14 @@ function SpecimenCardInline({
                     fontSize: fs, letterSpacing: '0.12em',
                     color: 'rgba(200,200,200,0.65)',
                     textTransform: 'uppercase', lineHeight: 1,
+                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '48%',
                 }}>STG {stage}</span>
                 <span style={{
                     fontFamily: "'LunaObscura',monospace",
                     fontSize: fs, letterSpacing: '0.1em',
                     color: statusColor,
                     textTransform: 'uppercase', lineHeight: 1,
+                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '48%',
                 }}>{status}</span>
             </span>
         </span>

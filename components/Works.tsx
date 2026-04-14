@@ -265,6 +265,7 @@ export function Works() {
 
   const [isMobile, setIsMobile] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
   const [previewProject, setPreviewProject] = useState<CardProject | null>(null);
   const [activeModalProject, setActiveModalProject] = useState<CardProject | null>(null);
   const [hasPointerPosition, setHasPointerPosition] = useState(false);
@@ -882,10 +883,10 @@ export function Works() {
                   zIndex: 101,
                 }}
               >
-                {/* Header — compact padding to reduce gap before media */}
+                {/* Header */}
                 <div style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '8px 14px',
+                  padding: '12px 16px',
                   borderBottom: `1px solid rgba(240,240,240,0.08)`,
                   background: 'rgba(8,8,8,0.98)',
                   flexShrink: 0,
@@ -964,7 +965,17 @@ export function Works() {
                       const safeIdx = slides.length > 0 ? identityIndex % slides.length : 0;
                       const slide = slides[safeIdx];
                       return (
-                        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                        <div
+                          style={{ position: 'relative', width: '100%', height: '100%' }}
+                          onTouchStart={(e) => { touchStartXRef.current = e.touches[0].clientX; }}
+                          onTouchEnd={(e) => {
+                            if (touchStartXRef.current === null) return;
+                            const delta = e.changedTouches[0].clientX - touchStartXRef.current;
+                            touchStartXRef.current = null;
+                            if (Math.abs(delta) < 50) return; // threshold
+                            changeSlide(slides.length, delta < 0 ? 'next' : 'prev', 'identity');
+                          }}
+                        >
                           {slide ? (
                             <img
                               src={slide}
@@ -976,51 +987,32 @@ export function Works() {
                               <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.55rem', letterSpacing: '0.16em', color: COLORS.textBone, opacity: 0.25, textTransform: 'uppercase' }}>NO PREVIEW</span>
                             </div>
                           )}
-                          {/* Prev / Next — only when there are multiple slides */}
+                          {/* Swipe hint + dot indicator — only when there are multiple slides */}
                           {slides.length > 1 && (
-                            <>
-                              <button
-                                onClick={() => changeSlide(slides.length, 'prev', 'identity')}
-                                style={{
-                                  position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)',
-                                  background: 'rgba(5,5,5,0.72)', border: `1px solid rgba(240,240,240,0.22)`,
-                                  color: COLORS.textBone, width: 36, height: 36,
-                                  borderRadius: '50%', fontSize: '1rem', cursor: 'pointer',
-                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                  backdropFilter: 'blur(6px)', zIndex: 2,
-                                }}
-                              >‹</button>
-                              <button
-                                onClick={() => changeSlide(slides.length, 'next', 'identity')}
-                                style={{
-                                  position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
-                                  background: 'rgba(5,5,5,0.72)', border: `1px solid rgba(240,240,240,0.22)`,
-                                  color: COLORS.textBone, width: 36, height: 36,
-                                  borderRadius: '50%', fontSize: '1rem', cursor: 'pointer',
-                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                  backdropFilter: 'blur(6px)', zIndex: 2,
-                                }}
-                              >›</button>
-                              {/* Dot indicator */}
-                              <div style={{
-                                position: 'absolute', bottom: 10, left: 0, right: 0,
-                                display: 'flex', justifyContent: 'center', gap: 5, zIndex: 2,
-                              }}>
+                            <div style={{
+                              position: 'absolute', bottom: 10, left: 0, right: 0,
+                              display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6, zIndex: 2,
+                              pointerEvents: 'none',
+                            }}>
+                              <span style={{
+                                fontFamily: 'var(--font-jetbrains-mono), monospace',
+                                fontSize: '0.5rem', letterSpacing: '0.18em',
+                                color: COLORS.textBone, opacity: 0.35, textTransform: 'uppercase',
+                              }}>← SWIPE →</span>
+                              <div style={{ display: 'flex', justifyContent: 'center', gap: 5 }}>
                                 {slides.map((_, di) => (
-                                  <button
+                                  <div
                                     key={di}
-                                    onClick={() => setIdentityIndex(di)}
                                     style={{
                                       width: di === safeIdx ? 16 : 6, height: 6,
-                                      borderRadius: 3, border: 'none',
+                                      borderRadius: 3,
                                       backgroundColor: di === safeIdx ? COLORS.accentInfrared : 'rgba(240,240,240,0.35)',
-                                      cursor: 'pointer', padding: 0,
                                       transition: 'width 0.2s ease, background-color 0.2s ease',
                                     }}
                                   />
                                 ))}
                               </div>
-                            </>
+                            </div>
                           )}
                         </div>
                       );

@@ -176,7 +176,9 @@ export function Hero() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       style={{
-        /* height is set in px by JS (window.innerHeight) — avoids iOS Safari 100vh > innerHeight bug */
+        /* 100svh = small viewport height (excludes iOS Safari chrome) — correct on first paint.
+           JS useEffect then sets an exact px value from window.innerHeight for fine-tuning. */
+        height: '100svh',
         minHeight: 0,
         width: '100%',
         position: 'relative',

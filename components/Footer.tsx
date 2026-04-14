@@ -81,9 +81,9 @@ export function Footer() {
     if (!fill || !text) return;
     gsap.killTweensOf([fill, text]);
     gsap.to(fill, { scaleY: 1, duration: 0.6, ease: GSAP_EASE.aggro });
-    // Text stays bgAbyss (black) — BG is always red, just darken on hover
-    gsap.to(text, { color: COLORS.bgAbyss, duration: 0.1 });
-    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.bgAbyss, duration: 0.1 });
+    // Text stays white — BG is always red, hover just darkens slightly
+    gsap.to(text, { color: COLORS.textBone, duration: 0.1 });
+    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.1 });
   }, [isActivated]);
 
   const handleCtaLeave = useCallback(() => {
@@ -93,8 +93,8 @@ export function Footer() {
     if (!fill || !text) return;
     gsap.killTweensOf([fill, text]);
     gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
-    gsap.to(text, { color: COLORS.bgAbyss, duration: 0.2 });
-    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.bgAbyss, duration: 0.2 });
+    gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
+    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.2 });
   }, [isActivated]);
 
   const handleCtaClick = useCallback(() => {
@@ -137,8 +137,8 @@ export function Footer() {
               if (fill && text) {
                 gsap.killTweensOf([fill, text]);
                 gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
-                gsap.to(text, { color: COLORS.bgAbyss, duration: 0.2 });
-                if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.bgAbyss, duration: 0.2 });
+                gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
+                if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.2 });
               }
             }, 1000);
           }
@@ -251,7 +251,7 @@ export function Footer() {
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: isMobile ? 'clamp(0.7rem, 3.5vw, 0.9rem)' : 'min(1.2rem, 4.5vw)',
             letterSpacing: '0.22em',
-            color: COLORS.bgAbyss, opacity: 0.6, textTransform: 'uppercase',
+            color: COLORS.textBone, opacity: 0.7, textTransform: 'uppercase',
             textAlign: isMobile ? 'center' : 'left',
           }}>
             {t('footer.cursor')}
@@ -272,7 +272,7 @@ export function Footer() {
             flexDirection: isMobile ? 'column' : 'row',
             justifyContent: (!isMobile && isTwoWords && lang === 'en') ? 'space-between' : 'flex-start',
             gap: isMobile ? 4 : ((isTwoWords && lang === 'es') ? 'clamp(0.5rem, 2vw, 2rem)' : 0),
-            color: COLORS.bgAbyss,
+            color: COLORS.textBone,
           }}
         >
           {isTwoWords ? (

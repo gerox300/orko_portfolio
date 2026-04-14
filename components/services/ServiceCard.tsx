@@ -192,8 +192,8 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: isMobile ? 'clamp(0.82rem, 3.2vw, 0.95rem)' : 'clamp(0.7rem, 1.2vw, 0.85rem)',
             lineHeight: 1.75,
-            color: COLORS.textBone,
-            opacity: 0.6,
+            color: isMobile ? COLORS.bgAbyss : COLORS.textBone,
+            opacity: isMobile ? 0.85 : 0.6,
             margin: 0,
           }}
         >
