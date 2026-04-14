@@ -103,7 +103,7 @@ const ROWS: RowDef[] = [
         direction: -1,
         scrub: 10,
         cardScrollOffset: 0.43,
-        card: { src: '/specimen_a.webm', label: 'SPECIMEN_01', stage: 'III', status: 'ACTIVE' },
+        card: { src: '/specimen_a.webm', label: 'SPEC_01', stage: 'III', status: 'ACTIVE' },
         segments: [
             'FIELDWORK ',
             { type: 'logo-iso' },
@@ -141,7 +141,7 @@ const ROWS: RowDef[] = [
         direction: -1,
         scrub: 10,
         cardScrollOffset: 0.58,
-        card: { src: '/specimen_b.webm', label: 'SPECIMEN_02', stage: 'VII', status: 'CRITICAL' },
+        card: { src: '/specimen_b.webm', label: 'SPEC_02', stage: 'VII', status: 'CRITICAL' },
         segments: [
             'BIOLOGY ⊕ INTERFACE → ',
             { word: 'METAMORPHOSIS', color: RED },
@@ -241,7 +241,10 @@ export function TickerSection() {
             cancelled = true;
             ctxRef.current?.revert();
         };
-    }, [isMobile]);
+    // Empty deps: run once. isMobile was here before but caused a context
+    // revert+rebuild on mobile init (false→true), creating the visible snap.
+    // GSAP effect doesn't use isMobile in its logic, so [] is correct.
+    }, []);
 
     return (
         <>
@@ -386,13 +389,24 @@ function RowContent({ row }: { row: RowDef }) {
 }
 
 // ─── Card inline con glitch ───────────────────────────────────────────────────
+/** Parse clamp(Xpx, Yvw, Zpx) → actual px value at current viewport width. */
+function resolveHeightPx(raw: string | number): number {
+    if (typeof raw === 'number') return raw;
+    const m = raw.match(/clamp\(([\d.]+)px,\s*([\d.]+)vw,\s*([\d.]+)px\)/);
+    if (!m) return 130;
+    const minPx = parseFloat(m[1]);
+    const vwPx = (parseFloat(m[2]) / 100) * (typeof window !== 'undefined' ? window.innerWidth : 1200);
+    const maxPx = parseFloat(m[3]);
+    return Math.min(Math.max(minPx, vwPx), maxPx);
+}
+
 function SpecimenCardInline({
     src, height: heightRaw, label, stage, status,
 }: {
     src: string; height: string | number;
     label: string; stage: string; status: string;
 }) {
-    const heightPx = typeof heightRaw === 'number' ? heightRaw : 130;
+    const heightPx = resolveHeightPx(heightRaw);
     const headerH = Math.max(18, Math.round(heightPx * 0.16));
     const footerH = Math.max(16, Math.round(heightPx * 0.14));
     const fs = Math.max(8, Math.round(heightPx * 0.075));
@@ -485,11 +499,11 @@ function SpecimenCardInline({
             }}>
                 <span style={{
                     fontFamily: "'LunaObscura',monospace",
-                    fontSize: fs, letterSpacing: '0.1em',
+                    fontSize: fs, letterSpacing: '0.08em',
                     color: 'rgba(255,255,255,0.6)',
                     textTransform: 'uppercase', whiteSpace: 'nowrap', lineHeight: 1,
-                    overflow: 'hidden', textOverflow: 'ellipsis',
-                    maxWidth: '65%',
+                    overflow: 'hidden', textOverflow: 'clip',
+                    maxWidth: '62%',
                 }}>{label}</span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 3 }}>
                     <span style={{

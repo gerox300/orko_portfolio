@@ -93,23 +93,11 @@ export function Hero() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Pin section height to actual viewport on ALL devices
-  // window.innerHeight is correct even on iOS Safari where 100vh > visible area
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-    const setH = () => {
-      section.style.height = `${window.innerHeight}px`;
-    };
-    setH();
-    window.addEventListener('resize', setH);
-    // Also re-measure after orientationchange (mobile)
-    window.addEventListener('orientationchange', setH);
-    return () => {
-      window.removeEventListener('resize', setH);
-      window.removeEventListener('orientationchange', setH);
-    };
-  }, []);
+  // Height is handled by CSS `height: 100svh` — no JS setter needed.
+  // JS setters run after paint and cause a layout shift (the "jump") because they
+  // change the section height after ScrollTrigger has already measured it.
+  // 100svh (small-viewport height) is accurate on iOS Safari 15.4+ and avoids the
+  // classic 100vh > innerHeight bug on mobile browsers.
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -165,7 +153,14 @@ export function Hero() {
 
     }, section);
 
-    return () => ctx.revert();
+    // Force ScrollTrigger to re-measure after setup — ensures correct start/end
+    // positions when fonts and images have finished loading.
+    const refreshTimer = setTimeout(() => ScrollTrigger.refresh(), 200);
+
+    return () => {
+      clearTimeout(refreshTimer);
+      ctx.revert();
+    };
   }, []);
 
   return (

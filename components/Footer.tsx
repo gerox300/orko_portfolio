@@ -251,7 +251,7 @@ export function Footer() {
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: isMobile ? 'clamp(0.7rem, 3.5vw, 0.9rem)' : 'min(1.2rem, 4.5vw)',
             letterSpacing: '0.22em',
-            color: COLORS.textBone, opacity: 0.7, textTransform: 'uppercase',
+            color: COLORS.bgAbyss, opacity: 0.75, textTransform: 'uppercase',
             textAlign: isMobile ? 'center' : 'left',
           }}>
             {t('footer.cursor')}
