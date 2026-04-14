@@ -82,7 +82,7 @@ interface RowDef {
     fontSize: string;
     baseColor: string;
     direction: -1 | 1;
-    scrub: number;
+    scrub: number | boolean;
     segments: Segment[];
     card: { src: string; label: string; stage: string; status: string } | null;
     /** 0–1, at which scroll progress the card should be centered on screen. Default 0.5. */
@@ -101,7 +101,7 @@ const ROWS: RowDef[] = [
         fontSize: 'clamp(100px, 13vw, 155px)',
         baseColor: W1,
         direction: -1,
-        scrub: 10,
+        scrub: true,
         cardScrollOffset: 0.43,
         card: { src: '/specimen_a.webm', label: '01', stage: 'III', status: 'ACT' },
         segments: [
@@ -121,7 +121,7 @@ const ROWS: RowDef[] = [
         fontSize: 'clamp(140px, 18vw, 210px)',
         baseColor: W2,
         direction: 1,
-        scrub: 12,
+        scrub: true,
         card: null,
         segments: [
             'DIALOGUE ⤵ ',
@@ -139,7 +139,7 @@ const ROWS: RowDef[] = [
         fontSize: 'clamp(110px, 14vw, 170px)',
         baseColor: W3,
         direction: -1,
-        scrub: 10,
+        scrub: true,
         cardScrollOffset: 0.58,
         card: { src: '/specimen_b.webm', label: '02', stage: 'VII', status: 'CRIT' },
         segments: [
@@ -210,23 +210,29 @@ export function TickerSection() {
                         endX = row.direction === -1 ? -travel : 0;
                     }
 
-                    // gsap.set is synchronous — positions the element in the DOM
-                    // BEFORE any RAF fires, so there's no x:0→startX snap on reveal.
-                    gsap.set(el, { x: startX });
+                    // fromTo with immediateRender:true applies startX synchronously
+                    // (before any RAF fires) so the element is never seen at x:0.
+                    // scrub:true links position directly to scroll with no catch-up
+                    // lag — Lenis already handles smoothing, so we don't need GSAP's
+                    // own lag which was causing the 10-second "catch-up" teleport.
+                    // invalidateOnRefresh recalculates positions on any refresh event.
+                    gsap.fromTo(el,
+                        { x: startX, immediateRender: true },
+                        {
+                            x: endX,
+                            ease: 'none',
+                            scrollTrigger: {
+                                trigger: section,
+                                start: 'top 80%',
+                                end: 'bottom 20%',
+                                scrub: row.scrub,
+                                invalidateOnRefresh: true,
+                            },
+                        }
+                    );
 
-                    gsap.to(el, {
-                        x: endX,
-                        ease: 'none',
-                        scrollTrigger: {
-                            trigger: section,
-                            start: 'top 80%',
-                            end: 'bottom 20%',
-                            scrub: row.scrub,
-                        },
-                    });
-
-                    // Double-RAF: ensures GSAP's own RAF tick has run (and positioned
-                    // the element via the scrub) before we make it visible.
+                    // Double-RAF: ensures GSAP has applied the scrub-adjusted position
+                    // before we reveal the row.
                     requestAnimationFrame(() => {
                         requestAnimationFrame(() => {
                             el.style.opacity = '1';
