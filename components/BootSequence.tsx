@@ -41,10 +41,10 @@ const BOOT_LINES_ES = [
 ];
 
 const BIO_BARS = [
-  { label: 'NEURAL_SYNC', labelMobile: 'NEURAL', targetPct: 94, color: '#00FF41', failAt: 45 },
-  { label: 'CELL_DENSITY', labelMobile: 'CELL', targetPct: 78, color: '#00FF41', failAt: null },
+  { label: 'NEURAL_SYNC', labelMobile: 'NEURAL', targetPct: 100, color: '#00FF41', failAt: 45 },
+  { label: 'CELL_DENSITY', labelMobile: 'CELL', targetPct: 100, color: '#00FF41', failAt: null },
   { label: 'MUTATION_CORE', labelMobile: 'MUTATION', targetPct: 100, color: '#00FF41', failAt: 67 },
-  { label: 'XENOBIO_ENGINE', labelMobile: 'XENOBIO', targetPct: 88, color: '#00FF41', failAt: null },
+  { label: 'XENOBIO_ENGINE', labelMobile: 'XENOBIO', targetPct: 100, color: '#00FF41', failAt: null },
 ];
 
 const CREATURE_VIDEOS = [
@@ -150,7 +150,7 @@ function BioBars({ active, isMobile }: { active: boolean; isMobile: boolean }) {
 
   if (!active) return null;
 
-  const barLength = isMobile ? 12 : 20;
+  const barLength = isMobile ? 22 : 32;
 
   return (
     <div style={{ marginTop: '1.2rem', display: 'flex', flexDirection: 'column', gap: isMobile ? 5 : 8 }}>
@@ -162,8 +162,8 @@ function BioBars({ active, isMobile }: { active: boolean; isMobile: boolean }) {
         const barStr = '█'.repeat(filled) + '░'.repeat(barLength - filled);
         const lbl = isMobile ? bar.labelMobile : bar.label;
         return (
-          <div key={bar.label} style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: isMobile ? 'clamp(0.62rem, 2.5vw, 0.72rem)' : 'clamp(0.55rem, 1.2vw, 0.68rem)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12 }}>
-            <span style={{ color: 'rgba(255,255,255,0.35)', width: isMobile ? 72 : 130, flexShrink: 0 }}>{lbl}</span>
+          <div key={bar.label} style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: isMobile ? 'clamp(0.6rem, 2.4vw, 0.7rem)' : 'clamp(0.55rem, 1.2vw, 0.68rem)', letterSpacing: '0.06em', display: 'flex', alignItems: 'center', gap: isMobile ? 8 : 12 }}>
+            <span style={{ color: 'rgba(255,255,255,0.35)', width: isMobile ? 58 : 130, flexShrink: 0 }}>{lbl}</span>
             <span style={{ color, fontFamily: 'monospace', letterSpacing: 0 }}>{barStr}</span>
             <span style={{ color, width: 30, textAlign: 'right', flexShrink: 0 }}>{status === 'fail' ? 'ERR' : `${Math.round(pct)}%`}</span>
           </div>

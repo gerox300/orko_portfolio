@@ -81,8 +81,9 @@ export function Footer() {
     if (!fill || !text) return;
     gsap.killTweensOf([fill, text]);
     gsap.to(fill, { scaleY: 1, duration: 0.6, ease: GSAP_EASE.aggro });
-    gsap.to(text, { color: COLORS.bgAbyss, duration: 0.25, delay: 0.18 });
-    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.bgAbyss, duration: 0.25, delay: 0.18 });
+    // Text stays bgAbyss (black) — BG is always red, just darken on hover
+    gsap.to(text, { color: COLORS.bgAbyss, duration: 0.1 });
+    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.bgAbyss, duration: 0.1 });
   }, [isActivated]);
 
   const handleCtaLeave = useCallback(() => {
@@ -92,8 +93,8 @@ export function Footer() {
     if (!fill || !text) return;
     gsap.killTweensOf([fill, text]);
     gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
-    gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
-    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.2 });
+    gsap.to(text, { color: COLORS.bgAbyss, duration: 0.2 });
+    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.bgAbyss, duration: 0.2 });
   }, [isActivated]);
 
   const handleCtaClick = useCallback(() => {
@@ -136,8 +137,8 @@ export function Footer() {
               if (fill && text) {
                 gsap.killTweensOf([fill, text]);
                 gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
-                gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
-                if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.2 });
+                gsap.to(text, { color: COLORS.bgAbyss, duration: 0.2 });
+                if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.bgAbyss, duration: 0.2 });
               }
             }, 1000);
           }
@@ -221,7 +222,7 @@ export function Footer() {
           minHeight: isMobile ? 'clamp(140px, 20vh, 240px)' : 'clamp(160px, 25vh, 440px)',
           border: 'none',
           borderBottom: `1px solid ${COLORS.lineAsh}`,
-          backgroundColor: 'transparent',
+          backgroundColor: COLORS.accentInfrared,
           padding: isMobile
             ? 'clamp(28px, 4vh, 48px) clamp(20px, 4vw, 40px)'
             : 'clamp(32px, 5vh, 64px) clamp(20px, 4vw, 40px)',
@@ -230,13 +231,13 @@ export function Footer() {
           textAlign: isMobile ? 'center' : 'left',
         }}
       >
-        {/* Infrared fill */}
+        {/* Hover darkening layer — subtle ripple on hover since BG is always red */}
         <div
           ref={ctaFillRef}
           aria-hidden="true"
           style={{
             position: 'absolute', inset: 0,
-            backgroundColor: COLORS.accentInfrared,
+            backgroundColor: 'rgba(0,0,0,0.18)',
             transform: 'scaleY(0)', transformOrigin: 'bottom center',
             zIndex: 0, willChange: 'transform',
           }}
@@ -250,7 +251,7 @@ export function Footer() {
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: isMobile ? 'clamp(0.7rem, 3.5vw, 0.9rem)' : 'min(1.2rem, 4.5vw)',
             letterSpacing: '0.22em',
-            color: '#FFFFFF', opacity: 0.9, textTransform: 'uppercase',
+            color: COLORS.bgAbyss, opacity: 0.6, textTransform: 'uppercase',
             textAlign: isMobile ? 'center' : 'left',
           }}>
             {t('footer.cursor')}
@@ -271,7 +272,7 @@ export function Footer() {
             flexDirection: isMobile ? 'column' : 'row',
             justifyContent: (!isMobile && isTwoWords && lang === 'en') ? 'space-between' : 'flex-start',
             gap: isMobile ? 4 : ((isTwoWords && lang === 'es') ? 'clamp(0.5rem, 2vw, 2rem)' : 0),
-            color: COLORS.textBone,
+            color: COLORS.bgAbyss,
           }}
         >
           {isTwoWords ? (

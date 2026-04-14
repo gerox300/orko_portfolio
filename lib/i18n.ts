@@ -42,8 +42,8 @@ const dictionary = {
     es: '[ SERVICIOS ]',
   },
   'hud.intel': {
-    en: '[ INTEL ]',
-    es: '[ INFO ]',
+    en: '[ BIO ]',
+    es: '[ BIO ]',
   },
   'hud.langEn': {
     en: 'LANG: [EN]',

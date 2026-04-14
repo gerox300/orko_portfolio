@@ -118,10 +118,11 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
       onMouseLeave={isMobile ? undefined : handleMouseLeave}
       style={{
         position: 'relative',
-        // Mobile: red border; Desktop: lineAsh
         border: isMobile
-          ? `1px solid ${COLORS.accentInfrared}44`
+          ? `1px solid ${COLORS.accentInfrared}`
           : `1px solid ${COLORS.lineAsh}`,
+        // Mobile: always infrared background
+        backgroundColor: isMobile ? COLORS.accentInfrared : 'transparent',
         padding: isMobile
           ? 'clamp(20px, 4vw, 28px)'
           : 'clamp(24px, 3.5vh, 36px) clamp(20px, 2.5vw, 28px)',
@@ -130,7 +131,6 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
         display: 'flex',
         flexDirection: 'column',
         gap: 0,
-        // Mobile: auto height so content determines size; desktop: fixed min
         minHeight: isMobile ? 'auto' : 'clamp(280px, 38vh, 360px)',
       }}
     >
@@ -158,8 +158,8 @@ export function ServiceCard({ number, title, description }: ServiceCardProps) {
             fontFamily: 'var(--font-jetbrains-mono), monospace',
             fontSize: '0.75rem',
             letterSpacing: '0.2em',
-            color: COLORS.accentInfrared,
-            opacity: 0.75,
+            color: isMobile ? COLORS.bgAbyss : COLORS.accentInfrared,
+            opacity: isMobile ? 0.5 : 0.75,
             display: 'block',
             marginBottom: 20,
           }}

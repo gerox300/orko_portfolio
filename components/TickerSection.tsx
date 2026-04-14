@@ -171,9 +171,6 @@ export function TickerSection() {
         const section = sectionRef.current;
         if (!section) return;
 
-        // Mobile: no GSAP scrub — rows are positioned statically
-        if (window.innerWidth < 768) return;
-
         // Wait for fonts to be fully loaded before measuring widths
         // (LunaObscura loads async; RAF alone isn't enough — font swap changes element widths)
         const fontPromise = document.fonts ? document.fonts.ready : Promise.resolve();
@@ -260,7 +257,7 @@ export function TickerSection() {
                 style={{
                     position: 'relative',
                     width: '100%',
-                    height: isMobile ? '30vh' : '65vh',
+                    height: isMobile ? '55vh' : '65vh',
                     marginTop: isMobile ? 24 : 80,
                     marginBottom: isMobile ? 24 : 60,
                     backgroundColor: '#050505',
@@ -278,9 +275,9 @@ export function TickerSection() {
                     position: 'absolute', inset: 0, zIndex: 10, pointerEvents: 'none',
                     background: 'linear-gradient(to right, #050505 0%, transparent 6%, transparent 94%, #050505 100%)',
                 }} />
-                {/* Fade top/bottom */}
-                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '12vh', background: 'linear-gradient(to bottom,#050505,transparent)', zIndex: 9, pointerEvents: 'none' }} />
-                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '12vh', background: 'linear-gradient(to top,#050505,transparent)', zIndex: 9, pointerEvents: 'none' }} />
+                {/* Fade top/bottom — smaller on mobile so text isn't mostly hidden */}
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: isMobile ? '6vh' : '12vh', background: 'linear-gradient(to bottom,#050505,transparent)', zIndex: 9, pointerEvents: 'none' }} />
+                <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: isMobile ? '6vh' : '12vh', background: 'linear-gradient(to top,#050505,transparent)', zIndex: 9, pointerEvents: 'none' }} />
 
                 {ROWS.map((row, i) => (
                     <div
@@ -293,10 +290,6 @@ export function TickerSection() {
                             willChange: 'transform',
                             lineHeight: 1,
                             margin: 0, padding: 0,
-                            // Mobile: CSS auto-scroll always left, avoids jump glitch
-                            ...(isMobile ? {
-                                animation: `ticker-scroll-left ${22 + i * 5}s linear infinite`,
-                            } : {}),
                         }}
                     >
                         <RowContent row={row} />

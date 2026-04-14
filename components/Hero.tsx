@@ -93,14 +93,22 @@ export function Hero() {
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  // Pin section height to actual viewport (accounts for browser chrome on mobile)
+  // Pin section height to actual viewport on ALL devices
+  // window.innerHeight is correct even on iOS Safari where 100vh > visible area
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    const setH = () => { section.style.height = `${window.innerHeight}px`; };
+    const setH = () => {
+      section.style.height = `${window.innerHeight}px`;
+    };
     setH();
     window.addEventListener('resize', setH);
-    return () => window.removeEventListener('resize', setH);
+    // Also re-measure after orientationchange (mobile)
+    window.addEventListener('orientationchange', setH);
+    return () => {
+      window.removeEventListener('resize', setH);
+      window.removeEventListener('orientationchange', setH);
+    };
   }, []);
 
   useEffect(() => {
@@ -168,12 +176,14 @@ export function Hero() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
       style={{
-        minHeight: '100vh',
+        /* height is set in px by JS (window.innerHeight) — avoids iOS Safari 100vh > innerHeight bug */
+        minHeight: 0,
         width: '100%',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
         backgroundColor: 'transparent',
+        overflow: 'hidden',
       }}
     >
       {/* Overlays — DataNodes hidden on mobile to prevent overflow */}

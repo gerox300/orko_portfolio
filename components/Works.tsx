@@ -882,19 +882,19 @@ export function Works() {
                   zIndex: 101,
                 }}
               >
-                {/* Header */}
+                {/* Header — compact padding to reduce gap before media */}
                 <div style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '14px 18px',
+                  padding: '8px 14px',
                   borderBottom: `1px solid rgba(240,240,240,0.08)`,
                   background: 'rgba(8,8,8,0.98)',
                   flexShrink: 0,
                 }}>
-                  <div style={{ minWidth: 0 }}>
+                  <div style={{ minWidth: 0, flex: 1 }}>
                     <span style={{
                       fontFamily: 'var(--font-headline), sans-serif',
                       fontWeight: 700,
-                      fontSize: 'clamp(0.9rem, 4.5vw, 1.1rem)',
+                      fontSize: 'clamp(0.85rem, 4vw, 1rem)',
                       letterSpacing: '-0.01em',
                       textTransform: 'uppercase',
                       color: COLORS.textBone,
@@ -903,20 +903,23 @@ export function Works() {
                     }}>
                       {activeModalProject.fullName || activeModalProject.client}
                     </span>
-                    <div style={{ display: 'flex', gap: 6, marginTop: 5, flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: 5, marginTop: 4, flexWrap: 'nowrap', overflow: 'hidden' }}>
                       <span style={{
                         fontFamily: 'var(--font-jetbrains-mono), monospace',
-                        fontSize: '0.55rem', letterSpacing: '0.14em',
+                        fontSize: '0.52rem', letterSpacing: '0.12em',
                         color: COLORS.accentInfrared, opacity: 0.85,
                         textTransform: 'uppercase',
-                        border: `1px solid rgba(255,84,69,0.3)`, padding: '3px 7px',
+                        border: `1px solid rgba(255,84,69,0.3)`, padding: '2px 6px',
+                        overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: '60vw',
+                        flexShrink: 1,
                       }}>{activeModalProject.type}</span>
                       <span style={{
                         fontFamily: 'var(--font-jetbrains-mono), monospace',
-                        fontSize: '0.55rem', letterSpacing: '0.14em',
+                        fontSize: '0.52rem', letterSpacing: '0.12em',
                         color: COLORS.textBone, opacity: 0.5,
                         textTransform: 'uppercase',
-                        border: `1px solid rgba(240,240,240,0.12)`, padding: '3px 7px',
+                        border: `1px solid rgba(240,240,240,0.12)`, padding: '2px 6px',
+                        flexShrink: 0,
                       }}>{activeModalProject.year}</span>
                     </div>
                   </div>
@@ -925,10 +928,10 @@ export function Works() {
                     style={{
                       flexShrink: 0, background: 'transparent',
                       border: `1px solid rgba(240,240,240,0.18)`,
-                      color: COLORS.textBone, width: 40, height: 40,
-                      borderRadius: '50%', fontSize: '1.3rem', cursor: 'pointer',
+                      color: COLORS.textBone, width: 36, height: 36,
+                      borderRadius: '50%', fontSize: '1.2rem', cursor: 'pointer',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      marginLeft: 12,
+                      marginLeft: 10,
                     }}
                   >×</button>
                 </div>
@@ -958,16 +961,67 @@ export function Works() {
                     }
                     if (viewerMode === 'identity' || (!media.scrollVideo && media.identitySlides?.[0])) {
                       const slides = media.identitySlides ?? [];
-                      const slide = slides[identityIndex] ?? slides[0];
-                      return slide ? (
-                        <img
-                          src={slide}
-                          alt=""
-                          style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '8px' }}
-                        />
-                      ) : (
-                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.55rem', letterSpacing: '0.16em', color: COLORS.textBone, opacity: 0.25, textTransform: 'uppercase' }}>NO PREVIEW</span>
+                      const safeIdx = slides.length > 0 ? identityIndex % slides.length : 0;
+                      const slide = slides[safeIdx];
+                      return (
+                        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                          {slide ? (
+                            <img
+                              src={slide}
+                              alt=""
+                              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', padding: '8px' }}
+                            />
+                          ) : (
+                            <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                              <span style={{ fontFamily: 'var(--font-jetbrains-mono), monospace', fontSize: '0.55rem', letterSpacing: '0.16em', color: COLORS.textBone, opacity: 0.25, textTransform: 'uppercase' }}>NO PREVIEW</span>
+                            </div>
+                          )}
+                          {/* Prev / Next — only when there are multiple slides */}
+                          {slides.length > 1 && (
+                            <>
+                              <button
+                                onClick={() => changeSlide(slides.length, 'prev', 'identity')}
+                                style={{
+                                  position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)',
+                                  background: 'rgba(5,5,5,0.72)', border: `1px solid rgba(240,240,240,0.22)`,
+                                  color: COLORS.textBone, width: 36, height: 36,
+                                  borderRadius: '50%', fontSize: '1rem', cursor: 'pointer',
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  backdropFilter: 'blur(6px)', zIndex: 2,
+                                }}
+                              >‹</button>
+                              <button
+                                onClick={() => changeSlide(slides.length, 'next', 'identity')}
+                                style={{
+                                  position: 'absolute', right: 8, top: '50%', transform: 'translateY(-50%)',
+                                  background: 'rgba(5,5,5,0.72)', border: `1px solid rgba(240,240,240,0.22)`,
+                                  color: COLORS.textBone, width: 36, height: 36,
+                                  borderRadius: '50%', fontSize: '1rem', cursor: 'pointer',
+                                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                  backdropFilter: 'blur(6px)', zIndex: 2,
+                                }}
+                              >›</button>
+                              {/* Dot indicator */}
+                              <div style={{
+                                position: 'absolute', bottom: 10, left: 0, right: 0,
+                                display: 'flex', justifyContent: 'center', gap: 5, zIndex: 2,
+                              }}>
+                                {slides.map((_, di) => (
+                                  <button
+                                    key={di}
+                                    onClick={() => setIdentityIndex(di)}
+                                    style={{
+                                      width: di === safeIdx ? 16 : 6, height: 6,
+                                      borderRadius: 3, border: 'none',
+                                      backgroundColor: di === safeIdx ? COLORS.accentInfrared : 'rgba(240,240,240,0.35)',
+                                      cursor: 'pointer', padding: 0,
+                                      transition: 'width 0.2s ease, background-color 0.2s ease',
+                                    }}
+                                  />
+                                ))}
+                              </div>
+                            </>
+                          )}
                         </div>
                       );
                     }
