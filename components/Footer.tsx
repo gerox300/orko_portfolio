@@ -37,6 +37,7 @@ export function Footer() {
     return () => window.removeEventListener('resize', check);
   }, []);
   const cancelScrambleRef = useRef<(() => void) | null>(null);
+  const hoverScrambleCancelRef = useRef<(() => void) | null>(null);
   const [isCopied, setIsCopied] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -75,27 +76,33 @@ export function Footer() {
   }, []);
 
   const handleCtaEnter = useCallback(() => {
-    if (isActivated) return;
+    if (isActivated || isMobile) return;
     const fill = ctaFillRef.current;
-    const text = ctaTextRef.current;
-    if (!fill || !text) return;
-    gsap.killTweensOf([fill, text]);
-    gsap.to(fill, { scaleY: 1, duration: 0.6, ease: GSAP_EASE.aggro });
-    // Text stays white — BG is always red, hover just darkens slightly
-    gsap.to(text, { color: COLORS.textBone, duration: 0.1 });
-    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.1 });
-  }, [isActivated]);
+    if (!fill) return;
+    // Black background sweeps up
+    gsap.killTweensOf(fill);
+    gsap.to(fill, { scaleY: 1, duration: 0.55, ease: GSAP_EASE.aggro });
+    // Text → accent-infrared (red)
+    if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.accentInfrared, duration: 0.15 });
+    // Scramble "START MUTATION" → "START PROJECT"
+    hoverScrambleCancelRef.current?.();
+    const hoverTarget = lang === 'es' ? 'INICIAR PROYECTO' : 'START PROJECT';
+    hoverScrambleCancelRef.current = scramble(hoverTarget, 320, setCtaDisplay);
+  }, [isActivated, isMobile, lang]);
 
   const handleCtaLeave = useCallback(() => {
-    if (isActivated) return;
+    if (isActivated || isMobile) return;
     const fill = ctaFillRef.current;
-    const text = ctaTextRef.current;
-    if (!fill || !text) return;
-    gsap.killTweensOf([fill, text]);
-    gsap.to(fill, { scaleY: 0, duration: 0.45, ease: 'power2.inOut' });
-    gsap.to(text, { color: COLORS.textBone, duration: 0.2 });
+    if (!fill) return;
+    // Black background recedes
+    gsap.killTweensOf(fill);
+    gsap.to(fill, { scaleY: 0, duration: 0.4, ease: 'power2.inOut' });
+    // Text → white
     if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.2 });
-  }, [isActivated]);
+    // Scramble back to original CTA text
+    hoverScrambleCancelRef.current?.();
+    hoverScrambleCancelRef.current = scramble(t('footer.cta'), 280, setCtaDisplay);
+  }, [isActivated, isMobile, t]);
 
   const handleCtaClick = useCallback(() => {
     if (isActivated || isProcessing) return;
@@ -106,6 +113,7 @@ export function Footer() {
     }
     setIsActivated(true);
     cancelScrambleRef.current?.();
+    hoverScrambleCancelRef.current?.();
     playSound(AUDIO_IDS.glitchBurst);
 
     cancelScrambleRef.current = scramble(
@@ -231,13 +239,13 @@ export function Footer() {
           textAlign: isMobile ? 'center' : 'left',
         }}
       >
-        {/* Hover darkening layer — subtle ripple on hover since BG is always red */}
+        {/* Hover fill — solid black sweeps up from bottom, reveals red text on red bg */}
         <div
           ref={ctaFillRef}
           aria-hidden="true"
           style={{
             position: 'absolute', inset: 0,
-            backgroundColor: 'rgba(0,0,0,0.18)',
+            backgroundColor: COLORS.bgAbyss,
             transform: 'scaleY(0)', transformOrigin: 'bottom center',
             zIndex: 0, willChange: 'transform',
           }}
