@@ -25,6 +25,7 @@ export function Footer() {
   const ctaFillRef = useRef<HTMLDivElement>(null);
   const ctaTextRef = useRef<HTMLSpanElement>(null);
   const ctaWrapperRef = useRef<HTMLDivElement>(null);
+  const scheduleHintRef = useRef<HTMLSpanElement>(null);
 
   const [ctaDisplay, setCtaDisplay] = useState(() => t('footer.cta'));
   const [isMobile, setIsMobile] = useState(false);
@@ -82,8 +83,9 @@ export function Footer() {
     // Black background sweeps up
     gsap.killTweensOf(fill);
     gsap.to(fill, { scaleY: 1, duration: 0.55, ease: GSAP_EASE.aggro });
-    // Text → accent-infrared (red)
+    // Text → accent-infrared (red), hint → white
     if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.accentInfrared, duration: 0.15 });
+    if (scheduleHintRef.current) gsap.to(scheduleHintRef.current, { color: COLORS.textBone, duration: 0.15 });
     // Scramble "START MUTATION" → "START PROJECT"
     hoverScrambleCancelRef.current?.();
     const hoverTarget = lang === 'es' ? 'INICIAR PROYECTO' : 'START PROJECT';
@@ -97,8 +99,9 @@ export function Footer() {
     // Black background recedes
     gsap.killTweensOf(fill);
     gsap.to(fill, { scaleY: 0, duration: 0.4, ease: 'power2.inOut' });
-    // Text → white
+    // Text → white, hint → black
     if (ctaWrapperRef.current) gsap.to(ctaWrapperRef.current, { color: COLORS.textBone, duration: 0.2 });
+    if (scheduleHintRef.current) gsap.to(scheduleHintRef.current, { color: COLORS.bgAbyss, duration: 0.2 });
     // Scramble back to original CTA text
     hoverScrambleCancelRef.current?.();
     hoverScrambleCancelRef.current = scramble(t('footer.cta'), 280, setCtaDisplay);
@@ -253,7 +256,7 @@ export function Footer() {
 
         {/* Schedule hint */}
         {!isActivated && (
-          <span aria-hidden="true" style={{
+          <span ref={scheduleHintRef} aria-hidden="true" style={{
             position: 'relative', zIndex: 1, display: 'block',
             marginBottom: 'clamp(12px, 2vh, 20px)',
             fontFamily: 'var(--font-jetbrains-mono), monospace',
