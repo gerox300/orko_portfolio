@@ -74,7 +74,7 @@ export function SmartCellCursor() {
 
   // Evita el error de hidratación: no renderiza nada en el servidor
   // On touch devices the cursor is never visible — skip entirely
-  if (!mounted || !hasBooted || isTouch) return null;
+  if (!mounted || isTouch) return null;
 
   return (
     <>
